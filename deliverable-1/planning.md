@@ -51,8 +51,9 @@
 2. As a global health director, after receiving data from partnering hospitals I want to see a detailed description of what results are limiting pediatric emergency care capacity in order to fully understand how pediatric emergency care can be improved.
 3. As a global health director with partnering hospitals in places that may have limited or inconsistent access to an internet connection, I want the hospital staff to have the ability to fill out a form offline, only needing the internet to download and submit the form in order to get crucial data from them regardless of connection quality.
 4. As a hospital leader, I want to collect handwashing data at my hospital and receive feedback in order to make improvements accordingly.
-5. As a global health organization worker, I want to create shareable forms with a customizable scoring system (??? lol) so that I can send them to hospitals and assess their pediatric emergency care capacity based on criteria set by the World Health Organization.
+5. As a global health organization worker, I want to create shareable forms with a customizable scoring system so that I can send them to hospitals and assess their pediatric emergency care capacity based on criteria set by the World Health Organization.
 6. As a nurse, I want to be able to fill out my section of the form while workers at other departments fill out theirs, so that we complete the form efficiently and with accurate information.
+7. As a global health director, I want to be able to send one form to several hospitals, so that each hospital can fill in information for their organization and I can receive a report with feedback for all hospitals collectively
 
 
 ----

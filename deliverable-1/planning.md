@@ -67,7 +67,9 @@
 4. You will share the code under an open-source license and distribute it as you wish but only the partner can access the system deployed during the course.
 
 **Briefly describe which option you have agreed to. Your partner cannot ask you to sign any legally binding agreements or documents pertaining to non-disclosure, confidentiality, IP ownership, etc.**
+
 We have agreed to option 2. that the code can be on GitHub and the running application will be handled by our Partner. We have also agreed to revisit this agreement if the project is successful and the app is deployed/used.
+
 ----
 
 ## Process Details

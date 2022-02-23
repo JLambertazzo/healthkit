@@ -1,0 +1,26 @@
+.side-nav {
+    list-style: none;
+    padding: 0;
+    margin: 1rem;
+}
+
+.side-nav li {
+    margin-bottom: 1rem;
+    padding: 5px 1.5rem;
+    border-radius: 15px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.side-nav li:hover {
+    background-color: #F3F4F6;
+}
+
+.side-nav li a {
+    text-decoration: none;
+    color: #0C5496;
+}
+
+.side-nav .current {
+    background-color: #F3F4F6;
+}

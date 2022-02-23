@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "axios": "^0.26.0",
-    "express": "^4.17.2"
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.2.3"
   },
   "name": "team-project-3-boston-children-s-hospital",
   "version": "1.0.0",
@@ -10,6 +12,8 @@
     "start": "node src/index.js",
     "push-dev": "git push && git push heroku-dev dev:master",
     "heroku-postbuild": "cd client && npm install && npm run build",
+    "setup": "npm i && cd client && npm i && cd ..",
+    "build-run": "cd client && npm run build && cd .. && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

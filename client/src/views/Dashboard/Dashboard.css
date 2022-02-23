@@ -6,6 +6,7 @@
 
 .dash-main {
     background-color: #F3F4F6;
+    overflow: scroll;
 }
 
 .dash-side {
@@ -13,4 +14,9 @@
 }
 .dash-main h1 {
     margin: 5rem;
+}
+
+.thumb-list {
+    display: flex;
+    flex-wrap: wrap;
 }

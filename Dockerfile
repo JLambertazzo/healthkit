@@ -1,10 +1,14 @@
 FROM node:16
 
-WORKDIR /app
+WORKDIR /
 
 COPY package*.json ./
 
 RUN npm install
+
+# build react app
+COPY client/ ./client/
+RUN cd client && npm install && npm run build
 
 COPY . .
 

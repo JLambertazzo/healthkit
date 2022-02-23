@@ -1,0 +1,20 @@
+.nav {
+    background-color: #D6D9DA;
+    height: 8vh;
+    display: grid;
+    grid-template-columns: 95% 5%;
+    align-content: center;
+
+}
+
+.nav h2 {
+    font-weight: 400;
+    color: #8C99A0;
+    font-size: 32px;
+}
+
+.navTitle, .navIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

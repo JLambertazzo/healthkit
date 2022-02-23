@@ -6,10 +6,12 @@
  * >Repository Layer: all communication with database should happen here
  * Split each layer into files for data type (user, form, etc.)
  */
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const apiRouter = require('./controllers')
 const app = express()
+const { mongoose } = require("./db/db")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

@@ -2,6 +2,24 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding: 1rem 3rem;
-    margin: 3rem;
+    padding: 1rem 2rem;
+    margin: 2rem;
+}
+
+.thumbnail .form-title {
+    color: #6E92B4;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.progress-cont {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 85% 15%;
+    align-items: center;
+
+}
+
+.progress-cont .MuiLinearProgress-barColorPrimary {
+    background-color: #6E92B4 !important;
 }

@@ -14,9 +14,15 @@ function Dashboard() {
             <div className="dash-main">
                 <h1>Dashboard</h1>
                 <div className="thumb-list">
-                    <Thumbnail/>
-                    <Thumbnail/>
-                    <Thumbnail/>
+                    <Thumbnail
+                        value={75}
+                    />
+                    <Thumbnail
+                        value={25}
+                    />
+                    <Thumbnail
+                        value={55}
+                    />
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@
  * >Controller Layer: endpoints for api requests, handles directing calls
  * >Service Layer: logic layer, call repositories as needed and create response for controller
  * >Repository Layer: all communication with database should happen here
+ * Repository layer is implemented in mongoose models
  * Split each layer into files for data type (user, form, etc.)
  */
 require('dotenv').config()

@@ -1,3 +1,7 @@
+/*
+ * In this file we initialize the mongodb connection
+ */
+
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/teambch")
     .then(() => console.log('mongoose connected'))

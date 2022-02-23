@@ -12,6 +12,8 @@
     "start": "node src/index.js",
     "push-dev": "git push && git push heroku-dev dev:master",
     "heroku-postbuild": "cd client && npm install && npm run build",
+    "setup": "npm i && cd client && npm i && cd ..",
+    "build-run": "cd client && npm run build && cd .. && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

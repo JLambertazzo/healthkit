@@ -13,7 +13,7 @@ const fieldModel = model('Field', new Schema({
         type: String,
         required: true
     },
-    options: [String]
+    options: {type: [String], default: []}
 }), 'Fields')
 
 module.exports = { fieldModel }

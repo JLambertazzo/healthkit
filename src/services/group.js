@@ -23,7 +23,10 @@ async function addUser(user_id) {
     try {
         return await userModel.findByIdAndUpdate(
             user_id,
-            {$push: {users: user_id}}
+            {$push: {users: user_id}},
+            {
+                returnDocument: true
+            }
         )
     } catch (e) {
         console.error('error occurred', e)

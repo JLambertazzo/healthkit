@@ -11,7 +11,7 @@ const fieldModel = model('Field', new Schema({
     },
     value: {
         type: [String],
-        required: true
+        default: ['']
     },
     options: {type: [String], default: []}
 }), 'Fields')

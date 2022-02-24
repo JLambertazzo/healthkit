@@ -12,10 +12,10 @@ router.get('/:id', idChecker, mongoChecker, (req, res, next) => {
     }
 })
 
-router.post('/', mongoChecker, (req, res, next) => {
+router.post('/:id', idChecker, mongoChecker, (req, res, next) => {
     try {
         const { field } = req.body
-        const form = await service.createField(field)
+        const form = await service.createField(req.params.id, field)
         res.send({ form })
     } catch(e) {
         console.error('an error occurred', e)

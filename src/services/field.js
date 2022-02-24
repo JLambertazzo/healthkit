@@ -1,4 +1,5 @@
 const { fieldModel } = require('../db/models/field')
+const { formModel } = require('../db/models/form')
 
 async function getField(id) {
     try {
@@ -9,9 +10,13 @@ async function getField(id) {
     }
 }
 
-async function createField(field) {
+async function createField(form_id, field) {
     try {
-        return await fieldModel.create(field)
+        const field = await fieldModel.create(field)
+        await formModel.findByIdAndUpdate(
+            form_id,
+            {$push: {fields: field._id}}
+        )
     } catch(e) {
         console.error('error occurred', e)
         return null

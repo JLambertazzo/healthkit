@@ -15,8 +15,8 @@ router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
 router.post('/', mongoChecker, async (req, res, next) => {
     let { user } = req.body
     try {
-        const user = await service.createUser(user)
-        res.send({user})
+        const newUser = await service.createUser(user)
+        res.send({user: newUser})
     } catch (e) {
         console.error('error', e)
         handleError(e, res)

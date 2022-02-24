@@ -5,7 +5,7 @@ async function getGroup(id) {
     try {
         return await groupModel.findById(id)
     } catch (e) {
-        console.error('error occured', e)
+        console.error('error occurred', e)
         return null
     }
 }
@@ -24,9 +24,7 @@ async function addUser(user_id) {
         return await userModel.findByIdAndUpdate(
             user_id,
             {$push: {users: user_id}},
-            {
-                returnDocument: true
-            }
+            { returnDocument: true }
         )
     } catch (e) {
         console.error('error occurred', e)

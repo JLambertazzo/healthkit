@@ -38,8 +38,18 @@ async function addUser(user_id, group_id) {
     }
 }
 
+async function deleteGroup(id) {
+    try {
+        return await groupModel.findByIdAndDelete(id)
+    } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
 module.exports = {
     getGroup,
     createGroup,
-    addUser
+    addUser,
+    deleteGroup
 }

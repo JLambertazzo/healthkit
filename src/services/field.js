@@ -17,6 +17,7 @@ async function createField(form_id, field) {
             form_id,
             {$push: {fields: field._id}}
         )
+        return field
     } catch(e) {
         console.error('error occurred', e)
         return null
@@ -25,5 +26,6 @@ async function createField(form_id, field) {
 
 module.exports = {
     getField,
-    createField
+    createField,
+    deleteField
 }

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const service = require('../services/form')
-const { idChecker, handleError, mongoChecker } = require('./misc')
+const { idChecker, handleError, mongoChecker, customIdChecker } = require('./misc')
 
 router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
@@ -39,6 +39,27 @@ router.post('/email/:id', idChecker, mongoChecker, async (req, res, next) => {
         const { emails } = req.body
         const form = await service.sendByEmails(req.params.id, emails)
         res.send({ form })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
+router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
+    try {
+        const form = await service.deleteForm(req.params.id)
+        res.send({ form })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
+// might not be necessary?? could be replaced by a good call to set fields
+router.delete('/:id/field/:field_id', idChecker, customIdChecker('field_id'), mongoChecker, (req, res, next) => {
+    try {
+        const field = await service.removeField()
+        res.send({ field })
     } catch(e) {
         console.error('an error occurred', e)
         handleError(e, res)

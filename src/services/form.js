@@ -53,9 +53,30 @@ async function sendByEmails(form_id, emails) {
     }
 }
 
+async function deleteForm(id) {
+    try {
+        return await formModel.findByIdAndDelete(id)
+    } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
+async function removeField(id, field_id) {
+    try {
+        await formModel.findByIdAndUpdate(id, { $pull: { fields: field_id } })
+        return await fieldModel.findByIdAndDelete(field_id)
+    } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
 module.exports = {
     getForm,
     createForm,
     setFields,
     sendByEmails,
+    deleteForm,
+    removeField
 }

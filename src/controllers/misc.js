@@ -38,24 +38,25 @@ function handleError(err, res) {
  */
 function idChecker(req, res, next) {
     if (!req.params.id || !ObjectId.isValid(req.params.id)) {
-        console.error("invalid board id:", req.params.id)
-        res.status(400).send("invalid board id")
+        console.error("invalid id:", req.params.id)
+        res.status(400).send("invalid id")
     }
     next()
 }
 
 /**
- * Checks that request was sent with a valid ObjectId group_id
- * @param {*} req The request to check
- * @param {*} res The response object from the call
- * @param {*} next The next function from the call
+ * Get an idChecker middleware for id's passed as values other than ':id'
+ * @param {*} id_name The name of the id being checked
+ * @returns A middleware function similar to idChecker
  */
- function groupIdChecker(req, res, next) {
-    if (!req.params.group_id || !ObjectId.isValid(req.params.group_id)) {
-        console.error("invalid board id:", req.params.group_id)
-        res.status(400).send("invalid board id")
+function customIdChecker(id_name) {
+    return (req, res, next) => {
+        if (!req.params[id_name] || !ObjectId.isValid(req.params[id_name])) {
+            console.error("invalid id:", req.params[id_name])
+            res.status(400).send("invalid id")
+        }
+        next()
     }
-    next()
 }
 
 /**
@@ -78,5 +79,5 @@ module.exports = {
     handleError,
     idChecker,
     mongoChecker,
-    groupIdChecker
+    customIdChecker
 }

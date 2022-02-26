@@ -66,6 +66,10 @@ For creation only label and type are needed, everything else is optional.
 * expects user object in body (see type above)
 * returns user if creation successful
 * will fail if duplicate username or email
+#### `DELETE` /api/user/:id
+* deletes a user
+* expects user id for :id
+* returns user if deletion successful
 
 ### Group Routes
 #### `GET` /api/group/:id
@@ -80,6 +84,10 @@ For creation only label and type are needed, everything else is optional.
 * adds user to group
 * expects group id for :group_id
 * expects user id for :id
+#### `DELETE` /api/group/:id
+* delete a group
+* expects group id for :id
+* returns group if deletion successful
 
 ### Form Routes
 #### `GET` /api/form/:id
@@ -99,6 +107,16 @@ For creation only label and type are needed, everything else is optional.
 * expects form id for :id
 * expects array of emails (strings) in body
 * return updated form if sucessful
+#### `DELETE` /api/form/:id
+* delete a form
+* expects form id for :id
+* return form if deletion successful
+#### `DELETE` /api/form/:id/field/:field_id
+* remove a field from a form
+* deletes the field from field collection
+* expects form id for :id
+* expects field id for :field_id
+* return deleted field if deletion successful
 
 ### Field Routes
 #### `GET` /api/field/:id

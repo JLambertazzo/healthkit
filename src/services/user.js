@@ -21,6 +21,7 @@ async function createUser(user) {
 
 async function deleteUser(id) {
     try {
+        // currently leaves dead user ids in groups
         return await userModel.findByIdAndDelete(id)
     } catch(e) {
         console.log('error occurred', e)

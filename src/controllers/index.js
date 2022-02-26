@@ -9,5 +9,8 @@ router.get('/', (req, res, next) => {
 })
 
 router.use('/user', require('./user'))
+router.use('/group', require('./group'))
+router.use('/form', require('./form'))
+router.use('/field', require('./field'))
 
 module.exports = router

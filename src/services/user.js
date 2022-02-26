@@ -1,15 +1,36 @@
 const { userModel } = require('../db/models/user')
 
 async function getUser(id) {
-    return await userModel.findById(id)
+    try {
+        return await userModel.findById(id)
+    } catch(e) {
+        console.log('error ocurred', e)
+        return null
+    }
 }
 
 async function createUser(user) {
     // hash password here
-    return await userModel.create(user)
+    try {
+        return await userModel.create(user)
+    } catch(e) {
+        console.log('error occurred', e)
+        return null
+    }
+}
+
+async function deleteUser(id) {
+    try {
+        // currently leaves dead user ids in groups
+        return await userModel.findByIdAndDelete(id)
+    } catch(e) {
+        console.log('error occurred', e)
+        return null
+    }
 }
 
 module.exports = {
     getUser,
     createUser,
+    deleteUser
 }

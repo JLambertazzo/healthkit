@@ -12,12 +12,12 @@ async function getField(id) {
 
 async function createField(form_id, field) {
     try {
-        const field = await fieldModel.create(field)
+        const fieldRes = await fieldModel.create(field)
         await formModel.findByIdAndUpdate(
             form_id,
             {$push: {fields: field._id}}
         )
-        return field
+        return fieldRes
     } catch(e) {
         console.error('error occurred', e)
         return null

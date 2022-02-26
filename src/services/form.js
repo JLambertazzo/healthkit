@@ -1,5 +1,6 @@
 const { formModel } = require('../db/models/form')
 const { userModel } = require('../db/models/user')
+const { fieldModel } = require('../db/models/field')
 
 async function getForm(id) {
     try {

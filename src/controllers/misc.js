@@ -40,6 +40,7 @@ function idChecker(req, res, next) {
     if (!req.params.id || !ObjectId.isValid(req.params.id)) {
         console.error("invalid id:", req.params.id)
         res.status(400).send("invalid id")
+        return false
     }
     next()
 }
@@ -54,6 +55,7 @@ function customIdChecker(id_name) {
         if (!req.params[id_name] || !ObjectId.isValid(req.params[id_name])) {
             console.error("invalid id:", req.params[id_name])
             res.status(400).send("invalid id")
+            return false
         }
         next()
     }

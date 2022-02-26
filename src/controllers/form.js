@@ -56,7 +56,7 @@ router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
 })
 
 // might not be necessary?? could be replaced by a good call to set fields
-router.delete('/:id/field/:field_id', idChecker, customIdChecker('field_id'), mongoChecker, (req, res, next) => {
+router.delete('/:id/field/:field_id', idChecker, customIdChecker('field_id'), mongoChecker, async (req, res, next) => {
     try {
         const field = await service.removeField()
         res.send({ field })

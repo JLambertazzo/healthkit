@@ -19,7 +19,7 @@ async function createGroup(group) {
     }
 }
 
-async function addUser(user_id, group_id) {
+async function addUser(group_id, user_id) {
     try {
         const userRes = await userModel.findByIdAndUpdate(
             user_id,
@@ -31,7 +31,7 @@ async function addUser(user_id, group_id) {
             {$push: {users: user_id}},
             { returnDocument: true }
         )
-        return {userRes, groupRes}
+        return {user, group}
     } catch (e) {
         console.error('error occurred', e)
         return null

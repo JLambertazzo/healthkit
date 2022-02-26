@@ -26,6 +26,5 @@ async function createField(form_id, field) {
 
 module.exports = {
     getField,
-    createField,
-    deleteField
+    createField
 }

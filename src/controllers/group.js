@@ -25,8 +25,8 @@ router.post('/', mongoChecker, async (req, res, next) => {
 
 router.patch('/add/:group_id/:id', customIdChecker('group_id'), idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const group = await service.addUser(req.params.group_id, req.params.id)
-        res.send({ group })
+        const { user, group } = await service.addUser(req.params.group_id, req.params.id)
+        res.send({ user, group })
     } catch(e) {
         console.error('an error occurred', e)
         handleError(e)

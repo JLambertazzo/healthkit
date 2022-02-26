@@ -68,6 +68,7 @@ function mongoChecker(req, res, next) {
     if (mongoose.connection.readyState !== 1) {
         console.error("Issue with mongoose connection")
         res.status(500).send("internal server error")
+        return false
     }
     next()
 }

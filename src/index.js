@@ -21,20 +21,20 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "../client/build")))
 
-app.use(
-    session({
-        secret: "secret secrets",
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-        expires: 36000000,
-        sameSite: "strict",
-        httpOnly: true,
-        },
-        store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
-        unset: "destroy",
-    })
-);
+// app.use(
+//     session({
+//         secret: "secret secrets",
+//         resave: false,
+//         saveUninitialized: false,
+//         cookie: {
+//         expires: 36000000,
+//         sameSite: "strict",
+//         httpOnly: true,
+//         },
+//         store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+//         unset: "destroy",
+//     })
+// );
 
 app.get('/session/loggedin', mongoChecker, (req, res, next) => {
     if (!req.session || !req.session.username) {

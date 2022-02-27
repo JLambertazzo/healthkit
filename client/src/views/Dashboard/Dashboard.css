@@ -1,0 +1,26 @@
+.dashboard {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    height: 100vh;
+}
+
+.dash-main {
+    background-color: #F3F4F6;
+    overflow: scroll;
+}
+
+.dash-side {
+    margin-top: 7rem;
+    display: flex;
+    justify-content: center;
+}
+.dash-main h1 {
+    margin: 5rem;
+}
+
+.thumb-list {
+    margin-top: 5rem;
+    margin-left: 5%;
+    display: flex;
+    flex-wrap: wrap;
+}

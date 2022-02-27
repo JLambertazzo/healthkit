@@ -1,0 +1,62 @@
+.thumbnail {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    margin: 0 1rem 1rem;
+    width: 200px;
+}
+
+.own-thumbnail {
+    height: 100px;
+}
+
+.thumbnail hr {
+    width: 20%;
+    height: 2px;
+    border: none;
+    background-color: #DAE4EE;
+    margin-left: 0;
+}
+
+.thumbnail .form-title {
+    color: #6E92B4;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.thumbnail .org-title {
+    color: #0C5496;
+    height: 50px;
+    font-size: 16px;
+}
+
+.progress-cont {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 85% 15%;
+    align-items: center;
+
+}
+
+.progress-cont .MuiLinearProgress-barColorPrimary {
+    background-color: #6E92B4 !important;
+}
+
+.dash-results {
+    font-family: "DM Sans", sans-serif !important;
+    text-transform: none !important;
+    background-color: #E0E8EF !important;
+    border-radius: 10px !important;
+    padding: 2px 15px !important;
+    color: #6E92B4 !important;
+}
+
+.progressText {
+    margin-top: 0;
+    font-size: 14px;
+    color: #8C99A0;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}

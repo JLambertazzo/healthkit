@@ -70,6 +70,14 @@ For creation only label and type are needed, everything else is optional.
 * deletes a user
 * expects user id for :id
 * returns user if deletion successful
+#### `POST` /api/user/login
+* run a login attempt
+* add username to the user session, allows to stay logged in and get current user
+* expects user email and user password as 'email' and 'password' in body
+* returns user if successful
+#### `GET` /api/user/current
+* returns the current user object if one is logged in
+* returns null if no user is logged in
 
 ### Group Routes
 #### `GET` /api/group/:id
@@ -127,3 +135,12 @@ For creation only label and type are needed, everything else is optional.
 * expects form id for :id
 * expects field object in body (see type above)
 returns field if creation successful
+
+### Session Routes
+#### `GET` /session/loggedin
+* returns username of logged in user
+* returns null if not logged in
+
+#### `GET` /session/logout
+* logs out current user if any exists
+* redirects to root '/'

@@ -1,0 +1,29 @@
+.profile{
+    height: 40vh;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    align-content: center;
+    color: #396288;
+    margin-top: 20px;
+}
+
+.profile-pic{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding-right: 30px;
+}
+
+.profile-info{
+    display: grid;
+    align-items: left;
+    justify-content: left;
+    grid-auto-rows: 100px 30px 30px;
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.user-info{
+    margin-left: 30px;
+    font-size: 18px;
+}

@@ -1,6 +1,7 @@
 import './Navbar.css'
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     return (
@@ -9,10 +10,10 @@ function Navbar() {
                 <h2>Health Scores</h2>
             </div>
             <div className="navIcon">
-                <IconButton >
+                <Link to='/profile'><IconButton >
                     <AccountCircleIcon
                         sx={{color: "#8C99A0", fontSize: '1.5em'}}
-                    /></IconButton>
+                    /></IconButton></Link>
             </div>
 
         </div>

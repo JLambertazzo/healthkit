@@ -52,6 +52,12 @@ router.get('/current', mongoChecker, async (req, res, next) => {
     }
 })
 
+// FOR TESTING PURPOSES, DELETE THIS ONCE LOGIN COMPLETE -Julien
+router.get('/force/:username', mongoChecker, async (req, res, next) => {
+    req.session.username = req.params.username
+    res.send({ message: `logged you in as ${req.params.username}` })
+})
+
 // routes like these need to be at the bottom, :id and current conflict
 router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
@@ -62,5 +68,6 @@ router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
         handleError(e, res)
     }
 })
+
 
 module.exports = router

@@ -24,7 +24,12 @@ async function setFields(form_id, fields) {
     try {
         return await formModel.findByIdAndUpdate(
             form_id,
-            {$set: {fields: fields}},
+            {$set: 
+                {
+                    fields: fields,
+                    numFields: fields.length
+                }
+            },
             { returnDocument: true }
         )
     } catch(e) {
@@ -65,10 +70,31 @@ async function deleteForm(id) {
 
 async function removeField(id, field_id) {
     try {
-        await formModel.findByIdAndUpdate(id, { $pull: { fields: field_id } })
+        await formModel.findByIdAndUpdate(
+            id, 
+            { $pull: { fields: field_id } },
+            { $inc: { numFields: -1 } } // Check here if field was complete then reduce number of completed fields    
+        )
         return await fieldModel.findByIdAndDelete(field_id)
     } catch(e) {
         console.error('error occurred', e)
+        return null
+    }
+}
+
+
+/**
+ * Check if all the questions in the form are answered or not
+ * @param {*} id Id of the form
+ * @returns True if all the questions in the form are answered else False.
+ *          Returns null in case of an error
+ */
+async function isComplete(id) {
+    try {
+        const form = await formModel.findById(id)
+        return form.numFields === form.numComplete
+    } catch(e) {
+        console.error('error occured', e)
         return null
     }
 }

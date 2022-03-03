@@ -1,0 +1,40 @@
+#dash{
+    align-items: center;
+    background-color: #F3F4F6;
+    height: 100vh;
+    overflow: scroll;
+}
+
+.sign-up-box{
+    background-color: rgb(181, 195, 207);
+    margin: 50px;
+    padding: 40px;
+}
+
+#sign-up{
+    padding: 0px;
+    margin: 0px;
+}
+
+.fields{
+    background-color: white;
+}
+
+#sign-up-button{
+    background-color: rgb(21, 82, 126);
+    color: white;
+}
+
+.nav {
+    background-color: #D6D9DA;
+    height: 8vh;
+    display: grid;
+    grid-template-columns: 95% 5%;
+    align-content: center;
+}
+
+.navTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

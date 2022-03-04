@@ -25,17 +25,3 @@
     color: white;
 }
 
-.nav {
-    background-color: #D6D9DA;
-    height: 8vh;
-    display: grid;
-    grid-template-columns: 95% 5%;
-    align-content: center;
-}
-
-.navTitle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-

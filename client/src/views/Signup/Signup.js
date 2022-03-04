@@ -3,6 +3,7 @@ import { Container, Box, TextField, Avatar, Button} from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { signup } from '../../actions/user';
+import Navbar from "../../components/Navbar/Navbar";
 
 function Signup(){
 
@@ -17,11 +18,7 @@ function Signup(){
 
     return(
         <div id = "dash">
-            <div className="nav">
-                <div className="navTitle">
-                    <h2>Health Scores</h2>
-                </div>
-            </div>
+            <Navbar/>
 
             <Container className = "sign-up-box" maxWidth="xs" sx={{ borderRadius: 15 }}>
                 <Box onSubmit={handleSubmit} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -29,12 +26,12 @@ function Signup(){
                         <LockOutlined />
                     </Avatar>
                     <h2 id="sign-up">Sign Up</h2>
-                    
+
                     <TextField fullWidth name = "email" margin = 'normal' className = "fields" required label="Email Address"/>
                     <TextField fullWidth name = "username" margin = 'normal' className = "fields" required label="Username"/>
                     <TextField fullWidth name = "password" margin = 'normal' className = "fields" required label="Password" type="password"/>
                     <TextField fullWidth name = "group" margin = 'normal' className = "fields" required label="Group"/>
-                    
+
                     <Button id="sign-up-button" type="submit" fullWidth sx={{mt: 3, mb: 3}}> Sign Up </Button>
                     <Link to="/login"> {"Already have an account? Sign In"} </Link>
                 </Box>

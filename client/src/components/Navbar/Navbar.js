@@ -6,14 +6,17 @@ import { Link } from 'react-router-dom';
 function Navbar() {
     return (
         <div className="nav">
+
             <div className="navTitle">
-                <h2>Health Scores</h2>
+                <h2>Health Kit</h2>
+            </div>
+            <div>
             </div>
             <div className="navIcon">
                 <Link to='/profile'><IconButton >
                     <AccountCircleIcon
-                        sx={{color: "#8C99A0", fontSize: '1.5em'}}
-                    /></IconButton></Link>
+                        sx={{color: "white", fontSize: '1.5em'}}
+                    /></IconButton>
             </div>
 
         </div>

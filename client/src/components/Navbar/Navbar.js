@@ -15,8 +15,7 @@ function Navbar() {
             <div className="navIcon">
                 <Link to='/profile'><IconButton >
                     <AccountCircleIcon
-                        sx={{color: "white", fontSize: '1.5em'}}
-                    /></IconButton></Link>
+                        sx={{color: "white", fontSize: '1.5em'}}/></IconButton></Link>
             </div>
 
         </div>

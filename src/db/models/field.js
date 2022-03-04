@@ -13,7 +13,8 @@ const fieldModel = model('Field', new Schema({
         type: [String],
         default: ['']
     },
-    options: {type: [String], default: []}
+    options: {type: [String], default: []},
+    isComplete: {type: Boolean, default: false }
 }), 'Fields')
 
 module.exports = { fieldModel }

@@ -11,12 +11,49 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const apiRouter = require('./controllers')
+const { mongoChecker } = require('./controllers/misc')
 const app = express()
 const { mongoose } = require("./db/db")
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "../client/build")))
+
+app.use(
+    session({
+        secret: "secret secrets",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+        expires: 36000000,
+        sameSite: "strict",
+        httpOnly: true,
+        },
+        store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+        unset: "destroy",
+    })
+);
+
+app.get('/session/loggedin', mongoChecker, (req, res, next) => {
+    if (!req.session || !req.session.username) {
+        res.send({ username: null })
+    } else {
+        res.send({ username: req.session.username })
+    }
+})
+
+app.get("/session/logout", (req, res) => {
+    if (req.session) {
+      req.session.destroy((err) => {
+          if (err) {
+              console.error(err)
+          }
+      });
+    }
+    res.status(301).redirect("/");
+});
 
 app.use('/api', apiRouter)
 

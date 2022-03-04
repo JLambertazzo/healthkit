@@ -24,7 +24,12 @@ async function setFields(form_id, fields) {
     try {
         return await formModel.findByIdAndUpdate(
             form_id,
-            {$set: {fields: fields}},
+            {$set: 
+                {
+                    fields: fields,
+                    numFields: fields.length
+                }
+            },
             { returnDocument: true }
         )
     } catch(e) {
@@ -65,8 +70,75 @@ async function deleteForm(id) {
 
 async function removeField(id, field_id) {
     try {
-        await formModel.findByIdAndUpdate(id, { $pull: { fields: field_id } })
+        const field = findById(field_id)
+        let val = (field.isComplete) ? -1 : 0
+        await formModel.findByIdAndUpdate(
+            id, 
+            { $pull: { fields: field_id } },
+            { $inc: 
+                { 
+                    numFields: -1,
+                    numComplete: val 
+                } 
+            }
+        )
         return await fieldModel.findByIdAndDelete(field_id)
+    } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
+
+/**
+ * Check if all the questions in the form are answered or not.
+ * @param {*} id Id of the form.
+ * @returns True if all the questions in the form are answered else False.
+ *          Returns null in case of an error.
+ */
+async function isComplete(id) {
+    try {
+        const form = await formModel.findById(id)
+        return form.numFields === form.numComplete
+    } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
+/**
+ * Returns of the form is submitted or not.
+ * @param {*} id Id of the form.
+ * @returns True if form is submitted, False otherwise. Null on error.
+ */
+async function isSubmitted(id) {
+    try {
+        const form = await formModel.findById(id)
+        return form.isSubmitted
+    } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
+/**
+ * Function to mark a form as submitted.
+ * @param {*} id Id of the form.
+ * @returns True if the opration was successful, false if unsuccessful. Null on error.
+ */
+async function submitForm(id) {
+    try {
+        const form = await formModel.findById(id)
+        if(form.isSubmitted) {
+            return false
+        }
+        if(formModel.numComplete !== formModel.numFields) {
+            return false
+        }
+        await formModel.findByIdAndUpdate(
+            id,
+            { $set: { isSubmitted: true } }
+        )
     } catch(e) {
         console.error('error occurred', e)
         return null

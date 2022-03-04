@@ -29,8 +29,37 @@ async function deleteUser(id) {
     }
 }
 
+async function login(email, password) {
+    try {
+        // emails are unique -- enforced in models
+        const user = await userModel.findOne({ email })
+        // comparison for passwords, should involve some hashing before comparison
+        if (user && user.password === password) {
+            return user
+        } else {
+            return null
+        }
+    } catch(e) {
+        console.log('error occurred', e)
+        return null
+    }
+}
+
+async function getByUsername(username) {
+    // get the currently logged in user
+    try {
+        // username is unique -- enforced in models
+        return await userModel.findOne({ username })
+    } catch(e) {
+        console.log('error occurred', e)
+        return null
+    }
+}
+
 module.exports = {
     getUser,
     createUser,
-    deleteUser
+    deleteUser,
+    login,
+    getByUsername
 }

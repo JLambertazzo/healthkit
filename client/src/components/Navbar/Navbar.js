@@ -1,6 +1,7 @@
 import './Navbar.css'
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     return (
@@ -12,10 +13,10 @@ function Navbar() {
             <div>
             </div>
             <div className="navIcon">
-                <IconButton >
+                <Link to='/profile'><IconButton >
                     <AccountCircleIcon
                         sx={{color: "white", fontSize: '1.5em'}}
-                    /></IconButton>
+                    /></IconButton></Link>
             </div>
 
         </div>

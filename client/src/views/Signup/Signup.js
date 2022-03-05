@@ -15,6 +15,7 @@ function Signup(){
         const pass = event.target.password.value;
         const email = event.target.email.value;
         signup(user, email, pass, []);
+        window.location.href = "/login";
     }
 
     return(

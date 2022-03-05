@@ -7,10 +7,6 @@ import Button from "@mui/material/Button";
 
 function Profile(props){
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        logout();
-    }
     return(
         <div>
             <Navbar/>

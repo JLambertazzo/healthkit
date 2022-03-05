@@ -7,16 +7,21 @@
 .dash-main {
     background-color: #F3F4F6;
     overflow: scroll;
+    box-shadow: inset -5px 5px 10px rgb(0 0 0 / 20%);
 }
 
 .dash-side {
-
+    margin-top: 7rem;
+    display: flex;
+    justify-content: center;
 }
 .dash-main h1 {
     margin: 5rem;
 }
 
 .thumb-list {
+    margin-top: 5rem;
+    margin-left: 5%;
     display: flex;
     flex-wrap: wrap;
 }

@@ -63,7 +63,7 @@ For creation only label and type are needed, everything else is optional.
 * expects user id for :id
 #### `POST` /api/user
 * creates a new user
-* expects user object in body (see type above)
+* expects username, email, password, and optional group in body
 * returns user if creation successful
 * will fail if duplicate username or email
 #### `DELETE` /api/user/:id
@@ -75,9 +75,11 @@ For creation only label and type are needed, everything else is optional.
 * add username to the user session, allows to stay logged in and get current user
 * expects user email and user password as 'email' and 'password' in body
 * returns user if successful
-#### `GET` /api/user/current
+#### `GET` /api/user/current?populated={1,0}
 * returns the current user object if one is logged in
 * returns null if no user is logged in
+* populated the document if populated == 1
+* doesn't populate if populated is 0 or blank
 
 ### Group Routes
 #### `GET` /api/group/:id

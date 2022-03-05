@@ -47,12 +47,12 @@ router.post('/login', mongoChecker, async (req, res, next) => {
 })
 
 router.get('/current', mongoChecker, async (req, res, next) => {
-    const populated = req.query.populated || false
+    const populated = +req.query.populated || false
     try {
         if (!req.session || !req.session.username) {
             res.send({ user: null })
         } else {
-            const user = await service.getByUsername(req.session.username, populated)
+            const user = await service.getByUsername(req.session.username, populated > 0)
             res.send({ user })
         }
     } catch(e) {

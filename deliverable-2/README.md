@@ -6,6 +6,10 @@
  * Provide a high-level description of your application and it's value from an end-user's perspective
  * What is the problem you're trying to solve?
  * Is there any context required to understand **why** the application solves this problem?
+ 
+This application at its core is a form that is specialized to evaluate the abilities of hospitals to be able to care for patients. This particular use case by the Boston Children’s Hospital is to measure the pediatric emergency care capacities of different hospitals, but this app can be generalized for other use cases. The app allows an end-user to create these massive questionnaires/surveys and distribute them out to the relevant people. Then these end-users will be able to complete the form questions concurrently. After the form has been completed, the end users will be able to generate a report that details how well equipped the hospitals are. 
+  
+One of the challenges that the hospital faced was the issue of multiple people having to complete the massive form/survey. Currently with the tools that they have, they would have to all get together for a 3 hour meeting with all pertinent staff members and painstakingly complete the survey. Another issue that arises is when this form needs to be completed by a hospital overseas. Then it becomes arduous to try to coordinate with all members to complete the form. This is clearly unideal and our tool aims to solve that problem by allowing all end-user’s to concurrently access their relevant sections of the survey at the same time. 
 
 ## Key Features
  * Described the key features in the application that the user can access

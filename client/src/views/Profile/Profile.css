@@ -27,3 +27,10 @@
     margin-left: 30px;
     font-size: 18px;
 }
+
+.logout-btn {
+    margin-left: 5% !important;
+    margin-top: 5% !important;
+    background-color: #bfc6ca !important;
+    color: #8C99A0 !important;
+}

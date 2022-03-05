@@ -51,12 +51,14 @@ async function login(email, password) { //hashed login
     }
 }
 
-async function getByUsername(username) {
+async function getByUsername(username, populated = false) {
     // get the currently logged in user
     try {
         // username is unique -- enforced in models
         user = await userModel.findOne({ username })
-        user = user.populate()
+        if (populated) {
+            user = user.populate()
+        }
         return user
     } catch(e) {
         console.log('error occurred', e)

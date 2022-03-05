@@ -22,6 +22,8 @@ One of the challenges that the hospital faced was the issue of multiple people h
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
  
+An end user will first sign up through the sign up page, inputting their email address, username and password. After entry of these fields, the user’s account will be created and they will immediately be directed to their dashboard. On their dashboard, they will see all the current forms that they are a part of. Under the “My Forms” tab, the user will be able to see the forms that they have created under the “Created Forms” section and the forms that they have been invited to work on under the “Sent Forms” section. When a user creates a form, they will be able to invite others to work on the form by sending an email invite or by link. Any user who is able to work on a form will also be able to invite others within their affiliation/group to also access the form. A user will be able to answer questions in any form they have been invited to and once the survey has been fully completed, the user will be able to click on the results button to generate a readable format summarizing the data collected from the forms.   
+ 
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
  * Briefly describe instructions for setting up and running the application (think a true README).

@@ -4,7 +4,10 @@ const { idChecker, handleError, mongoChecker } = require ('./misc')
 
 
 router.post('/', mongoChecker, async (req, res, next) => {
-    let user = {username: req.body.username, email: req.body.email, password: req.body.password, group: req.body.group};
+    let user = {username: req.body.username, email: req.body.email, password: req.body.password};
+    if (req.body.group) {
+        user.group = req.body.group
+    }
     try {
         const newUser = await service.createUser(user)
         res.send({user: newUser})
@@ -35,6 +38,7 @@ router.post('/login', mongoChecker, async (req, res, next) => {
         }
         else{
             res.status(400);
+            res.send({user: null})
         }
     } catch(e) {
         console.error('error', e)

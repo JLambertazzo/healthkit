@@ -16,8 +16,8 @@ async function createUser(user){ // hashed function
     try{
         const salt = await bcrypt.genSalt();
         const hashPass = await bcrypt.hash(user.password, salt);
-        const newUser = await userModel.create({...user, password: hashPass});
-        return newUser
+        await userModel.create({...user, password: hashPass});
+        return user
     } catch(e) {
         console.log('error occurred', e)
         return null
@@ -55,7 +55,9 @@ async function getByUsername(username) {
     // get the currently logged in user
     try {
         // username is unique -- enforced in models
-        return await userModel.findOne({ username })
+        user = await userModel.findOne({ username })
+        user = user.populate()
+        return user
     } catch(e) {
         console.log('error occurred', e)
         return null

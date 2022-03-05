@@ -1,16 +1,19 @@
 import './Login.css';
 import { Container, Box, TextField, Avatar, Button} from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link , useHistory } from 'react-router-dom';
+import { LoginUser } from '../../actions/user';
 import Navbar from "../../components/Navbar/Navbar";
 
 function Login(){
 
+    const history = useHistory();
+
     const handleSubmit = (event) => {
-        // event.preventDefault();
-        // // const email = event.target.email;
-        // // const pass = event.target.password;
-        // // login(email, pass);
+        event.preventDefault();
+        const email = event.target.email.value;
+        const pass = event.target.password.value;
+        LoginUser(email, pass, history);
     }
 
     return(
@@ -18,7 +21,7 @@ function Login(){
             <Navbar/>
 
             <Container className = "sign-in-box" maxWidth="xs" sx={{ borderRadius: 15 }}>
-                <Box onSubmit={handleSubmit} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <Box component = "form" onSubmit={handleSubmit} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <Avatar sx={{ m: 1, bgcolor: 'rgb(21, 82, 126)' }}>
                         <LockOutlined />
                     </Avatar>

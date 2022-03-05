@@ -21,6 +21,29 @@ export const signup = (username, email, password, group) => {
         });
 }
 
+export const LoginUser = (email, password, history) => {
+
+    const request = new Request(`/api/user/login`, {
+        method: "post",
+        body: JSON.stringify({email, password}),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                history.push("/");
+            }
+            return res.json();
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
 // Gets a user from their user id
 export const getUser = (id) => {
     const request = new Request(`/api/user/${id}`, {

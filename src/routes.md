@@ -63,7 +63,7 @@ For creation only label and type are needed, everything else is optional.
 * expects user id for :id
 #### `POST` /api/user
 * creates a new user
-* expects username, email, password, and optional group in body
+* expects name, username, email, password, and optional group in body
 * returns user if creation successful
 * will fail if duplicate username or email
 #### `DELETE` /api/user/:id

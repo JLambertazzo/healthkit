@@ -46,6 +46,18 @@ function Profile(props){
                                 </div>
                             </div>
                     </Box>
+                    <div className = "profile">
+                        <div className = "profile-pic">
+                            <AccountCircleIcon
+                                sx={{color: "#8C99A0", fontSize: '15em'}}
+                            />
+                        </div>
+                        <div className = "profile-info">
+                            <h2>{props.user.name}</h2>
+                            <span className = "user-info">{props.user.username}</span>
+                            <span className = "user-info">{props.user.email}</span>
+                        </div>
+                    </div>
 
                 </div>
             </div>

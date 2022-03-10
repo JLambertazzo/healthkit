@@ -14,7 +14,8 @@ function Signup(){
         const user = event.target.username.value;
         const pass = event.target.password.value;
         const email = event.target.email.value;
-        signup(user, email, pass, []);
+        const name = event.target.name.value;
+        signup(user, email, pass, name, []);
         window.location.href = "/login";
     }
 
@@ -30,6 +31,7 @@ function Signup(){
                     <h2 id="sign-up">Sign Up</h2>
 
                     <TextField fullWidth name = "email" margin = 'normal' className = "fields" required label="Email Address"/>
+                    <TextField fullWidth name = "name" margin = 'normal' className = "fields" required label="Name"/>
                     <TextField fullWidth name = "username" margin = 'normal' className = "fields" required label="Username"/>
                     <TextField fullWidth name = "password" margin = 'normal' className = "fields" required label="Password" type="password"/>
 

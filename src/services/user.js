@@ -18,8 +18,19 @@ async function createUser(user){ // hashed function
         const hashPass = await bcrypt.hash(user.password, salt)
         const group = user.group // array of group names
         let groupIds = await groupModel.find({name: {$in: group}})
-        groupIds = groupIds.map(g => g._id)
+        // create any group not found
+        const toCreate = []
+        for (const grp of group) {
+            const found = groupIds.find(g => g.name === grp)
+            if (!found) {
+                toCreate.push({name: grp})
+            }
+        }
+        const created = await groupModel.insertMany(toCreate)
+        groupIds = [...groupIds.map(g => g._id), ...created.map(g => g._id)]
         const newUser = await userModel.create({...user, password: hashPass, group: groupIds})
+        // insert new user to all referenced groups, should include created ones
+        await groupModel.updateMany({name: {$in: group}}, {$push: {users: newUser._id}})
         return newUser
     } catch(e) {
         console.log('error occurred', e)

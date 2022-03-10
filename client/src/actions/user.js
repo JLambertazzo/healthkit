@@ -1,11 +1,11 @@
 // Creates a user -- the group should be an array
 import app from "../App";
 
-export const signup = (username, email, password, group) => {
+export const signup = (username, email, password, name, group) => {
 
     const request = new Request(`/api/user`, {
         method: "post",
-        body: JSON.stringify({username, email, password, group}),
+        body: JSON.stringify({username, email, password, name, group}),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

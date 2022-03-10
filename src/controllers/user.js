@@ -4,7 +4,7 @@ const { idChecker, handleError, mongoChecker } = require ('./misc')
 
 
 router.post('/', mongoChecker, async (req, res, next) => {
-    let user = {username: req.body.username, email: req.body.email, password: req.body.password};
+    let user = {username: req.body.username, email: req.body.email, password: req.body.password, name: req.body.name};
     if (req.body.group) {
         user.group = req.body.group
     }

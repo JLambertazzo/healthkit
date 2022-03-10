@@ -1,4 +1,6 @@
 // Creates a user -- the group should be an array
+import app from "../App";
+
 export const signup = (username, email, password, group) => {
 
     const request = new Request(`/api/user`, {
@@ -35,7 +37,8 @@ export const LoginUser = (email, password, history) => {
     return fetch(request)
         .then(res => {
             if (res.status === 200) {
-                history.push("/");
+                // history.push("/");
+                window.location.href = "/"
             }
             return res.json();
         })
@@ -90,4 +93,56 @@ export const deleteUser = (id) => {
         });
 
 
+}
+
+// Return logged-in user or null if there is none
+export const checkLoggedIn = (setCurrUser) => {
+    const request = new Request(`/api/user/current`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json !== undefined) {
+                console.log("what is", json.user)
+                setCurrUser(json.user);
+                return json.user
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const logout = () => {
+    const request = new Request(`/session/logout`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                window.location.href = "/"
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json !== undefined) {
+                return json;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }

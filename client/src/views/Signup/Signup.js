@@ -8,14 +8,14 @@ import Navbar from "../../components/Navbar/Navbar";
 function Signup(){
 
     const history = useHistory();
-    
+
     const HandleSubmit = (event) => {
         event.preventDefault();
         const user = event.target.username.value;
         const pass = event.target.password.value;
         const email = event.target.email.value;
         signup(user, email, pass, []);
-        history.push("/")
+        window.location.href = "/login";
     }
 
     return(

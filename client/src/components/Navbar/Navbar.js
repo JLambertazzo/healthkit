@@ -8,7 +8,7 @@ function Navbar() {
         <div className="nav">
 
             <div className="navTitle">
-                <h2>Health Kit</h2>
+                <h2><Link to='/' style={{textDecoration: 'none', color:"white"}}> Health Kit</Link></h2>
             </div>
             <div>
             </div>

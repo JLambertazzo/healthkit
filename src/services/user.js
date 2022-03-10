@@ -69,10 +69,7 @@ async function getByUsername(username, populated = false) {
     // get the currently logged in user
     try {
         // username is unique -- enforced in models
-        user = populated ? await userModel.findOne({ username }).populate('sentForms').populate('receivedForms') : await userModel.findOne({ username })
-        if (populated) {
-            user = await user.populate()
-        }
+        user = populated ? await userModel.findOne({ username }).populate('sentForms').populate('receivedForms').populate('group') : await userModel.findOne({ username })
         return user
     } catch(e) {
         console.log('error occurred', e)

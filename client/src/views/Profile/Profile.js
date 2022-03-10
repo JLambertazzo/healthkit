@@ -9,7 +9,6 @@ import GroupIcon from '@mui/icons-material/Group'
 import EmailIcon from '@mui/icons-material/Email'
 
 function Profile(props){
-
     return(
         <div>
             <Navbar/>
@@ -38,7 +37,9 @@ function Profile(props){
                                             <GroupIcon
                                                 sx={{fontSize: '2em'}}
                                             />
-                                            <p>{props.user.group || 'Boston Childrens Hospital'}</p>
+                                            <p>{(props.user.group || []).map((el) => {
+                                                return(<p>{el.name}</p>)
+                                            }) || 'Boston Childrens Hospital'}</p>
                                         </div>
                                     </div>
 

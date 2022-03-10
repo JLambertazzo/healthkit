@@ -4,6 +4,7 @@ import { LockOutlined } from '@mui/icons-material';
 import { Link, useHistory } from 'react-router-dom';
 import { signup } from '../../actions/user';
 import Navbar from "../../components/Navbar/Navbar";
+import Autocomplete from '@mui/material/Autocomplete';
 
 function Signup(){
 
@@ -15,7 +16,8 @@ function Signup(){
         const pass = event.target.password.value;
         const email = event.target.email.value;
         const name = event.target.name.value;
-        signup(user, email, pass, name, []);
+        const group = event.target.group.value;
+        signup(user, email, pass, name, [group]);
         window.location.href = "/login";
     }
 
@@ -28,12 +30,29 @@ function Signup(){
                     <Avatar sx={{ m: 1, bgcolor: 'rgb(21, 82, 126)' }}>
                         <LockOutlined />
                     </Avatar>
-                    <h2 id="sign-up">Sign Up</h2>
+                    <h2 id="sign-up">Sign up</h2>
 
-                    <TextField fullWidth name = "email" margin = 'normal' className = "fields" required label="Email Address"/>
-                    <TextField fullWidth name = "name" margin = 'normal' className = "fields" required label="Name"/>
-                    <TextField fullWidth name = "username" margin = 'normal' className = "fields" required label="Username"/>
-                    <TextField fullWidth name = "password" margin = 'normal' className = "fields" required label="Password" type="password"/>
+                    <TextField fullWidth name = "email" margin = 'normal' className = "fields email" required label="Email Address"
+                               sx={{backgroundColor: 'white', borderRadius: '4px'}}/>
+                    <TextField fullWidth name = "name" margin = 'normal' className = "fields" required label="Name"
+                               sx={{backgroundColor: 'white', borderRadius: '4px'}} />
+                    <Autocomplete
+                        className="fields"
+                        disablePortal
+                        id="combo-box-demo"
+                        options={['Boston Childrens Hospital', 'SickKids']}
+                        fullWidth
+                        required
+                        freeSolo
+                        name="group"
+                        sx={{backgroundColor: 'white', borderRadius: '4px'}}
+                        renderInput={(params) => <TextField {...params} name="group" label={"Group"}/>}
+                    />
+
+                    <TextField fullWidth name = "username" margin = 'normal' className = "fields" required label="Username"
+                               sx={{backgroundColor: 'white', borderRadius: '4px'}}/>
+                    <TextField fullWidth name = "password" margin = 'normal' className = "fields" required label="Password" type="password"
+                               sx={{backgroundColor: 'white', borderRadius: '4px'}}/>
 
                     <Button id="sign-up-button" type="submit" fullWidth sx={{mt: 3, mb: 3}}> Sign Up </Button>
                     <Link to="/login"> {"Already have an account? Sign In"} </Link>

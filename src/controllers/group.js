@@ -12,6 +12,16 @@ router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
     }
 })
 
+router.get('/', mongoChecker, async (req, res, next) => {
+    try {
+        const groups = await service.getAll()
+        res.send({ groups })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
 router.post('/', mongoChecker, async (req, res, next) => {
     try {
         const { group } = req.body

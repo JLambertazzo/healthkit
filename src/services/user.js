@@ -1,4 +1,5 @@
 const { userModel } = require('../db/models/user')
+const { groupModel } = require('../db/models/group')
 const bcrypt = require("bcrypt")
 async function getUser(id) {
     try {
@@ -12,12 +13,14 @@ async function getUser(id) {
 
 
 async function createUser(user){ // hashed function
-  
     try{
-        const salt = await bcrypt.genSalt();
-        const hashPass = await bcrypt.hash(user.password, salt);
-        await userModel.create({...user, password: hashPass});
-        return user
+        const salt = await bcrypt.genSalt()
+        const hashPass = await bcrypt.hash(user.password, salt)
+        const group = user.group // array of group names
+        let groupIds = await groupModel.find({name: {$in: group}})
+        groupIds = groupIds.map(g => g._id)
+        const newUser = await userModel.create({...user, password: hashPass, group: groupIds})
+        return newUser
     } catch(e) {
         console.log('error occurred', e)
         return null

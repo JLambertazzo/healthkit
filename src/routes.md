@@ -64,6 +64,7 @@ For creation only label and type are needed, everything else is optional.
 #### `POST` /api/user
 * creates a new user
 * expects name, username, email, password, and optional group in body
+* if group included it should be array of group names
 * returns user if creation successful
 * will fail if duplicate username or email
 #### `DELETE` /api/user/:id
@@ -98,6 +99,8 @@ For creation only label and type are needed, everything else is optional.
 * delete a group
 * expects group id for :id
 * returns group if deletion successful
+#### `GET` /api/group
+* fetches and returns all groups
 
 ### Form Routes
 #### `GET` /api/form/:id

@@ -2,6 +2,8 @@ import './Dashboard.css'
 import Navbar from "../../components/Navbar/Navbar";
 import Thumbnail from "../../components/Thumbnail/Thumbnail";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 function Dashboard(props) {
     return (
@@ -39,6 +41,13 @@ function Dashboard(props) {
                     {/*    complete={true}*/}
                     {/*    title={"Pediatric Emergency Care Assessment"}*/}
                     {/*/>*/}
+
+                </div>
+                <div className="action-btn-cont">
+                <Fab className="action-btn" variant="extended">
+                    <AddIcon sx={{ mr: 1 }} />
+                    Create Form
+                </Fab>
                 </div>
             </div>
         </div>

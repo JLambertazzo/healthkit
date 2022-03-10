@@ -4,6 +4,8 @@ import OwnThumbnail from "../../components/Thumbnail/OwnThumbnail";
 import SentThumbnail from "../../components/Thumbnail/SentThumbnail";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import './MyForms.css'
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 function MyForms(props) {
     return (
@@ -36,6 +38,12 @@ function MyForms(props) {
                                 complete={form.isSubmitted}
                             />)
                         })}
+                    </div>
+                    <div className="action-btn-cont">
+                        <Fab className="action-btn" variant="extended">
+                            <AddIcon sx={{ mr: 1 }} />
+                            Create Form
+                        </Fab>
                     </div>
                 </div>
             </div>

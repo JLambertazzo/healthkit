@@ -55,7 +55,7 @@ function Signup(){
                         freeSolo
                         name="group"
                         sx={{backgroundColor: 'white', borderRadius: '4px'}}
-                        renderInput={(params) => <TextField {...params} name="group" label={"Group"}/>}
+                        renderInput={(params) => <TextField {...params} required name="group" label={"Group"}/>}
                     />
 
                     <TextField fullWidth name = "username" margin = 'normal' className = "fields" required label="Username"

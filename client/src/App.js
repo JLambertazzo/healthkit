@@ -45,7 +45,12 @@ function App() {
               )}
           </Route>
           <Route exact path='/profile'>
-                <Profile user={currentUser}/>
+              {currentUser && (
+                  <Profile user={currentUser}/>
+              )}
+              {!currentUser && (
+                  <LogIn/>
+              )}
           </Route>
         </Switch>
       </BrowserRouter>

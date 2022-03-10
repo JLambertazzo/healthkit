@@ -18,9 +18,16 @@
 
 .fields{
     background-color: white;
+    margin-bottom: 1rem !important;
+    margin-top: 0 !important;
+}
+
+.fields.email {
+    margin-top: 1rem !important;
 }
 
 #sign-up-button{
     background-color: rgb(21, 82, 126);
     color: white;
+    font-family: "DM Sans", sans-serif;
 }

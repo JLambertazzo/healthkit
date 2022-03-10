@@ -97,7 +97,7 @@ export const deleteUser = (id) => {
 
 // Return logged-in user or null if there is none
 export const checkLoggedIn = (setCurrUser) => {
-    const request = new Request(`/api/user/current`, {
+    const request = new Request(`/api/user/current?populated=1`, {
         method: "get",
         headers: {
             Accept: "application/json, text/plain, */*",

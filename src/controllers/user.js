@@ -48,6 +48,7 @@ router.post('/login', mongoChecker, async (req, res, next) => {
 
 router.get('/current', mongoChecker, async (req, res, next) => {
     const populated = +req.query.populated || false
+    console.log('pourquoiiii', req.query, populated)
     try {
         if (!req.session || !req.session.username) {
             res.send({ user: null })

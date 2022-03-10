@@ -19,14 +19,13 @@ function MyForms(props) {
                 <div className="dash-main myforms">
                     <h2>Created Forms</h2>
                     <div className="thumb-list myforms">
-                        <OwnThumbnail
-                            date={"Dec. 28, 2021"}
-                            title={"Poop Frequency at Hospitals"}
-                        />
-                        <OwnThumbnail
-                            date={"Nov. 12, 2021"}
-                            title={"Pediatric Emergency Care Assessment"}
-                        />
+                        {props.user.sentForms.map((form) => {
+                            return (<OwnThumbnail
+                                title={form.name}
+                                date={"Dec. 28, 2021"}
+                            />)
+                        })}
+
                     </div>
                     <h2>Sent Forms</h2>
                     <div className="thumb-list myforms">

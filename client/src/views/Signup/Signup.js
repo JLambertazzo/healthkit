@@ -5,10 +5,19 @@ import { Link, useHistory } from 'react-router-dom';
 import { signup } from '../../actions/user';
 import Navbar from "../../components/Navbar/Navbar";
 import Autocomplete from '@mui/material/Autocomplete';
+import {useState, useEffect} from "react";
+import {getAllGroups} from "../../actions/group";
 
 function Signup(){
 
     const history = useHistory();
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+        getAllGroups().then(res => {
+            setGroups(res.groups.map(g => g.name));
+        });
+    }, [])
 
     const HandleSubmit = (event) => {
         event.preventDefault();
@@ -40,7 +49,7 @@ function Signup(){
                         className="fields"
                         disablePortal
                         id="combo-box-demo"
-                        options={['Boston Childrens Hospital', 'SickKids']}
+                        options={groups || []}
                         fullWidth
                         required
                         freeSolo

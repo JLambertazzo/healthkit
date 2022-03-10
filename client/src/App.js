@@ -29,7 +29,7 @@ function App() {
           </Route>
           <Route exact path='/'>
               {currentUser && (
-                  <Dashboard/>
+                  <Dashboard user={currentUser}/>
               )}
               {!currentUser && (
                   <LogIn/>
@@ -37,7 +37,12 @@ function App() {
 
           </Route>
           <Route exact path='/myforms'>
-              <MyForms/>
+              {currentUser && (
+                  <MyForms user={currentUser}/>
+              )}
+              {!currentUser && (
+                  <LogIn/>
+              )}
           </Route>
           <Route exact path='/profile'>
                 <Profile user={currentUser}/>

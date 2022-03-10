@@ -5,7 +5,7 @@ import SentThumbnail from "../../components/Thumbnail/SentThumbnail";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import './MyForms.css'
 
-function MyForms() {
+function MyForms(props) {
     return (
         <div>
             <Navbar/>
@@ -30,16 +30,13 @@ function MyForms() {
                     </div>
                     <h2>Sent Forms</h2>
                     <div className="thumb-list myforms">
-                        <SentThumbnail
-                            title={"Poop Frequency at Hos  pitals"}
-                            org={"SickKids"}
-                            complete={true}
-                        />
-                        <SentThumbnail
-                            title={"Poop Frequency at Hospitals"}
-                            org={"Boston Childrens Hospital"}
-                            complete={false}
-                        />
+                        {props.user.sentForms.map((form) => {
+                            return (<SentThumbnail
+                                title={form.name}
+                                org={"SickKids"}
+                                complete={form.isSubmitted}
+                            />)
+                        })}
                     </div>
                 </div>
             </div>

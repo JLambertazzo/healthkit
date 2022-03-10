@@ -27,8 +27,10 @@ function Login(){
                     </Avatar>
                     <h2 id="sign-in">Log In</h2>
 
-                    <TextField fullWidth margin = 'normal' name = "email" id="email" required label="Email Address"/>
-                    <TextField fullWidth margin = 'normal' name = "password" id="pass" required label="Password" type="password"/>
+                    <TextField fullWidth margin = 'normal' name = "email" id="email" required label="Email Address"
+                               sx={{backgroundColor: 'white', borderRadius: '4px'}}/>
+                    <TextField fullWidth margin = 'normal' name = "password" id="pass" required label="Password" type="password"
+                               sx={{backgroundColor: 'white', borderRadius: '4px'}}/>
 
                     <Button id="sign-in-button" type="submit" fullWidth sx={{mt: 3, mb: 3}}> Log In</Button>
                     <Link to="/signup"> {"Don't have an account? Sign Up"} </Link>

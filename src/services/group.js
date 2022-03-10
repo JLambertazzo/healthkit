@@ -47,9 +47,19 @@ async function deleteGroup(id) {
     }
 }
 
+async function getAll() {
+    try {
+        return await groupModel.find()
+    } catch (e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
 module.exports = {
     getGroup,
     createGroup,
     addUser,
-    deleteGroup
+    deleteGroup,
+    getAll,
 }

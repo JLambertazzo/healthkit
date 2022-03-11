@@ -124,12 +124,6 @@ For creation only label and type are needed, everything else is optional.
 * delete a form
 * expects form id for :id
 * return form if deletion successful
-#### `DELETE` /api/form/:id/field/:field_id
-* remove a field from a form
-* deletes the field from field collection
-* expects form id for :id
-* expects field id for :field_id
-* return deleted field if deletion successful
 
 ### Field Routes
 #### `GET` /api/field/:id

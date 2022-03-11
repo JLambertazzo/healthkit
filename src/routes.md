@@ -3,9 +3,10 @@
 ### User
 ```javascript
 {
-    username: string,
-    email: string,
-    password: string,
+    name: String,
+    username: String,
+    email: String,
+    password: String,
     sentForms: ObjectId[],
     receivedForms: ObjectId[],
     group: ObjectId[]
@@ -19,7 +20,7 @@ For creation only username, email, and password are needed, everything else is o
 ### Group
 ```js
 {
-    name: string,
+    name: String,
     users: ObjectId[],
     forms: ObjectId[]
 }
@@ -32,9 +33,14 @@ For creation only a name needs to be sent, everything else is optional.
 ### Form
 ```js
 {
-    name: string,
-    description: string,
-    fields: ObjectId[]
+    name: String,
+    description: String,
+    fields: ObjectId[],
+    numFields: Number,
+    numComplete: Number,
+    isSubmitted: Boolean,
+    created: Date,
+    modified: Date | null,
 }
 ```
 <details>
@@ -45,10 +51,11 @@ For creation only a name needs to be sent, everything else is optional.
 ### Fields
 ```js
 {
-    label: string,
+    label: String,
     type: ('text' | 'multiple' | 'single' | 'select' | 'date' | 'time' | 'date-range' | 'time-range' | 'number' | 'address'),
-    value: string[],
-    options: string[],
+    value: String[],
+    options: String[],
+    isComplete: Boolean
 }
 ```
 <details>

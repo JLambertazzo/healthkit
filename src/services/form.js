@@ -22,16 +22,12 @@ async function createForm(form) {
 
 async function setFields(form_id, fields) {
     try {
-        return await formModel.findByIdAndUpdate(
-            form_id,
-            {$set: 
-                {
-                    fields: fields,
-                    numFields: fields.length
-                }
-            },
-            { returnDocument: true }
-        )
+        return await formModel.updateOne( {_id: form_id }, {
+            $set: {
+                fields: fields,
+                numFields: fields.length
+            }
+        })
     } catch(e) {
         console.error('error occurred', e)
         return null
@@ -67,28 +63,6 @@ async function deleteForm(id) {
         return null
     }
 }
-
-async function removeField(id, field_id) {
-    try {
-        const field = findById(field_id)
-        let val = (field.isComplete) ? -1 : 0
-        await formModel.findByIdAndUpdate(
-            id, 
-            { $pull: { fields: field_id } },
-            { $inc: 
-                { 
-                    numFields: -1,
-                    numComplete: val 
-                } 
-            }
-        )
-        return await fieldModel.findByIdAndDelete(field_id)
-    } catch(e) {
-        console.error('error occurred', e)
-        return null
-    }
-}
-
 
 /**
  * Check if all the questions in the form are answered or not.
@@ -135,10 +109,9 @@ async function submitForm(id) {
         if(formModel.numComplete !== formModel.numFields) {
             return false
         }
-        await formModel.findByIdAndUpdate(
-            id,
-            { $set: { isSubmitted: true } }
-        )
+        return await formModel.findOneAndUpdate({_id: id}, {$set:
+            { isSubmitted: true }
+        })
     } catch(e) {
         console.error('error occurred', e)
         return null
@@ -151,5 +124,5 @@ module.exports = {
     setFields,
     sendByEmails,
     deleteForm,
-    removeField
+    submitForm
 }

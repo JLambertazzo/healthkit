@@ -2,13 +2,22 @@ const mongoose = require('mongoose')
 const { Schema, model } = mongoose
 const { ObjectId } = Schema.Types
 
-const formModel = model('Form', new Schema({
+const schema = new Schema({
     name: {type: String, required: true},
     description: {type: String, default: ""},
     fields: {type: [{type: ObjectId, ref: 'Field'}], default: []},
     numFields: {type: Number, default: 0},
     numComplete: {type: Number, default: 0},
-    isSubmitted: {type: Boolean, default: false}
-}), 'Forms')
+    isSubmitted: {type: Boolean, default: false},
+    created: {type: Date, required: false, default: (new Date())},
+    modified: {type: Date, required: false, default: null},
+})
+
+schema.pre('updateOne', function(next) {
+    this.getUpdate().$set.modified = new Date()
+    next()
+})
+
+const formModel = model('Form', schema, 'Forms')
 
 module.exports = { formModel }

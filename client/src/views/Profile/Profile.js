@@ -18,7 +18,7 @@ function Profile(props){
                         current=""
                     />
                 </div>
-                <div className = "dash-main">
+                <div className = "dash-main profile-main">
                     <Button variant="contained" disableElevation className={"logout-btn"}
                             onClick={() => {logout()}}>Log out</Button>
                     <Box sx={{boxShadow: 1}} className = "profile">

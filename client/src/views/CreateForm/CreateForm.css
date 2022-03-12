@@ -1,0 +1,27 @@
+.createform-cont h2 {
+    font-family: "DM Sans", sans-serif;
+    color: #6e92b4;
+}
+
+.createform-cont {
+    margin: 8%;
+}
+
+
+.form-info {
+    margin-top: 3rem;
+}
+
+.form-info p {
+    font-size: 18px;
+    color: #6e92b4;
+    margin-top: 3rem;
+}
+
+.form-field {
+    width: 30%
+}
+
+.form-field input {
+    font-family: "DM Sans", sans-serif !important;
+}

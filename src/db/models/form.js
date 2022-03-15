@@ -9,6 +9,8 @@ const schema = new Schema({
     numFields: {type: Number, default: 0},
     numComplete: {type: Number, default: 0},
     isSubmitted: {type: Boolean, default: false},
+    group: {type: ObjectId | null, default: null, ref: "Group"},
+    parent: {type: ObjectId | null, default: null, ref: "Form"},
     created: {type: Date, required: false, default: (new Date())},
     modified: {type: Date, required: false, default: null},
 })

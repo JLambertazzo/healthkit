@@ -1,6 +1,7 @@
 const { formModel } = require('../db/models/form')
 const { userModel } = require('../db/models/user')
 const { fieldModel } = require('../db/models/field')
+const { groupModel } = require('../db/models/group')
 
 async function getForm(id) {
     try {
@@ -118,11 +119,47 @@ async function submitForm(id) {
     }
 }
 
+/**
+ * Send the form to given targets
+ * @param {*} sender username of the user sending the form
+ * @param {*} id id of the form to be sent
+ * @param {*} targets array of objects { email, group }, that specify what user to send a form to and which group to register it in
+ */
+async function sendForm(sender, id, targets) {
+    try {
+        const form = await formModel.findById(id);
+        if (!form) {
+            return null;
+        }
+        await userModel.findOneAndUpdate({ username: sender }, { $push: { sentForms: form._id } })
+        const parentId = form._id;
+        for (const target of targets) {
+            // create form copy - points to original
+            const newForm = await formModel.create({
+                name: form.name,
+                description: form.description,
+                fields: form.fields,
+                numComplete: form.numComplete,
+                group: await groupModel.find({ name: target.group }),
+                parent: form._id
+            });
+            await userModel.findOneAndUpdate({ email: target.email }, { $push: { receivedForms: newForm._id } });
+        }
+        return form
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 module.exports = {
     getForm,
     createForm,
     setFields,
     sendByEmails,
     deleteForm,
-    submitForm
+    isComplete,
+    isSubmitted,
+    submitForm,
+    sendForm,
 }

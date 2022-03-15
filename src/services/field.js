@@ -24,7 +24,32 @@ async function createField(form_id, field) {
     }
 }
 
+async function updateField(field_id, value, author, comment = "") {
+    try {
+        const target = await fieldModel.findById(field_id)
+        const history = {
+            old: target.value,
+            new: value,
+            author,
+            comment,
+            timestamp: (new Date())
+        }
+        return await fieldModel.findOneAndUpdate({ _id: field_id }, {
+            $set: {
+                value
+            },
+            $push: {
+                history
+            }
+        })
+    } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
 module.exports = {
     getField,
-    createField
+    createField,
+    updateField
 }

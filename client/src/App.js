@@ -10,6 +10,7 @@ import SignUp from "./views/Signup/Signup";
 import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
 import { Redirect} from 'react-router-dom';
+import CreateForm from "./views/CreateForm/CreateForm";
 
 function App() {
     const [currentUser, setCurrUser] = useState("")
@@ -52,6 +53,9 @@ function App() {
                   <LogIn/>
               )}
           </Route>
+            <Route exact path='/createform'>
+                <CreateForm/>
+            </Route>
         </Switch>
       </BrowserRouter>
     </div>

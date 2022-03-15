@@ -39,6 +39,8 @@ For creation only a name needs to be sent, everything else is optional.
     numFields: Number,
     numComplete: Number,
     isSubmitted: Boolean,
+    group: ObjectId | null,
+    parent: ObjectId | null,
     created: Date,
     modified: Date | null,
 }
@@ -46,6 +48,8 @@ For creation only a name needs to be sent, everything else is optional.
 <details>
 <summary>Details</summary><br>
 For creation only a name needs to be sent, everything else is optional.
+Group and parent fields are null when creating a form, when a form is sent, copies are made for each group it is send to
+with the group and parent forms populated.
 </details>
 
 ### Fields
@@ -108,6 +112,10 @@ For creation only label and type are needed, everything else is optional.
 * returns group if deletion successful
 #### `GET` /api/group
 * fetches and returns all groups
+#### `GET` /api/group/form/:id
+* fetches all groups that have been sent a given form
+* expects form id for :id
+* returns all found group objects
 
 ### Form Routes
 #### `GET` /api/form/:id
@@ -125,7 +133,8 @@ For creation only label and type are needed, everything else is optional.
 #### `POST` /api/form/email/:id
 * share a form by email
 * expects form id for :id
-* expects array of emails (strings) in body
+* expects sender user's id (as sender) in body
+* expects array of targets (as array of {email, group} object) in body
 * return updated form if sucessful
 #### `DELETE` /api/form/:id
 * delete a form

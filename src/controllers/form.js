@@ -36,8 +36,8 @@ router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
 
 router.post('/email/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const { emails } = req.body
-        const form = await service.sendByEmails(req.params.id, emails)
+        const { sender, targets } = req.body
+        const form = await service.sendForm(sender, req.params.id, targets)
         res.send({ form })
     } catch(e) {
         console.error('an error occurred', e)

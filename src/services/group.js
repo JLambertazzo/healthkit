@@ -1,3 +1,4 @@
+const { formModel } = require('../db/models/form')
 const { groupModel } = require('../db/models/group')
 const { userModel } = require('../db/models/user')
 
@@ -56,10 +57,22 @@ async function getAll() {
     }
 }
 
+async function getByFormId(form_id) {
+    try {
+        const sentForms = await formModel.find({ parent: form_id })
+        let groupIds = sentForms.map(form => form.group)
+        return await groupModel.find({ _id: { $in: groupIds } })
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
+
 module.exports = {
     getGroup,
     createGroup,
     addUser,
     deleteGroup,
     getAll,
+    getByFormId,
 }

@@ -53,4 +53,14 @@ router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
     }
 })
 
+router.get('/form/:id', idChecker, mongoChecker, async (req, res, next) => {
+    try {
+        const groups = await service.getByFormId(req.params.id)
+        res.send({ groups })
+    } catch (e) {
+        console.error('an error occurred', e)
+        handleError(e)
+    }
+})
+
 module.exports = router

@@ -13,6 +13,10 @@ const fieldModel = model('Field', new Schema({
         type: [String],
         default: ['']
     },
+    history: [{
+        type: {old: [String], new: [String], comment: String, author: String, timestamp: Date},
+        default: []
+    }],
     options: {type: [String], default: []},
     isComplete: {type: Boolean, default: false }
 }), 'Fields')

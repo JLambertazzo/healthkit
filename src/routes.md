@@ -150,6 +150,11 @@ For creation only label and type are needed, everything else is optional.
 * expects form id for :id
 * expects field object in body (see type above)
 returns field if creation successful
+#### `PATCH` /api/field/:id
+* update a field value
+* mainly for testing, better to do this on form routes
+* expects value, comment, and author in the request body
+* returns updated field on success
 
 ### Session Routes
 #### `GET` /session/loggedin

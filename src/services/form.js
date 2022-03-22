@@ -131,6 +131,26 @@ async function submitForm(id) {
     }
 }
 
+async function copyForm (form, group_id) {
+    // create new form copy and return it
+    const trimmedFields = form.fields.map(field => ({
+        label: field.label,
+        type: field.type,
+        options: field.options,
+        isComplete: field.isComplete
+    }));
+    const newFields = await fieldModel.insertMany(trimmedFields)
+    const newForm = await formModel.create({
+        name: form.name,
+        description: form.description,
+        fields: newFields.map(field => field._id),
+        numComplete: form.numComplete,
+        group: form.group,
+        parent: form._id,
+    })
+    return newForm;
+}
+
 /**
  * Send the form to given targets
  * @param {*} sender username of the user sending the form
@@ -139,7 +159,7 @@ async function submitForm(id) {
  */
 async function sendForm(sender, id, targets) {
     try {
-        const form = await formModel.findById(id);
+        const form = await formModel.findById(id).populate("fields");
         if (!form) {
             return null;
         }
@@ -147,14 +167,8 @@ async function sendForm(sender, id, targets) {
         const parentId = form._id;
         for (const target of targets) {
             // create form copy - points to original
-            const newForm = await formModel.create({
-                name: form.name,
-                description: form.description,
-                fields: form.fields,
-                numComplete: form.numComplete,
-                group: await groupModel.find({ name: target.group }),
-                parent: form._id
-            });
+            const group_id = (await groupModel.findOne({ name: target.group }));
+            const newForm = copyForm(form, group_id);
             await userModel.findOneAndUpdate({ email: target.email }, { $push: { receivedForms: newForm._id } });
         }
         return form

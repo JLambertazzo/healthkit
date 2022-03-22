@@ -2,6 +2,7 @@ const { formModel } = require('../db/models/form')
 const { userModel } = require('../db/models/user')
 const { fieldModel } = require('../db/models/field')
 const { groupModel } = require('../db/models/group')
+const { updateField, createField } = require('./field')
 
 async function getForm(id) {
     try {
@@ -23,11 +24,22 @@ async function createForm(form) {
 
 async function setFields(form_id, fields) {
     try {
-        return await formModel.updateOne( {_id: form_id }, {
-            $set: {
-                fields: fields,
-                numFields: fields.length
+        const form = await formModel.findById(form_id)
+        const newFields = []
+        for (const field of fields) {
+            const found = form.fields.find(f => f.label === field.label)
+            let updatedField;
+            if (found && found.value !== field.value) {
+                // TODO specify author and comment
+                updatedField = await updateField(field._id, field.value, "author")
+                newFields.push(updatedField)
+            } else {
+                updatedField = await createField(form_id, field)
+                newFields.push(updatedField)
             }
+        }
+        return await formModel.findOneAndUpdate({ _id: form_id }, {
+            $set: { fields: newFields, numFields: newFields.length }
         })
     } catch(e) {
         console.error('error occurred', e)

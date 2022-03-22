@@ -56,7 +56,7 @@ with the group and parent forms populated.
 ```js
 {
     label: String,
-    type: ('text' | 'multiple' | 'single' | 'select' | 'date' | 'time' | 'date-range' | 'time-range' | 'number' | 'address'),
+    type: ('text' | 'multiple' | 'single' | 'date' | 'time' | 'date-range' | 'time-range' | 'number' | 'address'),
     value: String[],
     options: String[],
     isComplete: Boolean

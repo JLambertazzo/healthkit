@@ -9,10 +9,7 @@ const fieldModel = model('Field', new Schema({
         required: true,
         enum: ['text', 'multiple', 'single', 'select', 'date', 'time', 'date-range', 'time-range', 'number', 'address']
     },
-    value: {
-        type: [String],
-        default: ['']
-    },
+    value: { type: String, default: '' },
     history: [{
         type: {old: [String], new: [String], comment: String, author: String, timestamp: Date},
         default: []

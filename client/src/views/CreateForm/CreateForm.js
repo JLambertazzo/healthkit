@@ -4,6 +4,7 @@ import { Delete, Close, Add } from '@mui/icons-material'
 import Navbar from "../../components/Navbar/Navbar";
 import { useState } from 'react'
 import { createForm } from '../../actions/form'
+import { useHistory } from 'react-router-dom';
 
 const types = [
     "text",
@@ -23,12 +24,12 @@ function CreateForm(props) {
     const [desc, setDesc] = useState('')
     const [fields, setFields] = useState([])
     const [focused, setFocused] = useState("")
+    const history = useHistory()
 
     const submitForm = () => {
-        createForm(title, desc, fields, props.user)
+        createForm(title, desc, fields, props.user.username)
             .then(form => {
-                console.log('got', form)
-                // TODO
+                history.push('/myforms')
             })
             .catch(console.error)
     }

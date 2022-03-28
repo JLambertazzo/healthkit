@@ -13,9 +13,17 @@ async function getForm(id) {
     }
 }
 
-async function createForm(form) {
+async function createForm(form, username) {
     try {
-        return await formModel.create(form)
+        // create all fields first
+        const fieldIds = []
+        for (const field of form.fields) {
+            const fieldRes = await fieldModel.create(field)
+            fieldIds.push(fieldRes._id)
+        }
+        const formRes = await formModel.create({...form, fields: fieldIds})
+        await userModel.findOneAndUpdate({ username }, { $push: {sentForms: formRes._id} })
+        return formRes
     } catch(e) {
         console.error('error occurred', e)
         return null

@@ -1,9 +1,9 @@
 // Create a form
-export const createForm = (name, description, fields) => {
+export const createForm = (name, description, fields, username) => {
 
     const request = new Request(`/api/form`, {
         method: "post",
-        body: JSON.stringify({name, description, fields}),
+        body: JSON.stringify({form: {name, description, fields}, username}),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

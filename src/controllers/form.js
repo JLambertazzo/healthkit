@@ -14,8 +14,8 @@ router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
 
 router.post('/', mongoChecker, async (req, res, next) => {
     try {
-        const { form } = req.body
-        const newForm = await service.createForm(form)
+        const { form, username } = req.body
+        const newForm = await service.createForm(form, username)
         res.send({ form: newForm })
     } catch(e) {
         console.error('an error occurred', e)

@@ -124,6 +124,7 @@ For creation only label and type are needed, everything else is optional.
 #### `POST` /api/form
 * create a form
 * expects form object in body (see type above)
+* expects username string in body
 * returns form if creation successful
 #### `PATCH` /api/form/fields/:id
 * update fields in a form

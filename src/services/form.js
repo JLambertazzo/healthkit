@@ -34,13 +34,21 @@ async function updateForm(form) {
     try {
         // TODO simplify this process and make more readable
         const prevForm = await formModel.findById(form._id).populate("fields");
+        // delete old fields
         const oldFields = prevForm.fields.filter(field => !form.fields.find(newField => newField._id && newField._id.toString() === field._id.toString()))
         const toDelete = oldFields.map(field => field._id) // fields in old but not new
-        console.log('handling deletes I have', form.fields, 'and', prevForm.fields, 'then', toDelete)
         await fieldModel.deleteMany({ _id: { $in: toDelete } });
+        // add brand new fields
         const toAdd = form.fields
             .filter(newField => !newField._id) // fields in new but not old
         let newFields = await fieldModel.insertMany(toAdd);
+        // update existing fields (label, type, options)
+        const toUpdate = form.fields.filter(field => field._id && !toDelete.includes(field._id))
+        // SLOW.. sorry
+        for (const field of toUpdate) {
+            await fieldModel.findByIdAndUpdate(field._id, { $set: { label: field.label, type: field.type, options: field.options } })
+        }
+        
         
         form.fields = form.fields
             .filter(field => !field._id || !toDelete.includes(field._id))

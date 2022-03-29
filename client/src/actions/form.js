@@ -23,7 +23,7 @@ export const createForm = (name, description, fields, username) => {
 
 // Get form by form id
 export const getForm = (id) => {
-    const request = new Request(`/api/form/${id}`, {
+    const request = new Request(`/api/form/${id}?populated=1`, {
         method: "get",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -51,6 +51,31 @@ export const updateFields = (id, label, type, value, options) => {
     const request = new Request(`/api/form/fields/${id}`, {
         method: "patch",
         body: JSON.stringify({label, type, value, options}),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json !== undefined) {
+                return json;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const updateForm = (form) => {
+    const request = new Request(`/api/form/update`, {
+        method: "post",
+        body: JSON.stringify({ form }),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

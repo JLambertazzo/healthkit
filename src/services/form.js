@@ -4,9 +4,9 @@ const { fieldModel } = require('../db/models/field')
 const { groupModel } = require('../db/models/group')
 const { updateField, createField } = require('./field')
 
-async function getForm(id) {
+async function getForm(id, populated = false) {
     try {
-        return await formModel.findById(id)
+        return populated ? await formModel.findById(id).populate("fields") : await formModel.findById(id)
     } catch(e) {
         console.error('error occurred', e)
         return null
@@ -25,6 +25,26 @@ async function createForm(form, username) {
         await userModel.findOneAndUpdate({ username }, { $push: {sentForms: formRes._id} })
         return formRes
     } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
+async function updateForm(form) {
+    try {
+        // TODO simplify this process and make more readable
+        const prevForm = await formModel.findById(form._id).populate("fields");
+        const toDelete = prevForm.fields
+            .filter(field => form.fields.find(newField => newField._id === field._id && field._id))
+            .map(field => field._id) // fields in old but not new
+        await fieldModel.deleteMany({ _id: { $in: toDelete } });
+        const toAdd = form.fields
+            .filter(newField => !newField._id) // fields in new but not old
+        const newFields = await fieldModel.insertMany(toAdd);
+        form.fields = newFields.map(field => field._id)
+        await formModel.findByIdAndUpdate({ _id: form._id }, form)
+        return form
+    } catch (e) {
         console.error('error occurred', e)
         return null
     }
@@ -190,6 +210,7 @@ module.exports = {
     getForm,
     createForm,
     setFields,
+    updateForm,
     sendByEmails,
     deleteForm,
     isComplete,

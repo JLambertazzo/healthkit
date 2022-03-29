@@ -36,6 +36,7 @@ function MyForms(props) {
                             return (!form.isSubmitted && <OwnThumbnail
                                 title={form.name}
                                 date={"Dec. 28, 2021"}
+                                id={form._id}
                             />)
                         })}
 

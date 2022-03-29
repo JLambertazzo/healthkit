@@ -33,7 +33,6 @@ function CreateForm(props) {
         if (form_id) {
             getForm(form_id)
                 .then(({form}) => {
-                    console.log('huh', form)
                     const { name, description, fields } = form
                     if (!name || !description || !fields) return
                     setTitle(name);
@@ -56,7 +55,6 @@ function CreateForm(props) {
     const update = () => {
         if (!form) return
         const newForm = {...form, name: title, description: desc, fields: fields}
-        console.log('sending', newForm)
         updateForm(newForm)
             .then(form => {
                 // history.push('/myforms')

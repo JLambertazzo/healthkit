@@ -25,12 +25,9 @@ router.post('/', mongoChecker, async (req, res, next) => {
 })
 
 router.post('/update', mongoChecker, async (req, res, next) => {
-    console.log("at least find the function")
     try {
         const { form } = req.body
-        console.log('here with', form)
         const formRes = await service.updateForm(form);
-        console.log('responding w', formRes)
         res.send({ form: formRes })
     } catch(e) {
         console.error('an error occurred', e)

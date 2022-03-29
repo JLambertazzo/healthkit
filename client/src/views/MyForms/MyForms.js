@@ -6,8 +6,10 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import './MyForms.css'
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import { useHistory } from 'react-router-dom'
 
 function MyForms(props) {
+    const history = useHistory();
     return (
         <div>
             <Navbar/>
@@ -40,7 +42,7 @@ function MyForms(props) {
                         })}
                     </div>
                     <div className="action-btn-cont">
-                        <Fab className="action-btn" variant="extended">
+                        <Fab className="action-btn" variant="extended" onClick={() => history.push('/createform')}>
                             <AddIcon sx={{ mr: 1 }} />
                             Create Form
                         </Fab>

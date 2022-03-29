@@ -9,7 +9,6 @@ import LogIn from "./views/Login/Login";
 import SignUp from "./views/Signup/Signup";
 import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
-import { Redirect} from 'react-router-dom';
 import CreateForm from "./views/CreateForm/CreateForm";
 import FillForm from "./views/FillForm/FillForm";
 
@@ -54,9 +53,6 @@ function App() {
                   <LogIn/>
               )}
           </Route>
-            <Route exact path='/createform'>
-                <CreateForm/>
-            </Route>
           <Route exact path='/form'>
             {currentUser && (
               <FillForm user={currentUser}/>
@@ -64,6 +60,10 @@ function App() {
             {!currentUser && (
               <LogIn/>
             )}
+            </Route>
+          <Route exact path='/createform'>
+              {currentUser && <CreateForm user={currentUser}/>}
+              {!currentUser && <LogIn />}
           </Route>
         </Switch>
       </BrowserRouter>

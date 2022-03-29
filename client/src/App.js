@@ -11,6 +11,7 @@ import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
 import { Redirect} from 'react-router-dom';
 import CreateForm from "./views/CreateForm/CreateForm";
+import FillForm from "./views/FillForm/FillForm";
 
 function App() {
     const [currentUser, setCurrUser] = useState("")
@@ -56,6 +57,14 @@ function App() {
             <Route exact path='/createform'>
                 <CreateForm/>
             </Route>
+          <Route exact path='/form'>
+            {currentUser && (
+              <FillForm user={currentUser}/>
+            )}
+            {!currentUser && (
+              <LogIn/>
+            )}
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>

@@ -34,14 +34,24 @@ async function updateForm(form) {
     try {
         // TODO simplify this process and make more readable
         const prevForm = await formModel.findById(form._id).populate("fields");
-        const toDelete = prevForm.fields
-            .filter(field => form.fields.find(newField => newField._id === field._id && field._id))
-            .map(field => field._id) // fields in old but not new
+        const oldFields = prevForm.fields.filter(field => !form.fields.find(newField => newField._id && newField._id.toString() === field._id.toString()))
+        const toDelete = oldFields.map(field => field._id) // fields in old but not new
+        console.log('handling deletes I have', form.fields, 'and', prevForm.fields, 'then', toDelete)
         await fieldModel.deleteMany({ _id: { $in: toDelete } });
         const toAdd = form.fields
             .filter(newField => !newField._id) // fields in new but not old
-        const newFields = await fieldModel.insertMany(toAdd);
-        form.fields = newFields.map(field => field._id)
+        let newFields = await fieldModel.insertMany(toAdd);
+        
+        form.fields = form.fields
+            .filter(field => !field._id || !toDelete.includes(field._id))
+            .map(field => {
+                if (field._id) {
+                    return field._id
+                } else {
+                    const found = newFields.find(newField => newField.label === field.label)
+                    return found._id
+                }
+            })
         await formModel.findByIdAndUpdate({ _id: form._id }, form)
         return form
     } catch (e) {

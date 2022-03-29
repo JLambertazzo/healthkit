@@ -4,7 +4,8 @@ const { idChecker, handleError, mongoChecker, customIdChecker } = require('./mis
 
 router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const form = await service.getForm(req.params.id)
+        const populated = +req.query.populated || false
+        const form = await service.getForm(req.params.id, populated)
         res.send({ form })
     } catch(e) {
         console.error('an error occurred', e)
@@ -23,6 +24,17 @@ router.post('/', mongoChecker, async (req, res, next) => {
     }
 })
 
+router.post('/update', mongoChecker, async (req, res, next) => {
+    try {
+        const { form } = req.body
+        const formRes = await service.updateForm(form);
+        res.send({ form: formRes })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
 router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
         const { fields } = req.body
@@ -33,6 +45,7 @@ router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
         handleError(e, res)
     }
 })
+
 
 router.post('/email/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {

@@ -112,7 +112,6 @@ export const checkLoggedIn = (setCurrUser) => {
         })
         .then(json => {
             if (json !== undefined) {
-                console.log("what is", json.user)
                 setCurrUser(json.user);
                 return json.user
             }

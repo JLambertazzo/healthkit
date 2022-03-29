@@ -9,8 +9,8 @@ import LogIn from "./views/Login/Login";
 import SignUp from "./views/Signup/Signup";
 import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
-import CreateForm from "./views/CreateForm/CreateForm";
 import FillForm from "./views/FillForm/FillForm";
+import ModifyForm from "./views/ModifyForm/ModifyForm";
 
 function App() {
     const [currentUser, setCurrUser] = useState("")
@@ -62,7 +62,11 @@ function App() {
             )}
             </Route>
           <Route exact path='/createform'>
-              {currentUser && <CreateForm user={currentUser}/>}
+              {currentUser && <ModifyForm user={currentUser}/>}
+              {!currentUser && <LogIn />}
+          </Route>
+          <Route exact path='/editform/:form_id'>
+              {currentUser && <ModifyForm user={currentUser}/>}
               {!currentUser && <LogIn />}
           </Route>
         </Switch>

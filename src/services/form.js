@@ -4,9 +4,9 @@ const { fieldModel } = require('../db/models/field')
 const { groupModel } = require('../db/models/group')
 const { updateField, createField } = require('./field')
 
-async function getForm(id) {
+async function getForm(id, populated = false) {
     try {
-        return await formModel.findById(id)
+        return populated ? await formModel.findById(id).populate("fields") : await formModel.findById(id)
     } catch(e) {
         console.error('error occurred', e)
         return null
@@ -25,6 +25,44 @@ async function createForm(form, username) {
         await userModel.findOneAndUpdate({ username }, { $push: {sentForms: formRes._id} })
         return formRes
     } catch(e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
+async function updateForm(form) {
+    try {
+        // TODO simplify this process and make more readable
+        const prevForm = await formModel.findById(form._id).populate("fields");
+        // delete old fields
+        const oldFields = prevForm.fields.filter(field => !form.fields.find(newField => newField._id && newField._id.toString() === field._id.toString()))
+        const toDelete = oldFields.map(field => field._id) // fields in old but not new
+        await fieldModel.deleteMany({ _id: { $in: toDelete } });
+        // add brand new fields
+        const toAdd = form.fields
+            .filter(newField => !newField._id) // fields in new but not old
+        let newFields = await fieldModel.insertMany(toAdd);
+        // update existing fields (label, type, options)
+        const toUpdate = form.fields.filter(field => field._id && !toDelete.includes(field._id))
+        // SLOW.. sorry
+        for (const field of toUpdate) {
+            await fieldModel.findByIdAndUpdate(field._id, { $set: { label: field.label, type: field.type, options: field.options } })
+        }
+        
+        
+        form.fields = form.fields
+            .filter(field => !field._id || !toDelete.includes(field._id))
+            .map(field => {
+                if (field._id) {
+                    return field._id
+                } else {
+                    const found = newFields.find(newField => newField.label === field.label)
+                    return found._id
+                }
+            })
+        await formModel.findByIdAndUpdate({ _id: form._id }, form)
+        return form
+    } catch (e) {
         console.error('error occurred', e)
         return null
     }
@@ -190,6 +228,7 @@ module.exports = {
     getForm,
     createForm,
     setFields,
+    updateForm,
     sendByEmails,
     deleteForm,
     isComplete,

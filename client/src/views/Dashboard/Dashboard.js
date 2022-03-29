@@ -24,6 +24,7 @@ function Dashboard(props) {
                 <div className="thumb-list">
                     {props.user.receivedForms.map((form) => {
                         return (<Thumbnail
+                            form={form}
                             value={0}
                             date={"Mar 10, 2022"}
                             complete={form.isSubmitted}

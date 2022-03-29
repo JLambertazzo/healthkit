@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom'
 import { useState } from "react";
 import { useEffect } from "react";
 import { checkLoggedIn } from "../../actions/user";
+import { deleteForm } from "../../actions/form";
 
 function MyForms(props) {
     const history = useHistory();
@@ -18,6 +19,18 @@ function MyForms(props) {
     useEffect(() => {
         checkLoggedIn(setUser);
     }, [])
+
+    const handleDelete = (id) => {
+        deleteForm(id)
+            .then(_ => {
+                setUser(prev => {
+                    const copy = {...prev}
+                    copy.sentForms = copy.sentForms.filter(form => form._id.toString() !== id.toString())
+                    return copy;
+                })
+            })
+            .catch(console.error)
+    }
 
     return (
         <div>
@@ -36,6 +49,7 @@ function MyForms(props) {
                             return (!form.isSubmitted && <OwnThumbnail
                                 title={form.name}
                                 date={"Dec. 28, 2021"}
+                                onDelete={() => handleDelete(form._id)}
                                 id={form._id}
                             />)
                         })}

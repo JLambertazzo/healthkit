@@ -116,6 +116,12 @@ async function sendByEmails(form_id, emails) {
 
 async function deleteForm(id) {
     try {
+        // delete all fields in form
+        const { fields } = await formModel.findById(id);
+        await fieldModel.deleteMany({ _id: { $in: fields } })
+        // remove from users who have form
+        await userModel.updateMany({ sentForms: id }, { $pull: { sentForms: id } })
+        await userModel.updateMany({ receivedForms: id }, { $pull: { receivedForms: id } })
         return await formModel.findByIdAndDelete(id)
     } catch(e) {
         console.error('error occurred', e)

@@ -8,6 +8,8 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { useLocation } from 'react-router-dom';
 import { getField } from '../../actions/field';
 import { useState, useEffect } from 'react';
+import { submitForm } from '../../actions/form';
+import Input from '../../components/Inputs/Input'
 
 
 function FillForm(){
@@ -43,44 +45,9 @@ function FillForm(){
                         <h1>{form.name}</h1>
                             {formFields.map(field => {
                             return <Card className="question">
-                                <Typography className="q-label">{field.label}</Typography>
-                                {(field.type == "text") && (
-                                    <TextField className="input"></TextField>
-                                )}
-                                {(field.type == "multiple") && (
-                                    <FormGroup>
-                                    {field.options.map(o =>
-                                        <FormControlLabel control={<Checkbox/>} label={o}/>
-                                    )}
-                                    </FormGroup>
-                                )}
-                                {(field.type == "select") && (
-                                    <RadioGroup>
-                                    {field.options.map(o =>
-                                        <FormControlLabel value={o} control={<Radio />} label={o}/>
-                                    )}
-                                    </RadioGroup>
-                                )}
-                                {(field.type == "number") && (
-                                    <RadioGroup>
-                                    <TextField type="number" className="input2"></TextField>
-                                    </RadioGroup>
-                                )}
-                                {(field.type == "date") && (
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DesktopDatePicker
-                                        label="Date desktop"
-                                        inputFormat="dd/MM/yyyy"
-                                        value={value}
-                                        onChange={(newValue) => {
-                                        setValue(newValue);
-                                        }}
-                                        renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                )}
+                                <Input label={field.label} type={field.type} value={field.value} options={field.options} />
                                 </Card>})}
-                                <Button className="submit">Submit</Button>
+                                <Button className="submit" onClick={() => submitForm(form._id)}>Submit</Button>
                                 </div>
                     </div>
             </div>

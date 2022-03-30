@@ -68,4 +68,14 @@ router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
     }
 })
 
+router.post('/submit/:id', idChecker, mongoChecker, async (req, res, next) => {
+    try {
+        const success = await service.submitForm(req.params.id)
+        res.send({ success })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
 module.exports = router

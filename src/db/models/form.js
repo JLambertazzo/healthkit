@@ -13,6 +13,7 @@ const schema = new Schema({
     parent: {type: ObjectId, required: false, ref: "Form"},
     created: {type: Date, required: false, default: (new Date())},
     modified: {type: Date, required: false, default: null},
+    sent: {type: Boolean, default: false}
 })
 
 schema.pre('updateOne', function(next) {

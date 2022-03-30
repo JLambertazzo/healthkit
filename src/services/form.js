@@ -191,9 +191,10 @@ async function copyForm (form, group_id) {
         description: form.description,
         fields: newFields.map(field => field._id),
         numComplete: form.numComplete,
-        group: form.group,
+        group: group_id,
         parent: form._id,
     })
+    console.log('created copy', newForm, newForm._id)
     return newForm;
 }
 
@@ -209,12 +210,11 @@ async function sendForm(sender, id, targets) {
         if (!form) {
             return null;
         }
-        await userModel.findOneAndUpdate({ username: sender }, { $push: { sentForms: form._id } })
-        const parentId = form._id;
+        await formModel.findByIdAndUpdate(id, { sent: true })
         for (const target of targets) {
             // create form copy - points to original
-            const group_id = (await groupModel.findOne({ name: target.group }));
-            const newForm = copyForm(form, group_id);
+            const group_id = (await groupModel.findOne({ name: target.group }))._id;
+            const newForm = await copyForm(form, group_id);
             await userModel.findOneAndUpdate({ email: target.email }, { $push: { receivedForms: newForm._id } });
         }
         return form

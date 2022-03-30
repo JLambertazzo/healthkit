@@ -33,7 +33,7 @@ function MyForms(props) {
                     <h2>Created Forms</h2>
                     <div className="thumb-list myforms">
                         {user && user.sentForms.map((form) => {
-                            return (!form.isSubmitted && <OwnThumbnail
+                            return (!form.parent && <OwnThumbnail
                                 title={form.name}
                                 date={"Dec. 28, 2021"}
                                 id={form._id}
@@ -44,7 +44,7 @@ function MyForms(props) {
                     <h2>Sent Forms</h2>
                     <div className="thumb-list myforms">
                         {user && user.sentForms.map((form) => {
-                            return (form.isSubmitted && <SentThumbnail
+                            return (form.parent && <SentThumbnail
                                 title={form.name}
                                 org={"SickKids"}
                                 complete={form.isSubmitted}

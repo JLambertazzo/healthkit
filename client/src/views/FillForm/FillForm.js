@@ -18,6 +18,14 @@ function FillForm(){
     const [formFields, setFormFields] = useState([]);
     const [value, setValue] = useState(null);
 
+    const updateValue = (index, value) => {
+        setFormFields(prev => {
+            const copy = [...prev]
+            copy[index].value = value
+            return copy
+        })
+    }
+
     useEffect(() => {
         const fetchData = () => {
             var fs = []
@@ -43,11 +51,17 @@ function FillForm(){
                     <div className="form">
                         <div className="form2">
                         <h1>{form.name}</h1>
-                            {formFields.map(field => {
+                            {formFields.map((field, index) => {
                             return <Card className="question">
-                                <Input label={field.label} type={field.type} value={field.value} options={field.options} />
+                                <Input
+                                    label={field.label}
+                                    type={field.type}
+                                    value={field.value}
+                                    options={field.options}
+                                    updateValue={v => updateValue(index, v)}
+                                />
                                 </Card>})}
-                                <Button className="submit" onClick={() => submitForm(form._id)}>Submit</Button>
+                                <Button className="submit" onClick={() => submitForm(form._id, formFields)}>Submit</Button>
                                 </div>
                     </div>
             </div>

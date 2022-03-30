@@ -166,13 +166,14 @@ export const removeField = (id, field_id) => {
 
 }
 
-export const submitForm = (id) => {
+export const submitForm = (id, fields) => {
     const request = new Request(`/api/form/submit/${id}`, {
         method: "post",
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify({fields})
     })
     return fetch(request)
         .then(res => {

@@ -22,6 +22,14 @@ export default function Input(props) {
     const onChangeSecond = (e) => setValue(prev => [prev.split("_")[0], e.target.value].join("_"));
     const onMultiChange = (e) => setMultiValue(prev => ({...prev, [e.target.name]: e.target.checked}))
 
+    useEffect(() => {
+        let valueRes = value
+        if (props.type === "multi") {
+            valueRes = Object.entries(multiValue).reduce((acc, [key, val]) => acc + val ? key : "", "") //idk
+        }
+        props.updateValue(valueRes)
+    }, [value, multiValue])
+
     const getInput = (type) => {
         switch(type) {
             case "multi":

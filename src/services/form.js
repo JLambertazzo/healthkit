@@ -160,7 +160,7 @@ async function isSubmitted(id) {
  * @param {*} id Id of the form.
  * @returns True if the opration was successful, false if unsuccessful. Null on error.
  */
-async function submitForm(id) {
+async function submitForm(id, fields) {
     try {
         const form = await formModel.findById(id)
         if(form.isSubmitted) {
@@ -173,6 +173,13 @@ async function submitForm(id) {
         const formRes = await formModel.findOneAndUpdate({_id: id}, {$set:
             { isSubmitted: true }
         })
+        // update field values{
+        const valueMap = fields.reduce((map, field) => ({ ...map, [field._id]: field.value}), {})
+        for (const field_id of form.fields) {
+            if (valueMap[field_id.toString()]) {
+                await fieldModel.findByIdAndUpdate(field_id, { value: valueMap[field_id] })
+            }
+        }
         await generateReport(id)
         return formRes
     } catch(e) {

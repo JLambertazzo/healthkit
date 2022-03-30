@@ -5,7 +5,7 @@ export default function Multi(props) {
   return (
     <FormGroup>
         {props.options.map(option => (
-            <FormControlLabel label={option} control={<Checkbox checked={props.value[option]} onChange={props.onChange} />} />
+            <FormControlLabel label={option} control={<Checkbox name={option} onChange={props.onChange} />} />
         ))}
     </FormGroup>
   )

@@ -11,27 +11,47 @@ import TimeRange from './TimeRange'
 
 // general input, stuff specified by props
 // expected props: props: { type: string, value: string, options: string[], label: string }
-export default function Input(props) {
+export default function Input({handleChange, props}) {
     // two types of values to store
     const [value, setValue] = useState(props.value || '')
-    const [multiValue, setMultiValue] = useState((props.options || []).reduce((acc, curr) => acc[curr] = false, {}))
+    const [multiValue, setMultiValue] = useState((props.options || []).reduce(function (acc, curr){ 
+        acc[curr] = false
+        return acc
+    }, {}))
     // different types of setter functions for input types
-    const onEventChange = (e) => setValue(e.target.value)
-    const onDirectChange = (e) => setValue(e)
-    const onChangeFirst = (e) => setValue(prev => [e.target.value, prev.split("_")[1]].join("_"));
-    const onChangeSecond = (e) => setValue(prev => [prev.split("_")[0], e.target.value].join("_"));
-    const onMultiChange = (e) => setMultiValue(prev => ({...prev, [e.target.name]: e.target.checked}))
+    const onEventChange = (e) => {
+        setValue(e.target.value)
+        handleChange(props.id, e.target.value)
+    }
+    const onDirectChange = (e) => {
+        setValue(e)
+        handleChange(props.id, value)
+    }
+    const onChangeFirst = (e) => {
+        setValue(prev => [e.target.value, prev.split("_")[1]].join("_"));
+        handleChange(props.id, value)
+    }
+    const onChangeSecond = (e) => {
+        setValue(prev => [prev.split("_")[0], e.target.value].join("_"));
+        handleChange(props.id, value)
+    }
+    const onMultiChange = (e) => {
+        // setMultiValue(prev => ({...prev, [e.target.name]: e.target.checked}))
+        multiValue[e.target.name]= e.target.checked
+        setMultiValue(multiValue)
+        handleChange(props.id, multiValue)
+    }
 
     const getInput = (type) => {
         switch(type) {
-            case "multi":
-                return (<Multi value={multiValue} options={props.options} onChange={onMultiChange} />);
+            case "multiple":
+                return (<Multi options={props.options} onChange={onMultiChange} />);
             case "single":
-                return (<Single value={value} options={props.options} onChange={onEventChange} />);
+                return (<Single options={props.options} onChange={onEventChange} />);
             case "select":
                 return (<Select value={value} options={props.options} onChange={onEventChange} />);
             case "date":
-                return (<Date value={value} onChange={onDirectChange} />);
+                return (<Date value={value} onChange={onEventChange} />);
             case "time":
                 return (<Time value={value} onChange={onDirectChange} />);
             case "date-range":
@@ -39,9 +59,9 @@ export default function Input(props) {
             case "time-range":
                 return (<TimeRange value={value} onChangeFirst={onChangeFirst} onChangeSecond={onChangeSecond} />);
             case "number":
-                return (<TextField value={value} onChange={onEventChange} type="number" />);
+                return (<TextField onChange={onEventChange} type="number" />);
             default: // text or anything else
-                return (<TextInput value={value} onChange={onEventChange} />);
+                return (<TextInput onChange={onEventChange} />);
 
         }
     }

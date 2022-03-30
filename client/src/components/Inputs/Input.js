@@ -14,7 +14,7 @@ import TimeRange from './TimeRange'
 export default function Input(props) {
     // two types of values to store
     const [value, setValue] = useState(props.value || '')
-    const [multiValue, setMultiValue] = useState((props.options || []).reduce((acc, curr) => acc[curr] = false, {}))
+    const [multiValue, setMultiValue] = useState((props.options || []).reduce((acc, curr) => ({ ...acc, [curr]: false}), {}))
     // different types of setter functions for input types
     const onEventChange = (e) => setValue(e.target.value)
     const onDirectChange = (e) => setValue(e)

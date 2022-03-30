@@ -47,10 +47,10 @@ export const getForm = (id) => {
 }
 
 // Update fields in a form - takes form id and array of fields
-export const updateFields = (id, label, type, value, options) => {
+export const updateFields = (id, fields) => {
     const request = new Request(`/api/form/fields/${id}`, {
-        method: "patch",
-        body: JSON.stringify({label, type, value, options}),
+        method: "PATCH",
+        body: JSON.stringify(fields),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -141,4 +141,27 @@ export const removeField = (id, field_id) => {
 
 }
 
+export const submitForm = (id) => {
+    const request = new Request(`/api/form/submit/${id}`, {
+        method: "PATCH",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
 
+    return fetch(request)
+    .then(res => {
+        if (res.status === 200) {
+            return res.json();
+        }
+    })
+    .then(json => {
+        if (json !== undefined) {
+            return json;
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}

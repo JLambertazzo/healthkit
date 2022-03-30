@@ -14,8 +14,18 @@ async function getReport(form_id) {
 async function generateReport(form_id) {
     try {
         // get parent and all children, assumes form_id is the parent's id
-        const parent = await formModel.findById(form_id)
+        let parent = await formModel.findById(form_id)
+        // clean input, make sure we know parent and children
+        if (parent.parent) {
+            form_id = parent.parent
+            parent = await formModel.findById(form_id)
+        }
         const children = await formModel.find({ parentId: form_id })
+
+        // if any unsubmitted child, do nothing
+        if (children.find(childForm => !childForm.isSubmitted)) {
+            return null
+        }
         
         const questions = parent.fields.map(field => field.label)
         

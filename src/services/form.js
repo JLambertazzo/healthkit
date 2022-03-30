@@ -2,6 +2,7 @@ const { formModel } = require('../db/models/form')
 const { userModel } = require('../db/models/user')
 const { fieldModel } = require('../db/models/field')
 const { groupModel } = require('../db/models/group')
+const { generateReport } = require('./report')
 const { updateField, createField } = require('./field')
 
 async function getForm(id, populated = false) {
@@ -168,9 +169,12 @@ async function submitForm(id) {
         if(formModel.numComplete !== formModel.numFields) {
             return false
         }
-        return await formModel.findOneAndUpdate({_id: id}, {$set:
+        // try creating report -- only goes through if all children submitted
+        const formRes = await formModel.findOneAndUpdate({_id: id}, {$set:
             { isSubmitted: true }
         })
+        await generateReport(id)
+        return formRes
     } catch(e) {
         console.error('error occurred', e)
         return null

@@ -166,4 +166,21 @@ export const removeField = (id, field_id) => {
 
 }
 
-
+export const submitForm = (id) => {
+    const request = new Request(`/api/form/submit/${id}`, {
+        method: "post",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json()
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}

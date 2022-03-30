@@ -7,9 +7,31 @@ import './MyForms.css'
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import { useHistory } from 'react-router-dom'
+import { useState } from "react";
+import { useEffect } from "react";
+import { checkLoggedIn } from "../../actions/user";
+import { deleteForm } from "../../actions/form";
 
 function MyForms(props) {
     const history = useHistory();
+    const [user, setUser] = useState(null) // seperate from user so it reloads every visit
+
+    useEffect(() => {
+        checkLoggedIn(setUser);
+    }, [])
+
+    const handleDelete = (id) => {
+        deleteForm(id)
+            .then(_ => {
+                setUser(prev => {
+                    const copy = {...prev}
+                    copy.sentForms = copy.sentForms.filter(form => form._id.toString() !== id.toString())
+                    return copy;
+                })
+            })
+            .catch(console.error)
+    }
+
     return (
         <div>
             <Navbar/>
@@ -23,18 +45,20 @@ function MyForms(props) {
                 <div className="dash-main myforms">
                     <h2>Created Forms</h2>
                     <div className="thumb-list myforms">
-                        {props.user.sentForms.map((form) => {
-                            return (<OwnThumbnail
+                        {user && user.sentForms.map((form) => {
+                            return (!form.isSubmitted && <OwnThumbnail
                                 title={form.name}
                                 date={"Dec. 28, 2021"}
+                                onDelete={() => handleDelete(form._id)}
+                                id={form._id}
                             />)
                         })}
 
                     </div>
                     <h2>Sent Forms</h2>
                     <div className="thumb-list myforms">
-                        {props.user.sentForms.map((form) => {
-                            return (<SentThumbnail
+                        {user && user.sentForms.map((form) => {
+                            return (form.isSubmitted && <SentThumbnail
                                 title={form.name}
                                 org={"SickKids"}
                                 complete={form.isSubmitted}

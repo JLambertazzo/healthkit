@@ -249,6 +249,16 @@ async function sendForm(sender, id, targets) {
     }
 }
 
+// temporary -- send to user's first group
+async function sendFormGroup0(sender, id, emails) {
+    const targets = []
+    for (const email of emails) {
+        const user = await userModel.findOne({ email })
+        targets.push({ email, group: user.group[0] })
+    }
+    return await sendForm(sender, id, targets)
+}
+
 module.exports = {
     getForm,
     createForm,
@@ -260,4 +270,5 @@ module.exports = {
     isSubmitted,
     submitForm,
     sendForm,
+    sendFormGroup0
 }

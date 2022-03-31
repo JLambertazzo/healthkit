@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getForm } from '../../actions/form'
 import { getReport } from "../../actions/report"
+import Navbar from "../../components/Navbar/Navbar"
 import { List, ListItem, ListItemText, Typography } from '@mui/material'
 
 export default function Report() {
@@ -25,6 +26,7 @@ export default function Report() {
 
     return (
         <div>
+            <Navbar />
             Report for form: { form ? form.name : "loading..." }
             <div>
                 {report && report.groups.map(g => {

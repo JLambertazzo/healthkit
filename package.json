@@ -9,6 +9,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
+    "jest": "^27.5.1",
     "mongoose": "^6.2.3",
     "react-router-dom": "^6.2.2"
   },
@@ -22,7 +23,7 @@
     "setup": "npm i && cd client && npm i && cd ..",
     "build-run": "cd client && npm run build && cd .. && npm start",
     "dev": "concurrently \"nodemon src/index.js src/**/*.js\" \"cd client && npm run dev\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",

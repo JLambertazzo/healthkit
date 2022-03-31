@@ -21,7 +21,6 @@ async function generateReport(form_id) {
             parent = await formModel.findById(form_id).populate("fields")
         }
         const children = await formModel.find({ parent: form_id }).populate("fields").populate("group")
-
         // if any unsubmitted child, do nothing
         if (children.find(childForm => !childForm.isSubmitted)) {
             console.log('doing nothing')
@@ -31,7 +30,6 @@ async function generateReport(form_id) {
         
         const groupIds = children.map(childForm => childForm.group)
         const groupDocs = await groupModel.find({ _id: { $in: groupIds } })
-        const groupNameMap = groupDocs.reduce((map, group) => ({ ...map, [group._id]: group.name }), {})
         const groups = groupDocs.map(group => group.name)
 
         const questionMap = {}

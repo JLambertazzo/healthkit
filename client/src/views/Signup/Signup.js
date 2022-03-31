@@ -56,7 +56,7 @@ function Signup(){
             <Box className = "sign-in-box"
                  w={'40%'}
                  m={'auto'}
-                 mt={20}
+                 mt={'8rem'}
                  bg={'white'}
             >
                 <form onSubmit={HandleSubmit}>
@@ -88,6 +88,7 @@ function Signup(){
                                 w={'60%'}
                                 borderColor={'gray.200'}
                                 focusBorderColor={'#2f8886'}
+                                _hover={{borderColor:'gray.200'}}
                                 _placeholder={{opacity: 0.4, color: 'black' }}
                             />
                             <FormLabel htmlFor='name'
@@ -101,6 +102,7 @@ function Signup(){
                                    borderColor={'gray.200'}
                                    focusBorderColor={'#2f8886'}
                                    color={'black'}
+                                   _hover={{borderColor:'gray.200'}}
                                    _placeholder={{opacity: 0.4, color: 'black' }}
                             />
                             <CUIAutoComplete
@@ -113,7 +115,7 @@ function Signup(){
                                 onSelectedItemsChange={(changes) =>
                                     handleSelectedItemsChange(changes.selectedItems)
                                 }
-                                inputStyleProps={{borderColor: 'gray.200', color: 'black'}}
+                                inputStyleProps={{ focusBorderColor:'#2f8886', borderColor: 'gray.200', color: 'black'}}
                                 toggleButtonStyleProps={{color: 'gray'}}
                                 labelStyleProps={{color: 'black', marginBottom: 0, marginTop: '1rem'}}
                                 listStyleProps={{borderColor: 'gray.200', color: 'black'}}
@@ -134,6 +136,7 @@ function Signup(){
                                    borderColor={'gray.200'}
                                    focusBorderColor={'#2f8886'}
                                    color={'black'}
+                                   _hover={{borderColor:'gray.200'}}
                                    _placeholder={{opacity: 0.4, color: 'black' }}
                             />
                             <FormLabel htmlFor='pass'
@@ -146,6 +149,7 @@ function Signup(){
                                    borderColor={'gray.200'}
                                    focusBorderColor={'#2f8886'}
                                    color={'black'}
+                                   _hover={{borderColor:'gray.200'}}
                                    _placeholder={{opacity: 0.4, color: 'black' }}
                             />
 

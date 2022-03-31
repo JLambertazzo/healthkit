@@ -1,6 +1,9 @@
 .nav {
     background-color: #2F8886;
     height: 8vh;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
 }
 
 .nav h2 {

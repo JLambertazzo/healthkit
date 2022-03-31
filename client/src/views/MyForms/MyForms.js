@@ -4,13 +4,13 @@ import OwnThumbnail from "../../components/Thumbnail/OwnThumbnail";
 import SentThumbnail from "../../components/Thumbnail/SentThumbnail";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import './MyForms.css'
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
+import {FaPlus} from "react-icons/fa";
 import { useHistory } from 'react-router-dom'
 import { useState } from "react";
 import { useEffect } from "react";
 import { checkLoggedIn } from "../../actions/user";
 import { deleteForm } from "../../actions/form";
+import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button} from "@chakra-ui/react";
 
 function MyForms(props) {
     const history = useHistory();
@@ -43,7 +43,10 @@ function MyForms(props) {
                     />
                 </div>
                 <div className="dash-main myforms">
-                    <h2>Created Forms</h2>
+                    <Heading
+                        m={'5%'}
+                        mb={'2rem'}
+                        fontSize={'20px'} color={'#2f8886'}>Created Forms</Heading>
                     <div className="thumb-list myforms">
                         {user && user.sentForms.map((form) => {
                             return (!form.sent && <OwnThumbnail
@@ -55,7 +58,11 @@ function MyForms(props) {
                         })}
 
                     </div>
-                    <h2>Sent Forms</h2>
+                    <Heading
+                        m={'5%'}
+                        mb={'2rem'}
+                        fontSize={'20px'}
+                             color={'#2f8886'}>Sent Forms</Heading>
                     <div className="thumb-list myforms">
                         {user && user.sentForms.map((form) => {
                             return (form.sent && <SentThumbnail
@@ -67,10 +74,13 @@ function MyForms(props) {
                         })}
                     </div>
                     <div className="action-btn-cont">
-                        <Fab className="action-btn" variant="extended" onClick={() => history.push('/createform')}>
-                            <AddIcon sx={{ mr: 1 }} />
+                        <Button className="action-btn" leftIcon={<FaPlus />}
+                                bg={'#2f8886'}
+                                _hover={{background: '#278280'}}
+                                onClick={() => history.push('/createform')}
+                                variant='solid'>
                             Create Form
-                        </Fab>
+                        </Button>
                     </div>
                 </div>
             </div>

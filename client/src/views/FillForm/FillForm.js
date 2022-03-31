@@ -31,17 +31,13 @@ function FillForm(){
     },[])
 
     const handleChange = (id, v) => {
-        console.log(v)
         var ff = formFields;
         ff.forEach((field) => {
             if (field._id == id){
-                console.log(field)
                 field.value = v;
-                console.log(field)
             }
         })
         setFormFields(ff);
-        console.log(formFields)
     }
 
     const handleSubmit = () => {
@@ -64,43 +60,7 @@ function FillForm(){
                         <h1>{form.name}</h1>
                             {formFields.map(field => {
                             return <Card className="question">
-                                {/* <Typography className="q-label">{field.label}</Typography> */}
                                 <Input handleChange={handleChange} props={{id: field._id, type:field.type, options:field.options, label:field.label}}/>
-                                {/* {(field.type === "text") && (
-                                    <TextField className="input"></TextField>
-                                )}
-                                {(field.type === "multiple") && (
-                                    <FormGroup>
-                                    {field.options.map(o =>
-                                        <FormControlLabel control={<Checkbox/>} label={o}/>
-                                    )}
-                                    </FormGroup>
-                                )}
-                                {(field.type === "single") && (
-                                    <RadioGroup>
-                                    {field.options.map(o =>
-                                        <FormControlLabel value={o} control={<Radio />} label={o}/>
-                                    )}
-                                    </RadioGroup>
-                                )}
-                                {(field.type === "number") && (
-                                    <RadioGroup>
-                                    <TextField type="number" className="input2"></TextField>
-                                    </RadioGroup>
-                                )}
-                                {(field.type === "date") && (
-                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                        <DesktopDatePicker
-                                        label="Date desktop"
-                                        inputFormat="dd/MM/yyyy"
-                                        value={value}
-                                        onChange={(newValue) => {
-                                        setValue(newValue);
-                                        }}
-                                        renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                )} */}
                                 </Card>})}
                                 <Button onClick={() => handleSubmit()}className="submit">Submit</Button>
                                 </div>

@@ -220,8 +220,8 @@ async function sendForm(sender, id, targets) {
         for (const target of targets) {
             // create form copy - points to original
             const group_id = (await groupModel.findOne({ name: target.group }));
-            const newForm = copyForm(form, group_id);
-            await userModel.findOneAndUpdate({ email: target.email }, { $push: { receivedForms: newForm._id } });
+            const newForm = await copyForm(form, group_id);
+            await userModel.findOneAndUpdate({ email: target }, { $push: { receivedForms: newForm._id } });
         }
         return form
     } catch (e) {

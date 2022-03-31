@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { checkLoggedIn } from "../../actions/user";
 import { deleteForm } from "../../actions/form";
+import ShareForm from "../ShareForm/ShareForm";
 
 function MyForms(props) {
     const history = useHistory();
@@ -32,6 +33,21 @@ function MyForms(props) {
             .catch(console.error)
     }
 
+    const [open, setOpen] = useState(false);
+    const [formName, setFormName] = useState(null);
+    const [formId, setFormId] = useState(null);
+
+    const handleClose = () => {
+        setOpen(false);
+        setFormName("");
+        setFormId("");
+    }
+    const handleOpen = (form) => {
+        setOpen(!open);
+        setFormName(form.name);
+        setFormId(form._id)
+    }
+
     return (
         <div>
             <Navbar/>
@@ -43,6 +59,7 @@ function MyForms(props) {
                     />
                 </div>
                 <div className="dash-main myforms">
+                    <ShareForm open={open} formId={formId} formName={formName} user={user} handleClose={handleClose}/>
                     <h2>Created Forms</h2>
                     <div className="thumb-list myforms">
                         {user && user.sentForms.map((form) => {
@@ -51,6 +68,8 @@ function MyForms(props) {
                                 date={"Dec. 28, 2021"}
                                 onDelete={() => handleDelete(form._id)}
                                 id={form._id}
+                                handleOpen={handleOpen}
+                                form={form}
                             />)
                         })}
 

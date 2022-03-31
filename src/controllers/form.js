@@ -4,7 +4,8 @@ const { idChecker, handleError, mongoChecker, customIdChecker } = require('./mis
 
 router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const form = await service.getForm(req.params.id)
+        const populated = +req.query.populated || false
+        const form = await service.getForm(req.params.id, populated)
         res.send({ form })
     } catch(e) {
         console.error('an error occurred', e)
@@ -14,9 +15,20 @@ router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
 
 router.post('/', mongoChecker, async (req, res, next) => {
     try {
-        const { form } = req.body
-        const newForm = await service.createForm(form)
+        const { form, username } = req.body
+        const newForm = await service.createForm(form, username)
         res.send({ form: newForm })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
+router.post('/update', mongoChecker, async (req, res, next) => {
+    try {
+        const { form } = req.body
+        const formRes = await service.updateForm(form);
+        res.send({ form: formRes })
     } catch(e) {
         console.error('an error occurred', e)
         handleError(e, res)
@@ -25,7 +37,7 @@ router.post('/', mongoChecker, async (req, res, next) => {
 
 router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const { fields } = req.body
+        const fields = req.body
         const form = await service.setFields(req.params.id, fields)
         res.send({ form })
     } catch(e) {
@@ -34,10 +46,12 @@ router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
     }
 })
 
+
 router.post('/email/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const { emails } = req.body
-        const form = await service.sendByEmails(req.params.id, emails)
+        const sender = req.body.username
+        const targets = req.body.emails
+        const form = await service.sendForm(sender, req.params.id, targets)
         res.send({ form })
     } catch(e) {
         console.error('an error occurred', e)
@@ -55,11 +69,11 @@ router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
     }
 })
 
-// might not be necessary?? could be replaced by a good call to set fields
-router.delete('/:id/field/:field_id', idChecker, customIdChecker('field_id'), mongoChecker, async (req, res, next) => {
+router.post('/submit/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const field = await service.removeField()
-        res.send({ field })
+        const { fields } = req.body
+        const success = await service.submitForm(req.params.id, fields)
+        res.send({ success })
     } catch(e) {
         console.error('an error occurred', e)
         handleError(e, res)

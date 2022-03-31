@@ -1,3 +1,4 @@
+const { formModel } = require('../db/models/form')
 const { groupModel } = require('../db/models/group')
 const { userModel } = require('../db/models/user')
 
@@ -31,7 +32,7 @@ async function addUser(group_id, user_id) {
             {$push: {users: user_id}},
             { returnDocument: true }
         )
-        return {user, group}
+        return {user: userRes, group: groupRes}
     } catch (e) {
         console.error('error occurred', e)
         return null
@@ -47,9 +48,31 @@ async function deleteGroup(id) {
     }
 }
 
+async function getAll() {
+    try {
+        return await groupModel.find()
+    } catch (e) {
+        console.error('error occurred', e)
+        return null
+    }
+}
+
+async function getByFormId(form_id) {
+    try {
+        const sentForms = await formModel.find({ parent: form_id })
+        let groupIds = sentForms.map(form => form.group)
+        return await groupModel.find({ _id: { $in: groupIds } })
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
+
 module.exports = {
     getGroup,
     createGroup,
     addUser,
-    deleteGroup
+    deleteGroup,
+    getAll,
+    getByFormId,
 }

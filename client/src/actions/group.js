@@ -21,6 +21,31 @@ export const createGroup = (name, users) => {
         });
 }
 
+// Gets all groups that have been created
+export const getAllGroups = () => {
+    const request = new Request(`/api/group`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json !== undefined) {
+                return json;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
 // Gets a group from the group id
 export const getGroup = (id) => {
     const request = new Request(`/api/group/${id}`, {

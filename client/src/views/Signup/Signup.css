@@ -1,0 +1,33 @@
+#dash{
+    align-items: center;
+    background-color: #F3F4F6;
+    height: 100vh;
+    overflow: scroll;
+}
+
+.sign-up-box{
+    background-color: rgb(181, 195, 207);
+    margin: 50px;
+    padding: 40px;
+}
+
+#sign-up{
+    padding: 0px;
+    margin: 0px;
+}
+
+.fields{
+    background-color: white;
+    margin-bottom: 1rem !important;
+    margin-top: 0 !important;
+}
+
+.fields.email {
+    margin-top: 1rem !important;
+}
+
+#sign-up-button{
+    background-color: rgb(21, 82, 126);
+    color: white;
+    font-family: "DM Sans", sans-serif;
+}

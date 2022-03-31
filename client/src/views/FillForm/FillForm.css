@@ -1,0 +1,60 @@
+.fill-form-dash{
+    display: grid;
+    grid-template-columns: 15% 85%;
+    height: 100vh;
+}
+
+.dash-side {
+    margin-top: 7rem;
+    display: flex;
+    justify-content: center;
+}
+
+.form{
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    padding-bottom:20px;
+    overflow: scroll;
+    background-color: #F3F4F6;
+    display:flex;
+    flex-direction: column;
+}
+
+.form h1{
+    text-align: center;
+    color: #396288;
+}
+
+.form2{
+    min-width:60%
+}
+
+.question{
+    background-color: #F3F4F6;
+    padding: 20px;
+    margin: 20px;
+    border-radius:10px;
+}
+
+.input{
+    width: 95%;
+    padding: 5px!important;
+}
+
+.input2{
+    width: 30%;
+    min-width: 50px;
+    padding: 5px!important;
+}
+
+.submit{
+    float:right;
+    color:#396288 !important;
+    background-color: #e4e4e4 !important;
+    margin-bottom: 10% !important;
+}
+
+.q-label{
+    padding-bottom:10px;
+}

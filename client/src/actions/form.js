@@ -1,9 +1,9 @@
 // Create a form
-export const createForm = (name, description, fields) => {
+export const createForm = (name, description, fields, username) => {
 
     const request = new Request(`/api/form`, {
         method: "post",
-        body: JSON.stringify({name, description, fields}),
+        body: JSON.stringify({form: {name, description, fields}, username}),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -23,7 +23,7 @@ export const createForm = (name, description, fields) => {
 
 // Get form by form id
 export const getForm = (id) => {
-    const request = new Request(`/api/form/${id}`, {
+    const request = new Request(`/api/form/${id}?populated=1`, {
         method: "get",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -47,10 +47,35 @@ export const getForm = (id) => {
 }
 
 // Update fields in a form - takes form id and array of fields
-export const updateFields = (id, label, type, value, options) => {
+export const updateFields = (id, fields) => {
     const request = new Request(`/api/form/fields/${id}`, {
-        method: "patch",
-        body: JSON.stringify({label, type, value, options}),
+        method: "PATCH",
+        body: JSON.stringify(fields),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json !== undefined) {
+                return json;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const updateForm = (form) => {
+    const request = new Request(`/api/form/update`, {
+        method: "post",
+        body: JSON.stringify({ form }),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -73,11 +98,11 @@ export const updateFields = (id, label, type, value, options) => {
 }
 
 // Share a form by email -- takes form id and array of emails (strings)
-export const shareByEmail = (id, emails) => {
+export const shareByEmail = (id, username, emails) => {
 
     const request = new Request(`/api/form/email/${id}`, {
         method: "post",
-        body: JSON.stringify({emails}),
+        body: JSON.stringify({username, emails}),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -141,4 +166,22 @@ export const removeField = (id, field_id) => {
 
 }
 
-
+export const submitForm = (id, fields) => {
+    const request = new Request(`/api/form/submit/${id}`, {
+        method: "post",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({fields})
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json()
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}

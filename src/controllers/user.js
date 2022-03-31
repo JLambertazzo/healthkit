@@ -4,7 +4,10 @@ const { idChecker, handleError, mongoChecker } = require ('./misc')
 
 
 router.post('/', mongoChecker, async (req, res, next) => {
-    let { user } = req.body
+    let user = {username: req.body.username, email: req.body.email, password: req.body.password, name: req.body.name};
+    if (req.body.group) {
+        user.group = req.body.group
+    }
     try {
         const newUser = await service.createUser(user)
         res.send({user: newUser})
@@ -30,8 +33,13 @@ router.post('/login', mongoChecker, async (req, res, next) => {
         const user = await service.login(email, password)
         if (user) {
             req.session.username = user.username
+            res.status(200);
+            res.send({user})
         }
-        res.send({ user })
+        else{
+            res.status(400);
+            res.send({user: null})
+        }
     } catch(e) {
         console.error('error', e)
         handleError(e, res)
@@ -39,17 +47,24 @@ router.post('/login', mongoChecker, async (req, res, next) => {
 })
 
 router.get('/current', mongoChecker, async (req, res, next) => {
+    const populated = +req.query.populated || false
     try {
         if (!req.session || !req.session.username) {
             res.send({ user: null })
         } else {
-            const user = await service.getByUsername(req.session.username)
+            const user = await service.getByUsername(req.session.username, populated > 0)
             res.send({ user })
         }
     } catch(e) {
         console.error('error', e)
         handleError(e, res)
     }
+})
+
+// FOR TESTING PURPOSES, DELETE THIS ONCE LOGIN COMPLETE -Julien
+router.get('/force/:username', mongoChecker, async (req, res, next) => {
+    req.session.username = req.params.username
+    res.send({ message: `logged you in as ${req.params.username}` })
 })
 
 // routes like these need to be at the bottom, :id and current conflict
@@ -62,5 +77,6 @@ router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
         handleError(e, res)
     }
 })
+
 
 module.exports = router

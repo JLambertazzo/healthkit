@@ -12,6 +12,16 @@ router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
     }
 })
 
+router.get('/', mongoChecker, async (req, res, next) => {
+    try {
+        const groups = await service.getAll()
+        res.send({ groups })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
 router.post('/', mongoChecker, async (req, res, next) => {
     try {
         const { group } = req.body
@@ -38,6 +48,16 @@ router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
         const group = await service.deleteGroup(req.params.id)
         res.send({ group })
     } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e)
+    }
+})
+
+router.get('/form/:id', idChecker, mongoChecker, async (req, res, next) => {
+    try {
+        const groups = await service.getByFormId(req.params.id)
+        res.send({ groups })
+    } catch (e) {
         console.error('an error occurred', e)
         handleError(e)
     }

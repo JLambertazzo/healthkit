@@ -40,7 +40,7 @@ function OwnThumbnail(props) {
                     <IconButton variant={'ghost'} onClick={() => props.handleOpen(props.form)}
                     icon={<FaShareAlt
                         color={'#a9a9a9'}
-                    />}
+                    />} />
                     </Tooltip>
                </HStack>
            </Box>

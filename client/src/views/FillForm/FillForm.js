@@ -50,7 +50,7 @@ function FillForm(){
 
     const handleSubmit = () => {
         updateFields(form._id, formFields)
-        submitForm(form._id)
+        submitForm(form._id, formFields)
         history.push('/')
     }
     
@@ -70,7 +70,7 @@ function FillForm(){
                             return <Card className="question">
                                 <Input handleChange={handleChange} props={{id: field._id, type:field.type, options:field.options, label:field.label}}/>
                                 </Card>})}
-                                <Button className="submit" onClick={() => submitForm(form._id, formFields)}>Submit</Button>
+                                <Button className="submit" onClick={() => handleSubmit()}>Submit</Button>
                                 </div>
                     </div>
             </div>

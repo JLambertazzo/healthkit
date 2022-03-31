@@ -2,9 +2,9 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    /*padding: 1.5rem;*/
     margin: 0 1rem 1rem;
-    width: 200px;
+    width: 250px;
 }
 
 .own-thumbnail {
@@ -20,9 +20,10 @@
 }
 
 .thumbnail .form-title {
-    color: #6E92B4;
+    color: #2F8886;
     font-size: 18px;
-    font-weight: 500;
+    margin-bottom: 1rem;
+    /*font-weight: 500;*/
 }
 
 .thumbnail .org-title {

@@ -13,14 +13,14 @@
 }
 
 .side-nav li:hover {
-    background-color: #F3F4F6;
+    background-color: #CCE3E3;
 }
 
 .side-nav li a {
     text-decoration: none;
-    color: #0C5496;
+    color: #2A5555;
 }
 
 .side-nav .current {
-    background-color: #F3F4F6;
+    background-color: #CCE3E3;
 }

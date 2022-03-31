@@ -68,7 +68,7 @@ function FillForm(){
                         <h1>{form.name}</h1>
                             {formFields.map((field, index) => {
                             return <Card className="question">
-                                <Input handleChange={handleChange} props={{value: field.value, id: field._id, type:field.type, options:field.options, label:field.label}}/>
+                                <Input handleChange={handleChange} value={field.value} id={field._id} type={field.type} options={field.options} label={field.label} />
                                 </Card>})}
                                 <Button className="submit" onClick={() => handleSubmit()}>Submit</Button>
                                 </div>

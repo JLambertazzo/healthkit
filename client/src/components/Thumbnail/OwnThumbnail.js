@@ -4,9 +4,11 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ShareIcon from '@mui/icons-material/Share';
 import Tooltip from '@mui/material/Tooltip';
 import { useHistory } from 'react-router-dom';
 import { deleteForm } from '../../actions/form';
+
 
 function OwnThumbnail(props) {
     const history = useHistory()
@@ -29,6 +31,11 @@ function OwnThumbnail(props) {
                     <Tooltip title={"Delete"}>
                     <IconButton sx={{padding: '5px'}} onClick={props.onDelete}>
                         <DeleteIcon sx={{color: '#a9a9a9'}}/>
+                    </IconButton>
+                    </Tooltip>
+                    <Tooltip title={"Share"}>
+                    <IconButton sx={{padding: '5px'}} onClick={() => props.handleOpen(props.form)}>
+                        <ShareIcon sx={{color: '#a9a9a9'}}/>
                     </IconButton>
                     </Tooltip>
            </Box>

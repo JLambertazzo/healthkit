@@ -3,7 +3,10 @@ import { useParams } from 'react-router-dom'
 import { getForm } from '../../actions/form'
 import { getReport } from "../../actions/report"
 import Navbar from "../../components/Navbar/Navbar"
-import { List, ListItem, ListItemText, Typography } from '@mui/material'
+import {
+    Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button, IconButton, Checkbox,
+    Radio, Textarea, Divider, List, ListItem, Select, Tooltip, FormHelperText, Text, VStack
+} from "@chakra-ui/react";
 
 export default function Report() {
     const { form_id } = useParams()
@@ -25,24 +28,35 @@ export default function Report() {
     }, [])
 
     return (
-        <div>
+        <Box>
             <Navbar />
-            Report for form: { form ? form.name : "loading..." }
+            <Box position={'absolute'} top={'10rem'} ml={'5%'}>
+
+                <Heading
+                    fontSize={24}
+                    mb={10}
+                    color={'#2F8886'}> Report for form: { form ? form.name : "loading..." }
+
+                </Heading>
             <div>
                 {report && report.groups.map(g => {
-                    
-                    return (<div><Typography>{g}</Typography>
-                    <List>
+
+                    return (<div><Text
+                    color={'#2F8886'}
+                    fontWeight='medium'
+                    >{g}</Text>
+                    <List mb={20}>
                     {report.questions.map(q => {
                         return (
                             <ListItem>
-                                <ListItemText>{q + ": " + report.questionMap[`${g}::${q}`]}</ListItemText>
-                            </ListItem>    
+                                <Text>{q + ": " + report.questionMap[`${g}::${q}`]}</Text>
+                            </ListItem>
                         )
                     })}
                     </List></div>)
                 })}
             </div>
-        </div>
+            </Box>
+        </Box>
     )
 }

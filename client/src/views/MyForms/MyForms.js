@@ -45,6 +45,7 @@ function MyForms(props) {
                 <div className="dash-main myforms">
                     <Heading
                         m={'5%'}
+                        mt={'5rem'}
                         mb={'2rem'}
                         fontSize={'20px'} color={'#2f8886'}>Created Forms</Heading>
                     <div className="thumb-list myforms">
@@ -60,6 +61,7 @@ function MyForms(props) {
                     </div>
                     <Heading
                         m={'5%'}
+                        mt={'5rem'}
                         mb={'2rem'}
                         fontSize={'20px'}
                              color={'#2f8886'}>Sent Forms</Heading>

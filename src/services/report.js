@@ -14,6 +14,7 @@ async function getReport(form_id) {
 async function generateReport(form_id) {
     try {
         // get parent and all children, assumes form_id is the parent's id
+        console.log(">>GOT HERE")
         let parent = await formModel.findById(form_id).populate("fields")
         // clean input, make sure we know parent and children
         if (parent.parent) {
@@ -21,7 +22,6 @@ async function generateReport(form_id) {
             parent = await formModel.findById(form_id).populate("fields")
         }
         const children = await formModel.find({ parent: form_id }).populate("fields").populate("group")
-
         // if any unsubmitted child, do nothing
         if (children.find(childForm => !childForm.isSubmitted)) {
             console.log('doing nothing')

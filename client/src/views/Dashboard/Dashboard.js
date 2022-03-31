@@ -2,9 +2,11 @@ import './Dashboard.css'
 import Navbar from "../../components/Navbar/Navbar";
 import Thumbnail from "../../components/Thumbnail/Thumbnail";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+// import Fab from '@mui/material/Fab';
+// import AddIcon from '@mui/icons-material/Add';
 import { useHistory } from 'react-router-dom'
+import {FaPlus} from "react-icons/fa";
+import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button} from "@chakra-ui/react";
 
 function Dashboard(props) {
     const history = useHistory();
@@ -20,7 +22,6 @@ function Dashboard(props) {
                 />
             </div>
             <div className="dash-main">
-                {/*<h1>Dashboard</h1>*/}
                 <div className="thumb-list">
                     {props.user.receivedForms.map((form) => {
                         return (<Thumbnail
@@ -32,25 +33,19 @@ function Dashboard(props) {
                         />)
                     })}
 
-                    {/*<Thumbnail*/}
-                    {/*    value={25}*/}
-                    {/*    date={"Jan. 3, 2022"}*/}
-                    {/*    complete={false}*/}
-                    {/*    title={"Handwashing in Hospitals"}*/}
-                    {/*/>*/}
-                    {/*<Thumbnail*/}
-                    {/*    value={55}*/}
-                    {/*    date={"Nov. 12, 2021"}*/}
-                    {/*    complete={true}*/}
-                    {/*    title={"Pediatric Emergency Care Assessment"}*/}
-                    {/*/>*/}
-
                 </div>
                 <div className="action-btn-cont">
-                <Fab className="action-btn" variant="extended" onClick={() => history.push('/createform')}>
-                    <AddIcon sx={{ mr: 1 }} />
-                    Create Form
-                </Fab>
+                    <Button className="action-btn" leftIcon={<FaPlus />}
+                            bg={'#2f8886'}
+                            _hover={{background: '#278280'}}
+                            onClick={() => history.push('/createform')}
+                            variant='solid'>
+                        Create Form
+                    </Button>
+                {/*<Fab  variant="extended" onClick={() => history.push('/createform')}>*/}
+                {/*    <AddIcon sx={{ mr: 1 }} />*/}
+                {/*    Create Form*/}
+                {/*</Fab>*/}
                 </div>
             </div>
         </div>

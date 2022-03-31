@@ -11,8 +11,8 @@ test("getReport returns mocked report", () => {
         .toHaveProperty("form", "mockedid")
 })
 
-// test("generateReport runs and returns mocked report", () => { // NOT WORKING FINISH TMRW
-//     return expect(generateReport("mockedid"))
-//         .resolves
-//         .toHaveProperty("_id", "mockedid")
-// })
+test("generateReport runs and returns mocked report", () => { // NOT WORKING FINISH TMRW
+    return expect(generateReport("mockedid"))
+        .resolves
+        .toHaveProperty("_id", "mockedid")
+})

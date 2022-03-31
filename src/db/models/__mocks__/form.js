@@ -1,19 +1,28 @@
 // mock handles all our uses of formModel
+async function noop() { return Promise.resolve(this) } // used to mock populate
 const formModel = {
+    mocked: true,
     findById(id) {
-        return Promise.resolve({
+        const form = Promise.resolve({
             name: "mockedform",
             _id: "mockedid",
-            populate() { return this }
+            fields: [{label: "mockedfield", value: "mockedvalue"}],
+            parent: null
         })
+        Promise.prototype.populate = noop;
+        return form
     },
     find(query) {
-        return Promise.resolve([{
+        const forms = Promise.resolve([{
             name: "mockedform",
             _id: "mockedid",
             isSubmitted: true,
+            group: "mockedgroup",
+            fields: [{label: "mockedfield", value: "mockedvalue"}],
             populate() { return this }
         }])
+        Promise.prototype.populate = noop;
+        return forms
     },
     findByIdAndUpdate(id) {
         return Promise.resolve({ // TODO what should this really return?

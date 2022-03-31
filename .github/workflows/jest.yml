@@ -24,12 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      - name: Enter client dir
-        run: cd client
         
       - name: Install dependencies
+        working-directory: ./client
         run: npm i
         
       - name: Run tests
+        working-directory: ./client
         run: npm test

@@ -12,7 +12,6 @@ import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
 import FillForm from "./views/FillForm/FillForm";
 import ModifyForm from "./views/ModifyForm/ModifyForm";
-import Input from './components/Inputs/Input';
 
 function App() {
     const [currentUser, setCurrUser] = useState("")

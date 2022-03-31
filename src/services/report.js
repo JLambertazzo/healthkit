@@ -14,7 +14,6 @@ async function getReport(form_id) {
 async function generateReport(form_id) {
     try {
         // get parent and all children, assumes form_id is the parent's id
-        console.log(">>GOT HERE")
         let parent = await formModel.findById(form_id).populate("fields")
         // clean input, make sure we know parent and children
         if (parent.parent) {
@@ -31,7 +30,6 @@ async function generateReport(form_id) {
         
         const groupIds = children.map(childForm => childForm.group)
         const groupDocs = await groupModel.find({ _id: { $in: groupIds } })
-        const groupNameMap = groupDocs.reduce((map, group) => ({ ...map, [group._id]: group.name }), {})
         const groups = groupDocs.map(group => group.name)
 
         const questionMap = {}

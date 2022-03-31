@@ -7,6 +7,7 @@ import MyForms from "./views/MyForms/MyForms";
 import Profile from "./views/Profile/Profile";
 import LogIn from "./views/Login/Login";
 import SignUp from "./views/Signup/Signup";
+import Report from "./views/Report/Report";
 import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
 import FillForm from "./views/FillForm/FillForm";
@@ -67,6 +68,10 @@ function App() {
           </Route>
           <Route exact path='/editform/:form_id'>
               {currentUser && <ModifyForm user={currentUser}/>}
+              {!currentUser && <LogIn />}
+          </Route>
+          <Route exact path='/report/:form_id'>
+              {currentUser && <Report />}
               {!currentUser && <LogIn />}
           </Route>
         </Switch>

@@ -37,7 +37,7 @@ router.post('/update', mongoChecker, async (req, res, next) => {
 
 router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const { fields } = req.body
+        const fields = req.body
         const form = await service.setFields(req.params.id, fields)
         res.send({ form })
     } catch(e) {
@@ -62,6 +62,17 @@ router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
         const form = await service.deleteForm(req.params.id)
         res.send({ form })
+    } catch(e) {
+        console.error('an error occurred', e)
+        handleError(e, res)
+    }
+})
+
+router.post('/submit/:id', idChecker, mongoChecker, async (req, res, next) => {
+    try {
+        const { fields } = req.body
+        const success = await service.submitForm(req.params.id, fields)
+        res.send({ success })
     } catch(e) {
         console.error('an error occurred', e)
         handleError(e, res)

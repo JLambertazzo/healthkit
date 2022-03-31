@@ -2,6 +2,7 @@ const { formModel } = require('../db/models/form')
 const { userModel } = require('../db/models/user')
 const { fieldModel } = require('../db/models/field')
 const { groupModel } = require('../db/models/group')
+const { generateReport } = require('./report')
 const { updateField, createField } = require('./field')
 
 async function getForm(id, populated = false) {
@@ -73,11 +74,11 @@ async function setFields(form_id, fields) {
         const form = await formModel.findById(form_id)
         const newFields = []
         for (const field of fields) {
-            const found = form.fields.find(f => f.label === field.label)
+            const found = form.fields.find(f => f._id == field._id)
             let updatedField;
             if (found && found.value !== field.value) {
                 // TODO specify author and comment
-                updatedField = await updateField(field._id, field.value, "author")
+                updatedField = await updateField(field._id, JSON.stringify(field.value), "author")
                 newFields.push(updatedField)
             } else {
                 updatedField = await createField(form_id, field)
@@ -116,6 +117,12 @@ async function sendByEmails(form_id, emails) {
 
 async function deleteForm(id) {
     try {
+        // delete all fields in form
+        const { fields } = await formModel.findById(id);
+        await fieldModel.deleteMany({ _id: { $in: fields } })
+        // remove from users who have form
+        await userModel.updateMany({ sentForms: id }, { $pull: { sentForms: id } })
+        await userModel.updateMany({ receivedForms: id }, { $pull: { receivedForms: id } })
         return await formModel.findByIdAndDelete(id)
     } catch(e) {
         console.error('error occurred', e)
@@ -159,7 +166,7 @@ async function isSubmitted(id) {
  * @param {*} id Id of the form.
  * @returns True if the opration was successful, false if unsuccessful. Null on error.
  */
-async function submitForm(id) {
+async function submitForm(id, fields) {
     try {
         const form = await formModel.findById(id)
         if(form.isSubmitted) {
@@ -168,9 +175,19 @@ async function submitForm(id) {
         if(formModel.numComplete !== formModel.numFields) {
             return false
         }
-        return await formModel.findOneAndUpdate({_id: id}, {$set:
+        // try creating report -- only goes through if all children submitted
+        const formRes = await formModel.findOneAndUpdate({_id: id}, {$set:
             { isSubmitted: true }
         })
+        // update field values{
+        const valueMap = fields.reduce((map, field) => ({ ...map, [field._id]: field.value}), {})
+        for (const field_id of form.fields) {
+            if (valueMap[field_id.toString()]) {
+                await fieldModel.findByIdAndUpdate(field_id, { value: valueMap[field_id] })
+            }
+        }
+        await generateReport(id)
+        return formRes
     } catch(e) {
         console.error('error occurred', e)
         return null
@@ -191,9 +208,10 @@ async function copyForm (form, group_id) {
         description: form.description,
         fields: newFields.map(field => field._id),
         numComplete: form.numComplete,
-        group: form.group,
+        group: group_id,
         parent: form._id,
     })
+    console.log('created copy', newForm, newForm._id)
     return newForm;
 }
 
@@ -209,12 +227,11 @@ async function sendForm(sender, id, targets) {
         if (!form) {
             return null;
         }
-        await userModel.findOneAndUpdate({ username: sender }, { $push: { sentForms: form._id } })
-        const parentId = form._id;
+        await formModel.findByIdAndUpdate(id, { sent: true })
         for (const target of targets) {
             // create form copy - points to original
-            const group_id = (await groupModel.findOne({ name: target.group }));
-            const newForm = copyForm(form, group_id);
+            const group_id = (await groupModel.findOne({ name: target.group }))._id;
+            const newForm = await copyForm(form, group_id);
             await userModel.findOneAndUpdate({ email: target.email }, { $push: { receivedForms: newForm._id } });
         }
         return form

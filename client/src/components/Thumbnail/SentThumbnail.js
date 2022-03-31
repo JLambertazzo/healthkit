@@ -3,8 +3,10 @@ import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { useHistory } from 'react-router-dom';
 
 function SentThumbnail(props) {
+    const history = useHistory()
     return (
         <Box sx={{boxShadow: 1}} className="thumbnail sent-thumbnail">
 
@@ -12,7 +14,7 @@ function SentThumbnail(props) {
             <hr/>
             <p className="form-title org-title" style={{marginBottom: '1rem', marginTop: 0}}>{props.org}</p>
                 {props.complete && (<Box>
-                    <Button className="dash-results" variant="contained" disableElevation>
+                    <Button className="dash-results" variant="contained" disableElevation onClick={() => history.push(`/report/${props.id}`)}>
                         Results <BarChartIcon/>
                     </Button>
                 </Box>)}

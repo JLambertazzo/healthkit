@@ -15,8 +15,7 @@ export default function Input({handleChange, props}) {
     // two types of values to store
     const [value, setValue] = useState(props.value || '')
     const [multiValue, setMultiValue] = useState((props.options || []).reduce(function (acc, curr){ 
-        acc[curr] = false
-        return acc
+        return { ...acc, [curr]: false }
     }, {}))
     // different types of setter functions for input types
     const onEventChange = (e) => {
@@ -41,6 +40,14 @@ export default function Input({handleChange, props}) {
         setMultiValue(multiValue)
         handleChange(props.id, multiValue)
     }
+
+    useEffect(() => {
+        let valueRes = value
+        if (props.type === "multi") {
+            valueRes = Object.entries(multiValue).reduce((acc, [key, val]) => acc + val ? key : "", "") //idk
+        }
+        props.updateValue(valueRes)
+    }, [value, multiValue])
 
     const getInput = (type) => {
         switch(type) {

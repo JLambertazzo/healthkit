@@ -68,10 +68,11 @@ router.delete('/:id', idChecker, mongoChecker, async (req, res, next) => {
     }
 })
 
-router.patch('/submit/:id', idChecker, mongoChecker, async (req, res, next) => {
+router.post('/submit/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const submitted = await service.submitForm(req.params.id)
-        res.send({ submitted })
+        const { fields } = req.body
+        const success = await service.submitForm(req.params.id, fields)
+        res.send({ success })
     } catch(e) {
         console.error('an error occurred', e)
         handleError(e, res)

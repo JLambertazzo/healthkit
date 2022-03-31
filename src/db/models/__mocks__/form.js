@@ -18,17 +18,15 @@ const formModel = {
             _id: "mockedid",
             isSubmitted: true,
             group: "mockedgroup",
-            fields: [{label: "mockedfield", value: "mockedvalue"}],
-            populate() { return this }
+            fields: [{label: "mockedfield", value: "mockedvalue"}]
         }])
         Promise.prototype.populate = noop;
         return forms
     },
-    findByIdAndUpdate(id) {
+    findByIdAndUpdate(id, query) {
         return Promise.resolve({ // TODO what should this really return?
             name: "mockedform",
             _id: "mockedid",
-            populate() { return this }
         })
     }
 }

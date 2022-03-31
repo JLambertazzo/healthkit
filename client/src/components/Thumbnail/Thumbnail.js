@@ -2,7 +2,7 @@ import './Thumbnail.css'
 import {Flex, FormControl, FormLabel, Heading, VStack, Input, Box, Button, Progress} from "@chakra-ui/react";
 // import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
-import {FaChartBar} from "react-icons/fa"
+import {FaRegChartBar} from "react-icons/fa"
 
 function Thumbnail(props) {
     return (
@@ -28,7 +28,10 @@ function Thumbnail(props) {
             </Link>
             </Box>
             {props.complete && (<Box>
-                <Button className="dash-results" rightIcon={<FaChartBar />} colorScheme='teal'>
+                <Button rightIcon={<FaRegChartBar />}
+                        bg={'#cce3e3'} color={'#2a5555'}
+                _hover={{bg: '#bad5d5'}}
+                >
                     Results
                 </Button>
             </Box>)}

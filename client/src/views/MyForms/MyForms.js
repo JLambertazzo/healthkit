@@ -48,6 +48,7 @@ function MyForms(props) {
                                 title={form.name}
                                 org={"SickKids"}
                                 complete={form.isSubmitted}
+                                id={form._id}
                             />)
                         })}
                     </div>

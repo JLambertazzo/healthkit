@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #396288;
+    color: #308886;
     margin-top: 20px;
     margin-left: 5%;
     background-color: white;
@@ -37,7 +37,7 @@
 .profile-username{
     font-weight: 500;
     font-size: 18px;
-    color: #8c99a0;
+    color: #308886;
 }
 
 .profile-email {

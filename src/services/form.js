@@ -49,8 +49,8 @@ async function updateForm(form) {
         for (const field of toUpdate) {
             await fieldModel.findByIdAndUpdate(field._id, { $set: { label: field.label, type: field.type, options: field.options } })
         }
-        
-        
+
+
         form.fields = form.fields
             .filter(field => !field._id || !toDelete.includes(field._id))
             .map(field => {
@@ -230,9 +230,17 @@ async function sendForm(sender, id, targets) {
         await formModel.findByIdAndUpdate(id, { sent: true })
         for (const target of targets) {
             // create form copy - points to original
-            const group_id = (await groupModel.findOne({ name: target.group }))._id;
+            var group_id;
+            await userModel.findOne({email: target}).then(u=> {
+                group_id = u.group;
+            }
+            )
+            // (await groupModel.findOne({ name: target.group })).then(g => {
+            //     group_id = g._id
+            //     }
+            // )
             const newForm = await copyForm(form, group_id);
-            await userModel.findOneAndUpdate({ email: target.email }, { $push: { receivedForms: newForm._id } });
+            await userModel.findOneAndUpdate({ email: target }, { $push: { receivedForms: newForm._id } });
         }
         return form
     } catch (e) {

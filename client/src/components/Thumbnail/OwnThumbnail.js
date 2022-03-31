@@ -2,7 +2,8 @@ import './Thumbnail.css'
 import { Button, Box, IconButton, Flex, Spacer, Center, Tooltip, VStack, HStack} from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom';
 import { deleteForm } from '../../actions/form';
-import {FaEye, FaPen, FaTrash} from "react-icons/fa";
+import {FaEye, FaPen, FaTrash, FaShareAlt} from "react-icons/fa";
+
 
 function OwnThumbnail(props) {
     const history = useHistory()
@@ -35,7 +36,12 @@ function OwnThumbnail(props) {
                     />}
                     />
                     </Tooltip>
-
+                    <Tooltip label={"Share"}>
+                    <IconButton variant={'ghost'} onClick={() => props.handleOpen(props.form)}
+                    icon={<FaShareAlt
+                        color={'#a9a9a9'}
+                    />} />
+                    </Tooltip>
                </HStack>
            </Box>
 

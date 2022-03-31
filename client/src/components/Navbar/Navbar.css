@@ -1,12 +1,6 @@
 .nav {
-    background-color: #6E92B4;
+    background-color: #2F8886;
     height: 8vh;
-    display: grid;
-    grid-template-columns: 15% 80% 5%;
-    align-items: center;
-    align-content: center;
-    justify-items: center;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .nav h2 {
@@ -16,8 +10,3 @@
     font-family: "DM Serif Text", serif;
 }
 
-.navTitle, .navIcon {
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: center;*/
-}

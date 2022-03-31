@@ -62,6 +62,7 @@ function MyForms(props) {
                     <ShareForm open={open} formId={formId} formName={formName} user={user} handleClose={handleClose}/>
                     <Heading
                         m={'5%'}
+                        mt={'5rem'}
                         mb={'2rem'}
                         fontSize={'20px'} color={'#2f8886'}>Created Forms</Heading>
                     <div className="thumb-list myforms">
@@ -79,6 +80,7 @@ function MyForms(props) {
                     </div>
                     <Heading
                         m={'5%'}
+                        mt={'5rem'}
                         mb={'2rem'}
                         fontSize={'20px'}
                              color={'#2f8886'}>Sent Forms</Heading>

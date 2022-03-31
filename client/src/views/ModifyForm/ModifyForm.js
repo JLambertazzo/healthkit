@@ -207,8 +207,11 @@ function CreateForm(props) {
             <div style={{display: "flex", flexDirection: "column"}}>
                 {opts}
                 <Button width={"max-content"}
-                        bg={'#2f8886'}
-                        _hover={{bg: '#278280'}}
+                        borderColor={'#2f8886'}
+                        borderWith={1}
+                        color={'#2F8886'}
+                        my={8}
+                        variant={'outline'}
                         onClick={() => addOpt(qindex, "")}>Add Option</Button>
             </div>
         )
@@ -270,7 +273,9 @@ function CreateForm(props) {
                             _hover={{bg: '#278280'}}
                             _active={{bg: '#278280'}}
                             bg={'#2f8886'}
-                            icon={<FaPlus />}/>
+                            icon={<FaPlus
+                            color={'white'}
+                            />}/>
                     </Flex>
                     <Divider
                         bg={'gray.300'}
@@ -326,13 +331,13 @@ function CreateForm(props) {
                                     </Box>
                                 ))
                             }
-                            <Button sx={{width: "max-content"}} variant="contained" onClick={() => newField()}>Add Field</Button>
                         </List>
                     </div>
 
 
                     <Button
                         bg={'#2f8886'}
+                        color={'white'}
                         _hover={{bg: '#278280'}} onClick={form_id ? update : submitForm} sx={{marginTop: 2}}>{form_id ? "Update" : "Create"}</Button>
                 </FormControl>
 

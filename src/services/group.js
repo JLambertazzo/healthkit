@@ -32,7 +32,7 @@ async function addUser(group_id, user_id) {
             {$push: {users: user_id}},
             { returnDocument: true }
         )
-        return {user, group}
+        return {user: userRes, group: groupRes}
     } catch (e) {
         console.error('error occurred', e)
         return null

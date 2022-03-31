@@ -31,7 +31,7 @@ function Login(){
             <Box className = "sign-in-box"
                   w={'40%'}
                  m={'auto'}
-                 mt={20}
+                 mt={'8rem'}
                  bg={'white'}
                  >
                 <form onSubmit={handleSubmit}>
@@ -68,6 +68,7 @@ function Login(){
                         borderColor={'gray.200'}
                         focusBorderColor={'#2f8886'}
                         _placeholder={{opacity: 0.4, color: 'black' }}
+                        _hover={{borderColor:'gray.200'}}
                         />
                     <FormLabel htmlFor='pass'
                                color={'black'}
@@ -79,6 +80,7 @@ function Login(){
                            borderColor={'gray.200'}
                            focusBorderColor={'#2f8886'}
                            color={'black'}
+                           _hover={{borderColor:'gray.200'}}
                            _placeholder={{opacity: 0.4, color: 'black' }}
                     />
 

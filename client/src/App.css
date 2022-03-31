@@ -1,4 +1,8 @@
 body {
   font-family: 'DM Sans', sans-serif;
-  overflow: hidden;
+  overflow: scroll;
+}
+
+html {
+  background: white;
 }

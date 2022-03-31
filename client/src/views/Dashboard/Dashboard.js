@@ -42,10 +42,6 @@ function Dashboard(props) {
                             variant='solid'>
                         Create Form
                     </Button>
-                {/*<Fab  variant="extended" onClick={() => history.push('/createform')}>*/}
-                {/*    <AddIcon sx={{ mr: 1 }} />*/}
-                {/*    Create Form*/}
-                {/*</Fab>*/}
                 </div>
             </div>
         </div>

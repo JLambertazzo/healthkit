@@ -2,7 +2,8 @@
     align-items: center;
     background-color: #2A5555;
     height: 100vh;
-    overflow: scroll;
+    overflow: hidden;
+    /*margin-top: 5%;*/
 }
 
 /*.sign-in-box{*/

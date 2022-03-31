@@ -11,7 +11,8 @@ import TimeRange from './TimeRange'
 
 // general input, stuff specified by props
 // expected props: props: { type: string, value: string, options: string[], label: string }
-export default function Input({handleChange, props}) {
+export default function Input(props) {
+    const { handleChange } = props
     // two types of values to store
     const [value, setValue] = useState(props.value || '')
     const [multiValue, setMultiValue] = useState((props.options || []).reduce(function (acc, curr){ 

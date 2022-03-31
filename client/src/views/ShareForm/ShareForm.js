@@ -36,7 +36,7 @@ export default function ShareForm({open, formId, formName, user, handleClose}){
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader className="dialog-title">Share {formName}</ModalHeader>
-                    <ModalBody className="share-content">
+                    <ModalBody className="share-content"  w={'fit-content'}>
                         <Text>
                             Enter Emails below:
                         </Text>
@@ -44,11 +44,23 @@ export default function ShareForm({open, formId, formName, user, handleClose}){
                                 {
                                     emails.map((email, index) => (
                                         <ListItem>
-                                            <Input type="text" className="email" variant="standard" onChange={(e) => emailChange(index, e.target.value)} />
+                                            <Input type="text" className="email" variant="standard"
+                                                   color={'black'}
+                                                   w={'40%'}
+                                                   borderWidth={1}
+                                                   borderColor={'gray.200'}
+                                                   focusBorderColor={'#2f8886'}
+                                                   _placeholder={{opacity: 0.4, color: 'black' }}
+                                                   placeholder={"Email"}
+                                                   onChange={(e) => emailChange(index, e.target.value)} />
                                         </ListItem>
                                     ))
                                 }
-                                <Button sx={{width: "max-content", marginBottom:'15px'}} variant="contained" onClick={() => addNewEmail()}>Add Email</Button>
+                                <Button
+                                bg={'#2f8886'}
+                                color={'white'}
+                                    style={{width: "max-content", marginBottom:'15px'}}
+                                        onClick={() => addNewEmail()}>Add Email</Button>
                         </UnorderedList>
                     </ModalBody>
                     <ModalFooter className="l1">

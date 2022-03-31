@@ -14,7 +14,7 @@ function OwnThumbnail(props) {
 
             <p className="form-title" style={{marginBottom: '0.5rem', marginTop: 0}}>{props.title}</p>
            <Box>
-                    <p style={{fontSize: '12px', color: '#8C99A0', margin: 0}}>Created {props.date}</p>
+                    <p style={{fontSize: '12px', textAlign: 'center', color: '#8C99A0', margin: 0}}>Created {props.date}</p>
                <HStack>
                     <Tooltip label={"Preview"}>
                     <IconButton variant={'ghost'}

@@ -15,7 +15,7 @@ function FillForm(){
     const location = useLocation()
     const form = location.state.form;
     const [formFields, setFormFields] = useState([]);
-    
+
 
     const updateValue = (index, value) => {
         setFormFields(prev => {
@@ -39,22 +39,18 @@ function FillForm(){
     },[])
 
     const handleChange = (id, v) => {
-        console.log(v)
         var ff = formFields;
         ff.forEach((field) => {
             if (field._id == id){
-                console.log(field)
                 field.value = v;
-                console.log(field)
             }
         })
         setFormFields(ff);
-        console.log(formFields)
     }
 
     const handleSubmit = () => {
         updateFields(form._id, formFields)
-        submitForm(form._id)
+        submitForm(form._id, formFields)
         history.push('/')
     }
     
@@ -72,15 +68,9 @@ function FillForm(){
                         <h1>{form.name}</h1>
                             {formFields.map((field, index) => {
                             return <Card className="question">
-                                <Input
-                                    label={field.label}
-                                    type={field.type}
-                                    value={field.value}
-                                    options={field.options}
-                                    updateValue={v => updateValue(index, v)}
-                                />
+                                <Input handleChange={handleChange} props={{value: field.value, id: field._id, type:field.type, options:field.options, label:field.label}}/>
                                 </Card>})}
-                                <Button className="submit" onClick={() => submitForm(form._id, formFields)}>Submit</Button>
+                                <Button className="submit" onClick={() => handleSubmit()}>Submit</Button>
                                 </div>
                     </div>
             </div>

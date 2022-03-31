@@ -17,6 +17,7 @@ export default function Input({handleChange, props}) {
     const [multiValue, setMultiValue] = useState((props.options || []).reduce(function (acc, curr){ 
         return { ...acc, [curr]: false }
     }, {}))
+    const [multiList, setMultiList] = useState([])
     // different types of setter functions for input types
     const onEventChange = (e) => {
         setValue(e.target.value)
@@ -38,16 +39,27 @@ export default function Input({handleChange, props}) {
         // setMultiValue(prev => ({...prev, [e.target.name]: e.target.checked}))
         multiValue[e.target.name]= e.target.checked
         setMultiValue(multiValue)
-        handleChange(props.id, multiValue)
+        if (e.target.checked){
+            var old = multiList;
+            old.push(e.target.name)
+            setMultiList(old);
+        }
+        else{
+            var old = multiList;
+            var i = old.indexOf(e.target.name);
+            old.splice(i, 1)
+            setMultiList(old);
+        }
+        handleChange(props.id, multiList.toString())
     }
 
-    useEffect(() => {
-        let valueRes = value
-        if (props.type === "multi") {
-            valueRes = Object.entries(multiValue).reduce((acc, [key, val]) => acc + val ? key : "", "") //idk
-        }
-        props.updateValue(valueRes)
-    }, [value, multiValue])
+    // useEffect(() => {
+    //     let valueRes = value
+    //     if (props.type === "multi") {
+    //         valueRes = Object.entries(multiValue).reduce((acc, [key, val]) => acc + val ? key : "", "") //idk
+    //     }
+    //     props.updateValue(valueRes)
+    // }, [value, multiValue])
 
     const getInput = (type) => {
         switch(type) {

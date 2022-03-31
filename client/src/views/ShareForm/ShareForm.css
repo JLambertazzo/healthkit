@@ -1,0 +1,44 @@
+.share{
+    margin: auto;
+    position: absolute;
+}
+
+.share-content{
+    min-width: 300px;
+    min-height: 200px;
+    width: 50vw;
+    height: 50vh;
+}
+
+.MuiDialog-paper{
+    overflow-x: hidden;
+    padding: 50px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.dialog-title{
+    padding-top: 0px !important;
+    text-align: center;
+    font-weight: 600 !important;
+}
+
+.send{
+    position: fixed !important;
+    width: 100px;
+}
+
+.l1{
+    position: relative;
+    left: 35vw;
+    bottom: 20px;
+}
+
+.l2{
+    position: absolute;
+}
+
+.email{
+    margin-bottom: 15px;
+    width: 30vw;
+}

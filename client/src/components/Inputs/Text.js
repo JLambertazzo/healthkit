@@ -1,8 +1,23 @@
 import React from 'react'
-import { TextField } from '@mui/material'
+import {
+    Input,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper
+} from "@chakra-ui/react"
 
 export default function TextInput(props) {
     return (
-        <TextField value={props.value} onChange={props.onChange} />
+        props.type === "text" ?
+            <Input value={props.value} onChange={props.onChange} /> :
+            <NumberInput value={props.value} onChange={props.onChange}>
+                <NumberInputField />
+                <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                </NumberInputStepper>
+            </NumberInput>
     )
 }

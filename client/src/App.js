@@ -12,6 +12,7 @@ import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
 import FillForm from "./views/FillForm/FillForm";
 import ModifyForm from "./views/ModifyForm/ModifyForm";
+import Input from './components/Inputs/Input';
 
 function App() {
     const [currentUser, setCurrUser] = useState("")
@@ -73,6 +74,10 @@ function App() {
           <Route exact path='/report/:form_id'>
               {currentUser && <Report />}
               {!currentUser && <LogIn />}
+          </Route>
+          
+          <Route exact path='/testinputs'>
+              <Input label="label" type="select" value="value" updateValue={() => {}} handleChange={() => {}} options={["one", "two", "three"]} />
           </Route>
         </Switch>
       </BrowserRouter>

@@ -1,12 +1,14 @@
 import React from 'react'
-import { Radio, RadioGroup, FormControlLabel } from '@mui/material'
+import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 
 export default function Single(props) {
   return (
-    <RadioGroup name="single-select-group" value={props.value} onChange={props.onChange}>
+    <RadioGroup value={props.value} onChange={props.onChange}>
+      <Stack direction="column">
         {props.options.map(option => (
-            <FormControlLabel value={option} label={option} control={<Radio />} />
+            <Radio value={option} key={option}>{option}</Radio>
         ))}
+      </Stack>
     </RadioGroup>
   )
 }

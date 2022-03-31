@@ -75,10 +75,6 @@ function App() {
               {currentUser && <Report />}
               {!currentUser && <LogIn />}
           </Route>
-          
-          <Route exact path='/testinputs'>
-              <Input label="label" type="select" value="value" updateValue={() => {}} handleChange={() => {}} options={["one", "two", "three"]} />
-          </Route>
         </Switch>
       </BrowserRouter>
     </div>

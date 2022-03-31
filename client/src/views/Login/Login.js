@@ -1,9 +1,17 @@
 import './Login.css';
-import { Container, Box, TextField, Avatar, Button} from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { Link , useHistory } from 'react-router-dom';
+import {
+    Button, Box,
+    IconButton, Flex, Spacer,
+    Center, Input, FormControl, FormLabel,
+    FormErrorMessage,
+    FormHelperText,
+    HStack, Heading, VStack
+} from '@chakra-ui/react';
 import { LoginUser } from '../../actions/user';
 import Navbar from "../../components/Navbar/Navbar";
+import { FaUserCircle } from "react-icons/fa";
 
 function Login(){
 
@@ -17,25 +25,88 @@ function Login(){
     }
 
     return(
-        <div id = "dash">
+        <div id = "loginCont" >
             <Navbar/>
 
-            <Container className = "sign-in-box" maxWidth="xs" sx={{ borderRadius: 15 }}>
-                <Box component = "form" onSubmit={handleSubmit} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <Avatar sx={{ m: 1, bgcolor: 'rgb(21, 82, 126)' }}>
-                        <LockOutlined />
-                    </Avatar>
-                    <h2 id="sign-in">Log In</h2>
+            <Box className = "sign-in-box"
+                  w={'40%'}
+                 m={'auto'}
+                 mt={'8rem'}
+                 bg={'white'}
+                 >
+                <form onSubmit={handleSubmit}>
 
-                    <TextField fullWidth margin = 'normal' name = "email" id="email" required label="Email Address"
-                               sx={{backgroundColor: 'white', borderRadius: '4px'}}/>
-                    <TextField fullWidth margin = 'normal' name = "password" id="pass" required label="Password" type="password"
-                               sx={{backgroundColor: 'white', borderRadius: '4px'}}/>
+                <FormControl isRequired >
 
-                    <Button id="sign-in-button" type="submit" fullWidth sx={{mt: 3, mb: 3}}> Log In</Button>
-                    <Link to="/signup"> {"Don't have an account? Sign Up"} </Link>
-                </Box>
-            </Container>
+                    <Flex p={5}
+                          w={'70%'}
+                          margin={'auto'}
+                          flexDir={'column'}
+                    >
+                        <HStack my={5}>
+                            <Heading
+                                color={'#2F8886'}
+                                fontSize={'1.5em'}>
+                                Log In
+                            </Heading>
+                            {/*<FaUserCircle*/}
+                            {/*    m={1}*/}
+                            {/*    bg={'rgb(21, 82, 126)'}*/}
+                            {/*/>*/}
+                        </HStack>
+                    <FormLabel
+                        htmlFor='email'
+                    color={'black'}
+                    >Email Address</FormLabel>
+                    <Input
+                        mb={5}
+                        id="email" type={'email'}
+                           placeholder="Email"
+                        name={'email'}
+                           color={'black'}
+                           w={'60%'}
+                        borderColor={'gray.200'}
+                        focusBorderColor={'#2f8886'}
+                        _placeholder={{opacity: 0.4, color: 'black' }}
+                        _hover={{borderColor:'gray.200'}}
+                        />
+                    <FormLabel htmlFor='pass'
+                               color={'black'}
+                    >Password
+                    </FormLabel>
+                    <Input id="pass" placeholder="Password" type="password"
+                           w={'60%'}
+                           name={'password'}
+                           borderColor={'gray.200'}
+                           focusBorderColor={'#2f8886'}
+                           color={'black'}
+                           _hover={{borderColor:'gray.200'}}
+                           _placeholder={{opacity: 0.4, color: 'black' }}
+                    />
+
+                        <Box
+                            mt={10}
+                        >
+
+                            <Button type="submit"
+                                    bg='#2f8886'
+                                    _hover={{bg: '#267876'}}
+                                    mb={5}
+                                    color={'white'}
+                            > Log In</Button>
+                            <br/>
+                            <Link to="/signup"
+                            style={{color: '#2f8886'}}
+
+                            > {"Don't have an account? Sign Up"} </Link>
+                        </Box>
+                    </Flex>
+
+
+                </FormControl>
+
+                </form>
+            </Box>
         </div>
     )
 }

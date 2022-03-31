@@ -1,11 +1,16 @@
 import './ModifyForm.css'
-import { Button, List, Paper, TextField, FormControl, InputLabel, Select, MenuItem, FormControlLabel, Radio, Checkbox, IconButton } from '@mui/material'
+import {
+    Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button, IconButton, Checkbox,
+    Radio, Textarea, Divider, List, ListItem, Select, Tooltip, FormHelperText
+} from "@chakra-ui/react";
 import { Delete, Close, Add } from '@mui/icons-material'
 import Navbar from "../../components/Navbar/Navbar";
 import { useState } from 'react'
 import { createForm, getForm, updateForm } from '../../actions/form'
 import { useHistory, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import {FaPlus, FaTimes, FaTrash} from "react-icons/fa";
+
 
 const types = [
     "text",
@@ -66,7 +71,7 @@ function CreateForm(props) {
         setFields(prev => {
             return prev.concat({
                 label: "",
-                type: "text",
+                // type: "text",
                 options: []
             })
         })
@@ -77,7 +82,7 @@ function CreateForm(props) {
             const copy = [...prev];
             copy.splice(index + 1, 0, {
                 label: "",
-                type: "text",
+                // type: "text",
                 options: []
             });
             return copy;
@@ -116,7 +121,7 @@ function CreateForm(props) {
         setFields(prev => {
             const copy = [...prev]
             copy[questionIndex].options[optIndex] = value
-            return copy 
+            return copy
         })
     }
 
@@ -132,77 +137,207 @@ function CreateForm(props) {
         if (!["multiple", "single"].includes(type)) return
         let opts = []
         if (type === "multiple") {
-            opts = options.map((opt, index) => <div><IconButton onClick={() => delOpt(qindex, index)}><Close /></IconButton><FormControlLabel
-                                        key={`${qindex}-${index}-${opt}`}
-                                        label={<TextField autoFocus={focused === `${qindex}-${index}`} onFocus={() => setFocused(`${qindex}-${index}`)} variant="standard" value={opt} onChange={(e) => setOpt(qindex, index, e.target.value)} />}
-                                        control={<Checkbox checked={false} disabled={true} />}
-                                        /></div>)
+            opts = options.map((opt, index) => <HStack
+            mt={5}
+            >
+
+                <IconButton
+                icon={ <FaTrash
+                    color={'#a0aec0'}/>}
+                onClick={() => delOpt(qindex, index)}/>
+
+                    <Checkbox isDisabled bg={'gray.200'} borderRadius={'sm'}/>
+                    <Input
+                        color={'black'}
+                        w={'40%'}
+                        borderWidth={1}
+                        borderColor={'gray.200'}
+                        focusBorderColor={'#2f8886'}
+                        _placeholder={{opacity: 0.4, color: 'black' }}
+                        placeholder={"Option"}
+                        autoFocus={focused === `${qindex}-${index}`} onFocus={() => setFocused(`${qindex}-${index}`)} variant="standard" value={opt} onChange={(e) => setOpt(qindex, index, e.target.value)} />
+                </HStack>)
+
+                                    {/*<FormLabel*/}
+                                    {/*    color={'black'}*/}
+                                    {/*    key={`${qindex}-${index}-${opt}`}*/}
+                                    {/*    label={<Input*/}
+                                    {/*        color={'black'}*/}
+                                    {/*        w={'40%'}*/}
+                                    {/*        borderColor={'gray.200'}*/}
+                                    {/*        focusBorderColor={'#2f8886'}*/}
+                                    {/*        _hover={{borderColor:'gray.200'}}*/}
+                                    {/*        _placeholder={{opacity: 0.4, color: 'black' }}*/}
+                                    {/*        placeholder={"Title"}*/}
+                                    {/*        autoFocus={focused === `${qindex}-${index}`} onFocus={() => setFocused(`${qindex}-${index}`)} variant="standard" value={opt} onChange={(e) => setOpt(qindex, index, e.target.value)} />}*/}
+                                    {/*    control={<Checkbox isDisabled />}*/}
+                                    {/*    />
+
+                                    </div>)*/}
         } else {
-            opts = options.map((opt, index) => <div><IconButton onClick={() => delOpt(qindex, index)}><Close /></IconButton><FormControlLabel
-                                        key={`${qindex}-${index}-${opt}`}
-                                        label={<TextField autoFocus={focused === `${qindex}-${index}`} onFocus={() => setFocused(`${qindex}-${index}`)} variant="standard" value={opt} onChange={(e) => setOpt(qindex, index, e.target.value)} />}
-                                        control={<Radio checked={false} disabled={true} />} 
-                                        /></div>)
+            opts = options.map((opt, index) => <HStack
+                mt={5}
+                key={`${qindex}-${index}-${opt}`}
+            ><IconButton  icon={ <FaTrash
+                color={'#a0aec0'}/>} onClick={() => delOpt(qindex, index)}/>
+                                        >
+                                            <Radio
+                                                isDisabled
+                                                outline={'solid 2px #a0aec0'}
+                                                borderWidth={2}
+                                                borderColor={'teal'}
+                                                   colorScheme={'teal'}
+
+                                            />
+                                            <Input
+                                                color={'black'}
+                                                w={'40%'}
+                                                borderWidth={1}
+                                                borderColor={'gray.200'}
+                                                focusBorderColor={'#2f8886'}
+                                                _placeholder={{opacity: 0.4, color: 'black' }}
+                                                placeholder={"Option"}
+                                                autoFocus={focused === `${qindex}-${index}`} onFocus={() => setFocused(`${qindex}-${index}`)} variant="standard" value={opt} onChange={(e) => setOpt(qindex, index, e.target.value)}
+                                            />
+
+
+                                    </HStack>)
         }
         return (
             <div style={{display: "flex", flexDirection: "column"}}>
                 {opts}
-                <Button sx={{width: "max-content"}} variant="contained" onClick={() => addOpt(qindex, "")}>Add Option</Button>
+                <Button width={"max-content"}
+                        bg={'#2f8886'}
+                        _hover={{bg: '#278280'}}
+                        onClick={() => addOpt(qindex, "")}>Add Option</Button>
             </div>
         )
     }
 
     return (
-        <div>
+        <Box bg={'white'} height={'100vh'}>
             <Navbar/>
-            <div style={{display: "grid", gridTemplateColumns: "1fr 1fr"}}>
-                <div className="createform-cont">
-                    <h2>New Form</h2>
-                    <div className="form-info">
-                    <p>Form Title</p>
-                    <TextField id="outlined-basic" className="form-field" label="Title" variant="outlined" value={title} onChange={(e) => setTitle(e.target.value)} />
-                        <p>Form Description</p>
-                        <TextField
+            <div style={{display: "grid", gridTemplateColumns: "6fr 1fr", height: '100vh'}}>
+                <FormControl isRequired className="createform-cont">
+                        <Heading fontSize={30}>Create a Form</Heading>
+
+
+                    <Divider
+                    bg={'gray.300'}
+                    mt={5}
+                    w={'30%'}
+                    />
+                    <Box
+                        mb={10}
+                        className="form-info">
+                        <FormLabel htmlFor={"outlined-basic"}
+                                   color={'#2F8886'}
+                        >Form Title</FormLabel>
+                    <Input id="outlined-basic" className="form-field" label="Title"
+                           color={'black'}
+                           w={'40%'}
+                           borderColor={'gray.200'}
+                           focusBorderColor={'#2f8886'}
+                           _hover={{borderColor:'gray.200'}}
+                           _placeholder={{opacity: 0.4, color: 'black' }}
+                           placeholder={"Title"}
+                           mb={10}
+                           value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <FormLabel htmlFor={"outlined-multiline-static"}
+                        color={'#2F8886'}
+                        >Form Description</FormLabel>
+                        <Textarea
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                             id="outlined-multiline-static"
+                            name={"desc"}
                             label="Description"
-                            multiline
-                            rows={4}
+                            placeholder={"Description"}
                             className={"form-field"}
+                            _hover={{borderColor:'gray.200'}}
+                            color={'black'}
+                            w={'40%'}
+                            borderColor={'gray.200'}
+                            focusBorderColor={'#2f8886'}
+                            _placeholder={{opacity: 0.4, color: 'black' }}
                         />
-                    </div>
-                    <Button variant="contained" onClick={form_id ? update : submitForm} sx={{marginTop: 2}}>{form_id ? "Update" : "Create"}</Button>
-                </div>
-                <div>
-                    <List sx={{overflowY: "scroll !important"}}>
-                        {
-                            fields.map((field, index) => (
-                                <Paper key={`q${index}-${field.label}`} sx={{marginTop: '2rem'}} elevation={2}>
-                                    <Paper elevation={3}>
-                                        <IconButton aria-label='add after' onClick={() => newFieldAfter(index)}><Add /></IconButton>
-                                        <IconButton aria-label='delete' onClick={() => removeField(index)}><Delete /></IconButton>
-                                        <TextField variant="standard" autoFocus={focused === `${index}-`} onFocus={() => setFocused(`${index}-`)} value={field.label} onChange={(e) => setFieldLabel(index, e.target.value)} />
+                    </Box>
+                    <Flex w={'60%'} justify={'space-between'}>
+                        <Heading
+                            fontSize={30}>Questions</Heading>
+                        <IconButton
+                            onClick={() => newField()}
+                            _hover={{bg: '#278280'}}
+                            _active={{bg: '#278280'}}
+                            bg={'#2f8886'}
+                            icon={<FaPlus />}/>
+                    </Flex>
+                    <Divider
+                        bg={'gray.300'}
+                        mt={5}
+                        w={'60%'}
+                    />
+
+                    <div>
+                        <List>
+                            {
+                                fields.map((field, index) => (
+                                    <Box key={`q${index}-${field.label}`} marginTop={'2rem'} boxShadow={'sm'}>
                                         <FormControl>
-                                            <Select
-                                                variant="standard"
-                                                labelId={"type-label-" + index}
-                                                value={field.type}
-                                                onChange={(e) => setFieldType(index, e.target.value)}
-                                            >
-                                                {types.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
-                                            </Select>
+                                        <HStack boxShadow={'md'}
+                                        p={5}
+                                        >
+                                            <Tooltip label={'Add after'}>
+                                                <IconButton variant='ghost' color='gray.400' aria-label='add after' onClick={() => newFieldAfter(index)} icon={<FaPlus/>}/>
+                                            </Tooltip>
+                                            <IconButton variant='ghost' color='gray.400' aria-label='delete' onClick={() => removeField(index)} icon={<FaTrash/>}/>
+
+                                                <Input
+                                                    w={'40%'}
+                                                    borderColor={'gray.200'}
+                                                    focusBorderColor={'#2f8886'}
+                                                    _hover={{borderColor:'gray.200'}}
+                                                    _placeholder={{opacity: 0.4, color: 'black' }}
+                                                    placeholder={"Type your question..."}
+                                                    color={'black'}
+                                                    autoFocus={focused === `${index}-`} onFocus={() => setFocused(`${index}-`)}
+                                                    value={field.label} onChange={(e) => setFieldLabel(index, e.target.value)} />
+
+                                                <Box>
+                                                <Select
+                                                    id={"select"}
+                                                    placeholder={"Type of answer"}
+                                                    w={'fit-content'}
+                                                    labelId={"type-label-" + index}
+                                                    value={field.type}
+                                                    borderColor={'gray.200'}
+                                                    focusBorderColor={'#2f8886'}
+                                                    _hover={{borderColor:'gray.200'}}
+                                                    color={'#2f8886'}
+                                                    onChange={(e) => setFieldType(index, e.target.value)}
+                                                >
+                                                    {types.map(type => <option key={type} value={type}>{type}</option>)}
+                                                </Select>
+                                                    {/*<FormHelperText color={"gray.300"}>We'll never share your email.</FormHelperText>*/}
+                                                </Box>
+                                        </HStack>
                                         </FormControl>
-                                    </Paper>
-                                    {getOptions(field.type, field.options, index)}
-                                </Paper>
-                            ))
-                        }
-                        <Button sx={{width: "max-content"}} variant="contained" onClick={() => newField()}>Add Field</Button>
-                    </List>
-                </div>
+                                        {getOptions(field.type, field.options, index)}
+                                    </Box>
+                                ))
+                            }
+                            <Button sx={{width: "max-content"}} variant="contained" onClick={() => newField()}>Add Field</Button>
+                        </List>
+                    </div>
+
+
+                    <Button
+                        bg={'#2f8886'}
+                        _hover={{bg: '#278280'}} onClick={form_id ? update : submitForm} sx={{marginTop: 2}}>{form_id ? "Update" : "Create"}</Button>
+                </FormControl>
+
             </div>
-        </div>
+        </Box>
 
     );
 }

@@ -7,9 +7,10 @@
 .dash-main {
     background-color: #F3F4F6;
     overflow: scroll;
-    box-shadow: inset -5px 5px 10px rgb(0 0 0 / 20%);
+    box-shadow: rgb(0 0 0 / 10%) 0px 6px 8px inset;
     display: flex;
     flex-direction: column;
+    margin-top: 2rem;
 }
 
 .dash-side {
@@ -39,6 +40,6 @@
 
 .action-btn {
     font-family: "DM Sans", sans-serif !important;
-    background-color: #6e92b4 !important;
+    /*background-color: #6e92b4 !important;*/
     color: white !important;
 }

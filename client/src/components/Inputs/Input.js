@@ -22,19 +22,19 @@ export default function Input(props) {
     // different types of setter functions for input types
     const onEventChange = (e) => {
         setValue(e.target.value)
-        handleChange(props.id, e.target.value)
+        props.handleChange(props.id, e.target.value)
     }
     const onDirectChange = (e) => {
         setValue(e)
-        handleChange(props.id, value)
+        props.handleChange(props.id, value)
     }
     const onChangeFirst = (e) => {
         setValue(prev => [e.target.value, prev.split("_")[1]].join("_"));
-        handleChange(props.id, value)
+        props.handleChange(props.id, value)
     }
     const onChangeSecond = (e) => {
         setValue(prev => [prev.split("_")[0], e.target.value].join("_"));
-        handleChange(props.id, value)
+        props.handleChange(props.id, value)
     }
     const onMultiChange = (e) => {
         // setMultiValue(prev => ({...prev, [e.target.name]: e.target.checked}))
@@ -65,9 +65,9 @@ export default function Input(props) {
     const getInput = (type) => {
         switch(type) {
             case "multiple":
-                return (<Multi options={props.options} onChange={onMultiChange} />);
+                return (<Multi value={value} options={props.options} onChange={onMultiChange} />);
             case "single":
-                return (<Single options={props.options} onChange={onEventChange} />);
+                return (<Single value={value} options={props.options} onChange={onDirectChange} />);
             case "select":
                 return (<Select value={value} options={props.options} onChange={onEventChange} />);
             case "date":
@@ -79,9 +79,9 @@ export default function Input(props) {
             case "time-range":
                 return (<TimeRange value={value} onChangeFirst={onChangeFirst} onChangeSecond={onChangeSecond} />);
             case "number":
-                return (<TextField onChange={onEventChange} type="number" />);
+                return (<TextInput onChange={onDirectChange} type="number" />);
             default: // text or anything else
-                return (<TextInput onChange={onEventChange} />);
+                return (<TextInput onChange={onEventChange} type="text" />);
 
         }
     }

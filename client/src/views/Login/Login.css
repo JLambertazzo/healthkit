@@ -1,28 +1,29 @@
-#dash{
+#loginCont{
     align-items: center;
-    background-color: #F3F4F6;
+    background-color: #2A5555;
     height: 100vh;
-    overflow: scroll;
+    overflow: hidden;
+    /*margin-top: 5%;*/
 }
 
-.sign-in-box{
-    background-color: rgb(181, 195, 207);
-    margin: 50px;
-    padding: 40px;
-}
+/*.sign-in-box{*/
+/*    background-color: rgb(181, 195, 207);*/
+/*    margin: 50px;*/
+/*    padding: 40px;*/
+/*}*/
 
-#sign-in{
-    padding: 0px;
-    margin: 0px;
-}
+/*#sign-in{*/
+/*    padding: 0px;*/
+/*    margin: 0px;*/
+/*}*/
 
-#email, #pass{
-    background-color: white;
-    border-radius: 4px
-}
+/*#email, #pass{*/
+/*    background-color: white;*/
+/*    border-radius: 4px*/
+/*}*/
 
-#sign-in-button{
-    background-color: rgb(21, 82, 126);
-    color: white;
-}
+/*#sign-in-button{*/
+/*    background-color: rgb(21, 82, 126);*/
+/*    color: white;*/
+/*}*/
 

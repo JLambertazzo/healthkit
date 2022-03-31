@@ -1,30 +1,34 @@
 import './Thumbnail.css'
-import Box from '@mui/material/Box';
-import Button from "@mui/material/Button";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { Button, Box, IconButton, Flex, Spacer, Center, VStack} from '@chakra-ui/react'
+import {FaRegChartBar, FaRegClock} from "react-icons/fa"
 import { useHistory } from 'react-router-dom';
 
 function SentThumbnail(props) {
     const history = useHistory()
     return (
-        <Box sx={{boxShadow: 1}} className="thumbnail sent-thumbnail">
+        <VStack boxShadow={'sm'}
+                paddingY={10}
+                paddingX={15} className="thumbnail sent-thumbnail">
 
             <p className="form-title" style={{marginBottom: '0.5rem', marginTop: 0}}>{props.title}</p>
             <hr/>
-            <p className="form-title org-title" style={{marginBottom: '1rem', marginTop: 0}}>{props.org}</p>
+            <p className="form-title org-title">{props.org}</p>
                 {props.complete && (<Box>
-                    <Button className="dash-results" variant="contained" disableElevation onClick={() => history.push(`/report/${props.id}`)}>
-                        Results <BarChartIcon/>
+                    <Button rightIcon={<FaRegChartBar />}
+                            bg={'#cce3e3'} color={'#2a5555'}
+                            _hover={{bg: '#bad5d5'}}
+                            onClick={() => history.push(`/report/${props.id}`)}
+                    >
+                        Results
                     </Button>
                 </Box>)}
             {!props.complete && (<Box>
-                <p className="progressText">In progress <AccessTimeIcon/></p>
+                <p className="progressText">In progress <FaRegClock/></p>
             </Box>)}
 
 
 
-        </Box>
+        </VStack>
     );
 }
 

@@ -1,24 +1,44 @@
 import './Navbar.css'
-import IconButton from '@mui/material/IconButton';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Button, Box, IconButton, Flex, Spacer, Center} from '@chakra-ui/react'
 import { Link } from 'react-router-dom';
+import { FaUserCircle } from "react-icons/fa";
+
 
 function Navbar() {
     return (
-        <div className="nav">
+        <Flex className="nav" paddingX={5}
+              align={'center'}
+              boxShadow={'lg'}
+        >
 
-            <div className="navTitle">
+            <Box className="navTitle"
+                 w={'100%'}
+            >
+                <Center>
                 <h2><Link to='/' style={{textDecoration: 'none', color:"white"}}> Health Kit</Link></h2>
-            </div>
-            <div>
-            </div>
-            <div className="navIcon">
-                <Link to='/profile'><IconButton >
-                    <AccountCircleIcon
-                        sx={{color: "white", fontSize: '1.5em'}}/></IconButton></Link>
-            </div>
+                </Center>
+            </Box>
+            <Spacer/>
+            <Box className="navIcon">
+                <Link to='/profile'>
 
-        </div>
+                    <IconButton
+                        variant={'ghost'}
+                        w={'3rem'}
+                        h={'3rem'}
+                        _hover={{background: '#278280'}}
+                    >
+
+                        <FaUserCircle
+                        size={30}
+                        color={'white'}
+                        />
+                    </IconButton>
+
+                </Link>
+            </Box>
+
+        </Flex>
     );
 }
 

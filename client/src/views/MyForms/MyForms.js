@@ -63,7 +63,7 @@ function MyForms(props) {
                     <h2>Created Forms</h2>
                     <div className="thumb-list myforms">
                         {user && user.sentForms.map((form) => {
-                            return (!form.isSubmitted && <OwnThumbnail
+                            return (!form.sent && <OwnThumbnail
                                 title={form.name}
                                 date={"Dec. 28, 2021"}
                                 onDelete={() => handleDelete(form._id)}
@@ -77,10 +77,11 @@ function MyForms(props) {
                     <h2>Sent Forms</h2>
                     <div className="thumb-list myforms">
                         {user && user.sentForms.map((form) => {
-                            return (form.isSubmitted && <SentThumbnail
+                            return (form.sent && <SentThumbnail
                                 title={form.name}
                                 org={"SickKids"}
                                 complete={form.isSubmitted}
+                                id={form._id}
                             />)
                         })}
                     </div>

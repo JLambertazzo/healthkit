@@ -74,11 +74,11 @@ async function setFields(form_id, fields) {
         const form = await formModel.findById(form_id)
         const newFields = []
         for (const field of fields) {
-            const found = form.fields.find(f => f.label === field.label)
+            const found = form.fields.find(f => f._id == field._id)
             let updatedField;
             if (found && found.value !== field.value) {
                 // TODO specify author and comment
-                updatedField = await updateField(field._id, field.value, "author")
+                updatedField = await updateField(field._id, JSON.stringify(field.value), "author")
                 newFields.push(updatedField)
             } else {
                 updatedField = await createField(form_id, field)
@@ -117,6 +117,12 @@ async function sendByEmails(form_id, emails) {
 
 async function deleteForm(id) {
     try {
+        // delete all fields in form
+        const { fields } = await formModel.findById(id);
+        await fieldModel.deleteMany({ _id: { $in: fields } })
+        // remove from users who have form
+        await userModel.updateMany({ sentForms: id }, { $pull: { sentForms: id } })
+        await userModel.updateMany({ receivedForms: id }, { $pull: { receivedForms: id } })
         return await formModel.findByIdAndDelete(id)
     } catch(e) {
         console.error('error occurred', e)

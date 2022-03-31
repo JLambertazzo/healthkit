@@ -47,10 +47,10 @@ export const getForm = (id) => {
 }
 
 // Update fields in a form - takes form id and array of fields
-export const updateFields = (id, label, type, value, options) => {
+export const updateFields = (id, fields) => {
     const request = new Request(`/api/form/fields/${id}`, {
-        method: "patch",
-        body: JSON.stringify({label, type, value, options}),
+        method: "PATCH",
+        body: JSON.stringify(fields),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

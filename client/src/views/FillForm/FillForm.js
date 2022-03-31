@@ -1,22 +1,21 @@
 import './FillForm.css'
 import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { Card, Button, Typography, TextField, FormGroup, FormControlLabel, Checkbox, RadioGroup, Radio} from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import { Card, Button } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { getField } from '../../actions/field';
 import { useState, useEffect } from 'react';
-import { submitForm } from '../../actions/form';
-import Input from '../../components/Inputs/Input'
+import Input from '../../components/Inputs/Input';
+import { submitForm, updateFields } from '../../actions/form';
+import { useHistory } from 'react-router-dom';
 
 
 function FillForm(){
+    const history = useHistory();
     const location = useLocation()
     const form = location.state.form;
     const [formFields, setFormFields] = useState([]);
-    const [value, setValue] = useState(null);
+    
 
     const updateValue = (index, value) => {
         setFormFields(prev => {
@@ -38,6 +37,26 @@ function FillForm(){
         }
         fetchData();
     },[])
+
+    const handleChange = (id, v) => {
+        console.log(v)
+        var ff = formFields;
+        ff.forEach((field) => {
+            if (field._id == id){
+                console.log(field)
+                field.value = v;
+                console.log(field)
+            }
+        })
+        setFormFields(ff);
+        console.log(formFields)
+    }
+
+    const handleSubmit = () => {
+        updateFields(form._id, formFields)
+        submitForm(form._id)
+        history.push('/')
+    }
     
     return(
         <div>

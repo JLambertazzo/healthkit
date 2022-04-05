@@ -1,7 +1,8 @@
 import './FillForm.css'
 import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { Card, Button } from '@mui/material';
+// import { Card, Button } from '@mui/material';
+import {Flex, FormControl, FormLabel, Heading, HStack, Box, Button} from "@chakra-ui/react";
 import { useLocation } from 'react-router-dom';
 import { getField } from '../../actions/field';
 import { useState, useEffect } from 'react';
@@ -53,7 +54,7 @@ function FillForm(){
         submitForm(form._id, formFields)
         history.push('/')
     }
-    
+
     return(
         <div>
             <Navbar/>
@@ -67,10 +68,10 @@ function FillForm(){
                         <div className="form2">
                         <h1>{form.name}</h1>
                             {formFields.map((field, index) => {
-                            return <Card className="question">
+                            return <Box className="question">
                                 <Input handleChange={handleChange} value={field.value} id={field._id} type={field.type} options={field.options} label={field.label} />
-                                </Card>})}
-                                <Button className="submit" onClick={() => handleSubmit()}>Submit</Button>
+                                </Box>})}
+                                <Button className="submit" color='#2f8886' onClick={() => handleSubmit()}>Submit</Button>
                                 </div>
                     </div>
             </div>

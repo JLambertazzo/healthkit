@@ -23,10 +23,11 @@
 
 .form h1{
     text-align: center;
-    color: #396288;
+    color: #2f8886;
 }
 
 .form2{
+    margin-top: 8rem;
     min-width:60%
 }
 
@@ -50,7 +51,6 @@
 
 .submit{
     float:right;
-    color:#396288 !important;
     background-color: #e4e4e4 !important;
     margin-bottom: 10% !important;
 }

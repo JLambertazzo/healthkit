@@ -62,7 +62,7 @@ function CreateForm(props) {
         const newForm = {...form, name: title, description: desc, fields: fields}
         updateForm(newForm)
             .then(form => {
-                // history.push('/myforms')
+                history.push('/myforms')
             })
             .catch(console.error)
     }

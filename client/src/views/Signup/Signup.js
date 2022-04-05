@@ -105,6 +105,8 @@ function Signup(){
                                    _hover={{borderColor:'gray.200'}}
                                    _placeholder={{opacity: 0.4, color: 'black' }}
                             />
+                            <FormControl>
+
                             <CUIAutoComplete
                                 id={'groups'}
                                 label="Choose your group(s)"
@@ -123,6 +125,8 @@ function Signup(){
                                 itemRenderer={({value}) => <div>{value}</div>}
                                 createItemRenderer={(value) => <div>{value}</div>}
                             />
+
+                            </FormControl>
 
                             <FormLabel htmlFor='username'
                                        color={'black'}

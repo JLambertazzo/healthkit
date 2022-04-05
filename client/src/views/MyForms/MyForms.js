@@ -88,7 +88,7 @@ function MyForms(props) {
                         {user && user.sentForms.map((form) => {
                             return (form.sent && <SentThumbnail
                                 title={form.name}
-                                org={"SickKids"}
+                                org={""}
                                 complete={form.isSubmitted}
                                 id={form._id}
                             />)

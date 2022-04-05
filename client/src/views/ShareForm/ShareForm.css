@@ -3,19 +3,19 @@
     position: absolute;
 }
 
-.share-content{
-    min-width: 300px;
-    min-height: 200px;
-    width: 50vw;
-    height: 50vh;
-}
+/*.share-content{*/
+/*    min-width: 300px;*/
+/*    min-height: 200px;*/
+/*    width: 50vw;*/
+/*    height: 50vh;*/
+/*}*/
 
-.MuiDialog-paper{
-    overflow-x: hidden;
-    padding: 50px;
-    padding-top: 30px;
-    padding-bottom: 20px;
-}
+/*.MuiDialog-paper{*/
+/*    overflow-x: hidden;*/
+/*    padding: 50px;*/
+/*    padding-top: 30px;*/
+/*    padding-bottom: 20px;*/
+/*}*/
 
 .dialog-title{
     padding-top: 0px !important;

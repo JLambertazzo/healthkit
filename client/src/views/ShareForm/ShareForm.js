@@ -1,11 +1,12 @@
-import './ShareForm.css'
+// import './ShareForm.css'
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Text, Input, Button, UnorderedList, ListItem } from "@chakra-ui/react"
 import {useState} from 'react';
 import {shareByEmail} from '../../actions/form'
+import {FaPlus, FaTimes, FaTrash} from "react-icons/fa";
 
 export default function ShareForm({open, formId, formName, user, handleClose}){
 
-    const [emails, setEmails] = useState([])
+    const [emails, setEmails] = useState([""])
 
     const addNewEmail = () => {
         setEmails(prev => {
@@ -40,13 +41,13 @@ export default function ShareForm({open, formId, formName, user, handleClose}){
                         <Text>
                             Enter Emails below:
                         </Text>
-                        <UnorderedList sx={{overflowY: "scroll !important"}}>
+                        <UnorderedList style={{listStyle: 'none'}}>
                                 {
                                     emails.map((email, index) => (
-                                        <ListItem>
+                                        <ListItem my={5}>
                                             <Input type="text" className="email" variant="standard"
                                                    color={'black'}
-                                                   w={'40%'}
+                                                   w={'fit-content'}
                                                    borderWidth={1}
                                                    borderColor={'gray.200'}
                                                    focusBorderColor={'#2f8886'}
@@ -57,15 +58,18 @@ export default function ShareForm({open, formId, formName, user, handleClose}){
                                     ))
                                 }
                                 <Button
-                                bg={'#2f8886'}
-                                color={'white'}
+                                leftIcon={<FaPlus/>}
                                     style={{width: "max-content", marginBottom:'15px'}}
                                         onClick={() => addNewEmail()}>Add Email</Button>
                         </UnorderedList>
                     </ModalBody>
                     <ModalFooter className="l1">
                         <div className="l2">
-                            <Button onClick={() => sendForm()} className="send">SEND</Button>
+                            <Button
+                                bg={'#2f8886'}
+                                color={'white'}
+                                _hover={{background: '#278280'}}
+                                onClick={() => sendForm()} className="send">SEND</Button>
                         </div>
                     </ModalFooter>
                 </ModalContent>

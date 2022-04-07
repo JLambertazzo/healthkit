@@ -38,7 +38,7 @@ export const LoginUser = (email, password, history) => {
         .then(res => {
             if (res.status === 200) {
                 // history.push("/");
-                window.location.href = "/"
+                window.location.href = "/home"
             }
             return res.json();
         })

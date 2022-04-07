@@ -15,7 +15,7 @@ function Navbar() {
                  w={'100%'}
             >
                 <Center>
-                <h2><Link to='/' style={{textDecoration: 'none', color:"white"}}> Health Kit</Link></h2>
+                <h2><Link to='/home' style={{textDecoration: 'none', color:"white"}}> Health Kit</Link></h2>
                 </Center>
             </Box>
             <Spacer/>

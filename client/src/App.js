@@ -12,6 +12,7 @@ import { checkLoggedIn } from "./actions/user";
 import {useState, useEffect} from "react";
 import FillForm from "./views/FillForm/FillForm";
 import ModifyForm from "./views/ModifyForm/ModifyForm";
+import Landing from "./views/Landing/Landing";
 
 function App() {
     const [currentUser, setCurrUser] = useState("")
@@ -23,13 +24,16 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
+          <Route exact path = '/'>
+            <Landing/>
+          </Route>
           <Route exact path = '/login'>
             <LogIn/>
           </Route>
           <Route exact path = '/signup'>
             <SignUp/>
           </Route>
-          <Route exact path='/'>
+          <Route exact path='/home'>
               {currentUser && (
                   <Dashboard user={currentUser}/>
               )}

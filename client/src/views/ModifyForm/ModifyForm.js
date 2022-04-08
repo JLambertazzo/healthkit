@@ -7,9 +7,9 @@ import { Delete, Close, Add } from '@mui/icons-material'
 import Navbar from "../../components/Navbar/Navbar";
 import { useState } from 'react'
 import { createForm, getForm, updateForm } from '../../actions/form'
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import {FaPlus, FaTimes, FaTrash} from "react-icons/fa";
+import {FaPlus, FaArrowLeft, FaTrash} from "react-icons/fa";
 
 
 const types = [
@@ -158,22 +158,6 @@ function CreateForm(props) {
                         autoFocus={focused === `${qindex}-${index}`} onFocus={() => setFocused(`${qindex}-${index}`)} variant="standard" value={opt} onChange={(e) => setOpt(qindex, index, e.target.value)} />
                 </HStack>)
 
-                                    {/*<FormLabel*/}
-                                    {/*    color={'black'}*/}
-                                    {/*    key={`${qindex}-${index}-${opt}`}*/}
-                                    {/*    label={<Input*/}
-                                    {/*        color={'black'}*/}
-                                    {/*        w={'40%'}*/}
-                                    {/*        borderColor={'gray.200'}*/}
-                                    {/*        focusBorderColor={'#2f8886'}*/}
-                                    {/*        _hover={{borderColor:'gray.200'}}*/}
-                                    {/*        _placeholder={{opacity: 0.4, color: 'black' }}*/}
-                                    {/*        placeholder={"Title"}*/}
-                                    {/*        autoFocus={focused === `${qindex}-${index}`} onFocus={() => setFocused(`${qindex}-${index}`)} variant="standard" value={opt} onChange={(e) => setOpt(qindex, index, e.target.value)} />}*/}
-                                    {/*    control={<Checkbox isDisabled />}*/}
-                                    {/*    />
-
-                                    </div>)*/}
         } else {
             opts = options.map((opt, index) => <HStack
                 mt={5}
@@ -222,6 +206,11 @@ function CreateForm(props) {
             <Navbar/>
             <div style={{display: "grid", gridTemplateColumns: "6fr 1fr", height: '100vh'}}>
                 <FormControl isRequired className="createform-cont">
+                    <Button my={10} leftIcon={<FaArrowLeft />}
+                            onClick={() => history.goBack()}
+                            colorScheme='teal' variant='solid'>
+                        Go Back
+                    </Button>
                         <Heading fontSize={30}>Create a Form</Heading>
 
 
@@ -234,7 +223,7 @@ function CreateForm(props) {
                         mb={10}
                         className="form-info">
                         <FormLabel htmlFor={"outlined-basic"}
-                                   color={'#2F8886'}
+                                   color={'black'}
                         >Form Title</FormLabel>
                     <Input id="outlined-basic" className="form-field" label="Title"
                            color={'black'}
@@ -247,7 +236,7 @@ function CreateForm(props) {
                            mb={10}
                            value={title} onChange={(e) => setTitle(e.target.value)} />
                         <FormLabel htmlFor={"outlined-multiline-static"}
-                        color={'#2F8886'}
+                        color={'black'}
                         >Form Description</FormLabel>
                         <Textarea
                             value={desc}
@@ -283,7 +272,7 @@ function CreateForm(props) {
                         w={'60%'}
                     />
 
-                    <div>
+                    <Box mb={15}>
                         <List>
                             {
                                 fields.map((field, index) => (
@@ -332,12 +321,13 @@ function CreateForm(props) {
                                 ))
                             }
                         </List>
-                    </div>
+                    </Box>
 
 
                     <Button
                         bg={'#2f8886'}
                         color={'white'}
+                        mb={'2rem'}
                         _hover={{bg: '#278280'}} onClick={form_id ? update : submitForm} sx={{marginTop: 2}}>{form_id ? "Update" : "Create"}</Button>
                 </FormControl>
 

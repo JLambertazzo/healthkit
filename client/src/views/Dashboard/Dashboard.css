@@ -6,7 +6,6 @@
 
 .dash-main {
     background-color: #F3F4F6;
-    overflow: scroll;
     box-shadow: rgb(0 0 0 / 10%) 0px 6px 8px inset;
     display: flex;
     flex-direction: column;

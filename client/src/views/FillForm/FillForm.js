@@ -39,12 +39,17 @@ function FillForm(){
         fetchData();
     },[])
 
+    useEffect(() => {
+        console.log("ff", formFields);
+    }, [formFields])
+
     const handleChange = (id, v) => {
-        var ff = formFields;
-        ff.forEach((field) => {
+        const ff = formFields.map((field) => {
             if (field._id == id){
-                field.value = v;
+                // field.value = v;
+                return {...field, value: v};
             }
+            return field
         })
         setFormFields(ff);
     }

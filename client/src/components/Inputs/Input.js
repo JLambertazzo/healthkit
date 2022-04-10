@@ -26,7 +26,7 @@ export default function Input(props) {
     }
     const onDirectChange = (e) => {
         setValue(e)
-        props.handleChange(props.id, value)
+        props.handleChange(props.id, e)
     }
     const onChangeFirst = (e) => {
         setValue(prev => [e.target.value, prev.split("_")[1]].join("_"));

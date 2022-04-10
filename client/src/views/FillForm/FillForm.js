@@ -52,7 +52,7 @@ function FillForm(){
     const handleSubmit = () => {
         updateFields(form._id, formFields)
         submitForm(form._id, formFields)
-        history.push('/')
+        history.push('/home')
     }
 
     return(

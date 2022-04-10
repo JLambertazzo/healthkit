@@ -7,8 +7,7 @@ export default function Multi(props) {
     <CheckboxGroup>
       <Stack direction="column">
         {props.options.map(option => (
-          // <FormControlLabel label={option} control={<Checkbox name={option} onChange={props.onChange} />} />
-          <Checkbox value={option} key={option}>{option}</Checkbox>
+          <Checkbox value={option} key={option} onChange={props.onChange}>{option}</Checkbox>
         ))}
       </Stack>
     </CheckboxGroup>

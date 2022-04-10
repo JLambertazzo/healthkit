@@ -38,29 +38,22 @@ export default function Input(props) {
     }
     const onMultiChange = (e) => {
         // setMultiValue(prev => ({...prev, [e.target.name]: e.target.checked}))
-        multiValue[e.target.name]= e.target.checked
-        setMultiValue(multiValue)
-        if (e.target.checked){
+        const copy = {...multiValue};
+        copy[e.target.value] = !copy[e.target.value];
+        setMultiValue(copy);
+        if (copy[e.target.value]) {
             var old = multiList;
-            old.push(e.target.name)
+            old.push(e.target.value)
             setMultiList(old);
         }
         else{
             var old = multiList;
-            var i = old.indexOf(e.target.name);
+            var i = old.indexOf(e.target.value);
             old.splice(i, 1)
             setMultiList(old);
         }
         handleChange(props.id, multiList.toString())
     }
-
-    // useEffect(() => {
-    //     let valueRes = value
-    //     if (props.type === "multi") {
-    //         valueRes = Object.entries(multiValue).reduce((acc, [key, val]) => acc + val ? key : "", "") //idk
-    //     }
-    //     props.updateValue(valueRes)
-    // }, [value, multiValue])
 
     const getInput = (type) => {
         switch(type) {

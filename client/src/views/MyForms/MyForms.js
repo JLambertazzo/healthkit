@@ -11,7 +11,8 @@ import { useEffect } from "react";
 import { checkLoggedIn } from "../../actions/user";
 import { deleteForm } from "../../actions/form";
 import ShareForm from "../ShareForm/ShareForm";
-import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button} from "@chakra-ui/react";
+import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button, Image, Text} from "@chakra-ui/react";
+import empty from "../MyForms/emptycreated.svg";
 
 function MyForms(props) {
     const history = useHistory();
@@ -66,7 +67,10 @@ function MyForms(props) {
                         mb={'2rem'}
                         fontSize={'20px'} color={'#2f8886'}>Created Forms</Heading>
                     <div className="thumb-list myforms">
-                        {user && user.sentForms.map((form) => {
+                        {user &&
+                            user.sentForms.length > 0 && (
+
+                            user.sentForms.map((form) => {
                             return (!form.sent && <OwnThumbnail
                                 title={form.name}
                                 date={"Dec. 28, 2021"}
@@ -75,7 +79,29 @@ function MyForms(props) {
                                 handleOpen={handleOpen}
                                 form={form}
                             />)
-                        })}
+                        }))}
+                        {user && user.sentForms.length === 0 && (
+                            <HStack
+                                w={'70%'}
+                                my={'2rem'}
+                            >
+                                <Image
+                                    src={empty}
+                                    boxSize={'150px'}
+                                />
+
+                                <Text
+                                    color={'#2F8886'}
+                                    marginLeft={'2rem !important'}
+                                    fontWeight={500}
+                                >Nothing here yet! Get started by <Text
+                                    display={'inline'}
+                                    cursor={'pointer'}
+                                    fontWeight={800}
+                                    onClick={() => history.push('/createform')}>creating a form</Text>.
+                                </Text>
+                            </HStack>
+                        )}
 
                     </div>
                     <Heading

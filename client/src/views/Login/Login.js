@@ -1,27 +1,27 @@
 import './Login.css';
-import { LockOutlined } from '@mui/icons-material';
 import { Link , useHistory } from 'react-router-dom';
 import {
     Button, Box,
-    IconButton, Flex, Spacer,
-    Center, Input, FormControl, FormLabel,
-    FormErrorMessage,
-    FormHelperText,
-    HStack, Heading, VStack
+    Flex,
+    Input, FormControl, FormLabel,
+    HStack, Heading,
+    Alert,
+    AlertIcon,
 } from '@chakra-ui/react';
 import { LoginUser } from '../../actions/user';
 import Navbar from "../../components/Navbar/Navbar";
-import { FaUserCircle } from "react-icons/fa";
+import {useState} from "react";
 
 function Login(){
 
     const history = useHistory();
+    const [success, setSuccess] = useState(true)
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const email = event.target.email.value;
         const pass = event.target.password.value;
-        LoginUser(email, pass, history);
+        LoginUser(email, pass, history).then(res => res.user === null ? setSuccess(false) : null)
     }
 
     return(
@@ -49,10 +49,6 @@ function Login(){
                                 fontSize={'1.5em'}>
                                 Log In
                             </Heading>
-                            {/*<FaUserCircle*/}
-                            {/*    m={1}*/}
-                            {/*    bg={'rgb(21, 82, 126)'}*/}
-                            {/*/>*/}
                         </HStack>
                     <FormLabel
                         htmlFor='email'
@@ -83,6 +79,14 @@ function Login(){
                            _hover={{borderColor:'gray.200'}}
                            _placeholder={{opacity: 0.4, color: 'black' }}
                     />
+                        {!success && (
+                            <Alert
+                                mt={'1rem'}
+                                status='error'>
+                                <AlertIcon />
+                                Login failed, your email or password are incorrect.
+                            </Alert>
+                        )}
 
                         <Box
                             mt={10}
@@ -99,6 +103,7 @@ function Login(){
                             style={{color: '#2f8886'}}
 
                             > {"Don't have an account? Sign Up"} </Link>
+
                         </Box>
                     </Flex>
 

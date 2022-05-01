@@ -61,5 +61,8 @@
 }
 
 .profile-main {
-    display: block;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
 }

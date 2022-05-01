@@ -1,12 +1,21 @@
 import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import './Profile.css';
 import {logout} from "../../actions/user";
-import GroupIcon from '@mui/icons-material/Group'
-import EmailIcon from '@mui/icons-material/Email'
-import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button} from "@chakra-ui/react";
-import { FaUserCircle, FaUserFriends } from "react-icons/fa";
+import {
+    Flex,
+    FormControl,
+    FormLabel,
+    Heading,
+    HStack,
+    Input,
+    Box,
+    Button,
+    Center,
+    VStack,
+    Text, IconButton
+} from "@chakra-ui/react";
+import { MdOutlineEmail} from "react-icons/md";
 
 function Profile(props){
     return(
@@ -18,38 +27,73 @@ function Profile(props){
                         current=""
                     />
                 </div>
-                <div className = "dash-main profile-main">
-                    <Button variant="contained" disableElevation className={"logout-btn"}
-                            onClick={() => {logout()}}>Log out</Button>
-                    <Box boxShadow={'sm'} className = "profile">
-                            {/*<div className = "profile-pic">*/}
+                <Box className = "dash-main profile-main">
+                    <Button
+                            mt={'5rem'}
+                            alignSelf={'flex-start'}
+                            ml={'20%'}
+                            mb={'1rem'}
+                            bg={'gray.200'}
+                            color={'gray.500'}
+                            onClick={() => {logout()}}>Log out
+                    </Button>
+                    <Center boxShadow={'sm'}
+                            p={'1rem'}
+                            bg={'white'}
+                            mr={'20%'}
+                            w={'40%'}
 
-                            {/*</div>*/}
-                            <div className = "profile-info">
-                                <FaUserCircle
-                                    color={"#8C99A0"}
-                                    fontSize={'7em'}
-                                />
-                                <div className="user-info-cont" style={{rowGap: '1rem'}}>
-                                    <div className="user-info-cont">
-                                    <h2 style={{marginBottom: 0}}>{props.user.name}</h2>
-                                    <span className="profile-username">@{props.user.username || 'judy'} / <span className = "profile-email">{props.user.email || 'judy@hotmail.com'}</span>  </span>
-                                        <div className="profile-group">
-                                            <FaUserFriends
-                                                color={'#308886'}
-                                                fontSize={'2em'}
-                                            />
-                                            <p>{(props.user.group || []).map((el) => {
-                                                return(<p>{el.name}</p>)
-                                            }) || 'Boston Childrens Hospital'}</p>
-                                        </div>
-                                    </div>
+                    >
 
+                            <Box w={'100%'}>
+                                <VStack>
+                                    <IconButton
+                                        alignSelf={'flex-end'}
+                                        aria-label={''}>
+                                        <MdOutlineEmail/>
+                                    </IconButton>
+                                    <Center
+                                    background={'#CEE0E0'}
+                                    borderRadius={'50%'}
+                                    mt={'0 !important'}
+                                    padding={5}
+                                    w={'5rem'}
+                                    h={'5rem'}
+                                    >
+                                        <Heading
+                                        color={'#2F8886'}
 
-                                </div>
-                            </div>
+                                        >{props.user.name.split(' ').length > 1 && (props.user.name.split(' ')[0][0]+props.user.name.split(' ')[1][0])}
+                                            {props.user.name.split(' ').length === 1 && (props.user.name.split(' ')[0][0])}
+
+                                        </Heading>
+                                    </Center>
+                                    <Text fontWeight={500}
+                                    fontSize={24}
+                                    >{props.user.name}</Text>
+                                    <Text
+                                        mt={'0 !important'}
+                                    color={'gray.400'}
+                                    >
+                                        @{props.user.username || 'judy'}
+                                    </Text>
+                                    <HStack
+                                    mb={'1rem !important'}
+                                    >
+                                        {(props.user.group || []).map((el) => {
+                                                            return(<Text
+                                                                color={'#2F8886'}
+                                                                bg={'#CEE0E0'}
+                                                                paddingX={3}
+                                                                borderRadius={20}
+                                                            >{el.name}</Text>)
+                                                   }) || 'Boston Childrens Hospital'}
+                                    </HStack>
+
+                                </VStack>
+                            </Box>
+                    </Center>
                     </Box>
-                </div>
             </div>
         </div>
     )

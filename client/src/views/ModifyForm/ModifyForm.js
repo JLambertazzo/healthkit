@@ -71,8 +71,8 @@ function CreateForm(props) {
         setFields(prev => {
             return prev.concat({
                 label: "",
-                // type: "text",
-                options: []
+                options: [],
+                index: fields.length > 0 ? fields[fields.length - 1].index + 1 : 0
             })
         })
     }
@@ -82,8 +82,8 @@ function CreateForm(props) {
             const copy = [...prev];
             copy.splice(index + 1, 0, {
                 label: "",
-                // type: "text",
-                options: []
+                options: [],
+                index: fields[fields.length - 1].index + 1
             });
             return copy;
         })
@@ -164,7 +164,6 @@ function CreateForm(props) {
                 key={`${qindex}-${index}-${opt}`}
             ><IconButton  icon={ <FaTrash
                 color={'#a0aec0'}/>} onClick={() => delOpt(qindex, index)}/>
-                                        >
                                             <Radio
                                                 isDisabled
                                                 outline={'solid 2px #a0aec0'}

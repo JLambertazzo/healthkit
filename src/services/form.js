@@ -1,7 +1,6 @@
 const { formModel } = require('../db/models/form')
 const { userModel } = require('../db/models/user')
 const { fieldModel } = require('../db/models/field')
-const { groupModel } = require('../db/models/group')
 const { generateReport } = require('./report')
 const { updateField, createField } = require('./field')
 
@@ -200,13 +199,16 @@ async function copyForm (form, group_id) {
         label: field.label,
         type: field.type,
         options: field.options,
-        isComplete: field.isComplete
+        isComplete: field.isComplete,
+        index: field.index
     }));
     const newFields = await fieldModel.insertMany(trimmedFields)
     const newForm = await formModel.create({
         name: form.name,
         description: form.description,
-        fields: newFields.map(field => field._id),
+        fields: newFields
+            .sort((f1,f2) => f1.index - f2.index)
+            .map(field => field._id),
         numComplete: form.numComplete,
         group: group_id,
         parent: form._id,
@@ -232,13 +234,14 @@ async function sendForm(sender, id, targets) {
             // create form copy - points to original
             var group_id;
             await userModel.findOne({email: target}).then(u=> {
-                group_id = u.group;
+                if (u) {
+                    group_id = u.group;
+                } else {
+                    // TODO show something on screen
+                    console.error('no user found')
+                }
             }
             )
-            // (await groupModel.findOne({ name: target.group })).then(g => {
-            //     group_id = g._id
-            //     }
-            // )
             const newForm = await copyForm(form, group_id);
             await userModel.findOneAndUpdate({ email: target }, { $push: { receivedForms: newForm._id } });
         }

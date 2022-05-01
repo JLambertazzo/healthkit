@@ -15,7 +15,8 @@ const fieldModel = model('Field', new Schema({
         default: []
     }],
     options: {type: [String], default: []},
-    isComplete: {type: Boolean, default: false }
+    isComplete: {type: Boolean, default: false },
+    index: { type: Number, required: true }
 }), 'Fields')
 
 module.exports = { fieldModel }

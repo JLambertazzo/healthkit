@@ -1,9 +1,9 @@
 // Create a form
 export const createForm = (name, description, fields, username) => {
-
+    const fieldsSorted = fields.sort((f1,f2) => f1.index - f2.index)
     const request = new Request(`/api/form`, {
         method: "post",
-        body: JSON.stringify({form: {name, description, fields}, username}),
+        body: JSON.stringify({form: {name, description, fields: fieldsSorted}, username}),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

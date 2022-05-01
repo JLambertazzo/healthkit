@@ -45,8 +45,10 @@ function Signup(){
         const email = event.target.email.value;
         const name = event.target.name.value;
         const group = selectedItems.map(g => g.value);
-        signup(user, email, pass, name, group);
-        window.location.href = "/login";
+
+        signup(user, email, pass, name, group)
+            .then(() => history.push('/login'))
+            .catch(console.error);
     }
 
     return(

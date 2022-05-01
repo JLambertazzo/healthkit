@@ -1,10 +1,10 @@
 
 // Create a field and add it to a form with given form id
-export const createField = (id, label, type, value, options) => {
+export const createField = (id, label, type, value, options, index) => {
 
     const request = new Request(`/api/field/${id}`, {
         method: "post",
-        body: JSON.stringify({label, type, value, options}),
+        body: JSON.stringify({label, type, value, options, index}),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

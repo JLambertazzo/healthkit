@@ -1,13 +1,12 @@
 import './ModifyForm.css'
 import {
     Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button, IconButton, Checkbox,
-    Radio, Textarea, Divider, List, ListItem, Select, Tooltip, FormHelperText
+    Radio, Textarea, Divider, List, Select, Tooltip, useToast
 } from "@chakra-ui/react";
-import { Delete, Close, Add } from '@mui/icons-material'
 import Navbar from "../../components/Navbar/Navbar";
 import { useState } from 'react'
 import { createForm, getForm, updateForm } from '../../actions/form'
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import {FaPlus, FaArrowLeft, FaTrash} from "react-icons/fa";
 
@@ -33,6 +32,7 @@ function CreateForm(props) {
     const [form, setForm] = useState(null) // need this for updates
     const history = useHistory()
     const { form_id } = useParams() // defined if we are editing a form
+    const toast = useToast();
 
     useEffect(() => {
         if (form_id) {
@@ -50,8 +50,80 @@ function CreateForm(props) {
     }, [form_id])
 
     const submitForm = () => {
+        // validate then create
+        if (!title) {
+            toast({
+                title: "Title Required",
+                description: "Please enter a title for the form",
+                status: "error",
+                isClosable: true,
+            })
+            return
+        }
+        if (!desc) {
+            toast({
+                title: "Description Required",
+                description: "Please enter a description for the form",
+                status: "error",
+                isClosable: true,
+            })
+            return
+        }
+        if (fields.length === 0) {
+            toast({
+                title: "Fields Required",
+                description: "Please enter at least one field",
+                status: "error",
+                isClosable: true,
+            })
+            return
+        }
+        // validate each field
+        for (let i = 0; i < fields.length; i++) {
+            if (!fields[i].label) {
+                toast({
+                    title: "Question Missing",
+                    description: `Please enter a question for question ${i + 1}`,
+                    status: "error",
+                    isClosable: true,
+                })
+                return
+            }
+            if (!fields[i].type) {
+                toast({
+                    title: "Type Missing",
+                    description: `Please select a type for question ${i + 1}`,
+                    status: "error",
+                    isClosable: true,
+                })
+                return
+            }
+            if (["multiple", "single"].includes(fields[i].type) && fields[i].options.length === 0) {
+                toast({
+                    title: "Options Required",
+                    description: `Please enter options for question ${i + 1}`,
+                    status: "error",
+                    isClosable: true,
+                })
+                return
+            }
+            if (fields[i].options.filter(opt => !opt).length > 0) {
+                toast({
+                    title: "Blank Option Found",
+                    description: `Please delete or fill this option on question ${i + 1}`,
+                    status: "error",
+                    isClosable: true,
+                })
+                return
+            }
+        }
         createForm(title, desc, fields, props.user.username)
-            .then(form => {
+            .then(() => {
+                toast({
+                    title: "Form Created",
+                    status: "success",
+                    isClosable: true
+                })
                 history.push('/myforms')
             })
             .catch(console.error)
@@ -327,7 +399,7 @@ function CreateForm(props) {
                         bg={'#2f8886'}
                         color={'white'}
                         mb={'2rem'}
-                        _hover={{bg: '#278280'}} onClick={form_id ? update : submitForm} sx={{marginTop: 2}}>{form_id ? "Update" : "Create"}</Button>
+                        _hover={{bg: '#278280'}} onClick={form_id ? update : submitForm} sx={{marginTop: 2}}>{form_id ? "Update Form" : "Create Form"}</Button>
                 </FormControl>
 
             </div>

@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { getField } from '../../actions/field';
 import { useState, useEffect } from 'react';
 import Input from '../../components/Inputs/Input';
-import { submitForm, updateFields } from '../../actions/form';
+import { getForm, submitForm, updateFields } from '../../actions/form';
 import { useHistory } from 'react-router-dom';
 
 
@@ -17,36 +17,17 @@ function FillForm(){
     const form = location.state.form;
     const [formFields, setFormFields] = useState([]);
 
-
-    const updateValue = (index, value) => {
-        setFormFields(prev => {
-            const copy = [...prev]
-            copy[index].value = value
-            return copy
-        })
-    }
-
     useEffect(() => {
-        const fetchData = () => {
-            var fs = []
-            form.fields.map((fID) => getField(fID).then(field => {
-                    fs.push(field.field)
-                    return fs
-                    }).then(fs=>{
-                        setFormFields([...formFields, ...fs])}
-                        ));
-        }
-        fetchData();
-    },[])
-
-    useEffect(() => {
-        console.log("ff", formFields);
-    }, [formFields])
+        getForm(form._id).then(res => {
+            if (res.form) {
+                setFormFields(res.form.fields);
+            }
+        }).catch(console.error)
+    },[form])
 
     const handleChange = (id, v) => {
         const ff = formFields.map((field) => {
             if (field._id == id){
-                // field.value = v;
                 return {...field, value: v};
             }
             return field
@@ -72,13 +53,27 @@ function FillForm(){
                     <div className="form">
                         <div className="form2">
                         <h1>{form.name}</h1>
-                            {formFields.map((field, index) => {
-                            return <Box className="question">
-                                <Input handleChange={handleChange} value={field.value} id={field._id} type={field.type} options={field.options} label={field.label} />
-                                </Box>})}
-                                <Button className="submit" color='#2f8886' onClick={() => handleSubmit()}>Submit</Button>
-                                </div>
+                        {formFields.map(field =>
+                            <Box className="question">
+                                <Input
+                                    handleChange={handleChange}
+                                    value={field.value}
+                                    id={field._id}
+                                    type={field.type}
+                                    options={field.options}
+                                    label={field.label}
+                                />
+                            </Box>
+                        )}
+                        <Button
+                            className="submit"
+                            color='#2f8886'
+                            onClick={handleSubmit}
+                        >
+                            Submit
+                        </Button>
                     </div>
+                </div>
             </div>
         </div>
     )

@@ -1,16 +1,16 @@
 import './Signup.css';
-// import { Container, Box, TextField, Avatar, Button} from '@mui/material';
-import { LockOutlined } from '@mui/icons-material';
 import { Link, useHistory } from 'react-router-dom';
 import { signup } from '../../actions/user';
 import Navbar from "../../components/Navbar/Navbar";
 import { CUIAutoComplete } from 'chakra-ui-autocomplete'
 import {useState, useEffect} from "react";
 import {getAllGroups} from "../../actions/group";
-import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button} from "@chakra-ui/react";
+import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button, Alert,
+    AlertIcon} from "@chakra-ui/react";
 
 function Signup(){
 
+    const [success, setSuccess] = useState(true)
     const history = useHistory();
     const [groups, setGroups] = useState([]);
 
@@ -46,9 +46,14 @@ function Signup(){
         const name = event.target.name.value;
         const group = selectedItems.map(g => g.value);
 
-        signup(user, email, pass, name, group)
-            .then(() => history.push('/login'))
-            .catch(console.error);
+        signup(user, email, pass, name, group).then(res => {
+            if (res.user == null) {
+                setSuccess(false)
+            }
+            else {
+                window.location.href = "/login"
+            }
+        })
     }
 
     return(
@@ -158,6 +163,15 @@ function Signup(){
                                    _hover={{borderColor:'gray.200'}}
                                    _placeholder={{opacity: 0.4, color: 'black' }}
                             />
+
+                            {!success && (
+                                <Alert
+                                    mt={'1rem'}
+                                    status='error'>
+                                    <AlertIcon />
+                                    Error signing up! Your username/email is not unique.
+                                </Alert>
+                            )}
 
                             <Box
                                 mt={10}

@@ -28,7 +28,6 @@ function Dashboard(props) {
                     {props.user.receivedForms.length > 0 &&(
 
                         props.user.receivedForms.map((form) => {
-                            console.log("got here")
                         return (<Thumbnail
                             form={form}
                             value={0}

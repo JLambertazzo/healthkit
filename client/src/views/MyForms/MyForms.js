@@ -22,6 +22,16 @@ function MyForms(props) {
         checkLoggedIn(setUser);
     }, [])
 
+    useEffect(() => {
+        if (!user) return;
+        console.log('updated to user', user)
+        console.log(
+            'should see',
+            user.sentForms.filter(f => f.parent && !f.group),
+            user.sentForms.filter(f => f.sent)
+        )
+    }, [user])
+
     const handleDelete = (id) => {
         deleteForm(id)
             .then(_ => {
@@ -111,8 +121,10 @@ function MyForms(props) {
                         fontSize={'20px'}
                              color={'#2f8886'}>Sent Forms</Heading>
                     <div className="thumb-list myforms">
-                        {user && user.sentForms.map((form) => {
-                            return (form.sent && <SentThumbnail
+                        {user && user.sentForms
+                                    .filter(f => f.sent && f.parent && !f.group)
+                                    .map((form) => {
+                            return (<SentThumbnail
                                 title={form.name}
                                 org={""}
                                 complete={form.isSubmitted}

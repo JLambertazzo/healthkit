@@ -23,7 +23,6 @@ async function generateReport(form_id) {
         const children = await formModel.find({ parent: form_id }).populate("fields").populate("group")
         // if any unsubmitted child, do nothing
         if (children.find(childForm => !childForm.isSubmitted)) {
-            console.log('doing nothing')
             return null
         }
         const questions = parent.fields.map(field => field.label)

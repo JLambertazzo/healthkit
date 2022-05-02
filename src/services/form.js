@@ -217,6 +217,11 @@ async function copyChild (form, group_id) {
 }
 
 async function copyParent (form) {
+    // return existing parent form if one is found
+    const foundForm = await formModel.findOne({ group: null, parent: form._id });
+    if (foundForm) {
+        return foundForm;
+    }
     // create new form copy and return it
     // this is parent that sender sees, so we still have template around
     const trimmedFields = form.fields.map(field => ({
@@ -235,7 +240,7 @@ async function copyParent (form) {
             .map(field => field._id),
         numComplete: form.numComplete,
         group: null,
-        parent: null,
+        parent: form._id,
         sent: true,
     })
     return newForm;

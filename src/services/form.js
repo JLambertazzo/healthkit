@@ -193,7 +193,7 @@ async function submitForm(id, fields) {
     }
 }
 
-async function copyForm (form, group_id) {
+async function copyChild (form, group_id) {
     // create new form copy and return it
     const trimmedFields = form.fields.map(field => ({
         label: field.label,
@@ -213,7 +213,36 @@ async function copyForm (form, group_id) {
         group: group_id,
         parent: form._id,
     })
-    console.log('created copy', newForm, newForm._id)
+    return newForm;
+}
+
+async function copyParent (form) {
+    // return existing parent form if one is found
+    const foundForm = await formModel.findOne({ group: null, parent: form._id });
+    if (foundForm) {
+        return foundForm;
+    }
+    // create new form copy and return it
+    // this is parent that sender sees, so we still have template around
+    const trimmedFields = form.fields.map(field => ({
+        label: field.label,
+        type: field.type,
+        options: field.options,
+        isComplete: field.isComplete,
+        index: field.index
+    }));
+    const newFields = await fieldModel.insertMany(trimmedFields)
+    const newForm = await formModel.create({
+        name: form.name,
+        description: form.description,
+        fields: newFields
+            .sort((f1,f2) => f1.index - f2.index)
+            .map(field => field._id),
+        numComplete: form.numComplete,
+        group: null,
+        parent: form._id,
+        sent: true,
+    })
     return newForm;
 }
 
@@ -229,7 +258,10 @@ async function sendForm(sender, id, targets) {
         if (!form) {
             return null;
         }
-        await formModel.findByIdAndUpdate(id, { sent: true })
+        // create separate parent form, and send it
+        const parent = await copyParent(form);
+        parent.fields = await fieldModel.find({ _id: { $in: parent.fields } })
+        await userModel.findOneAndUpdate({ username: sender }, { $push: { sentForms: parent._id }});
         for (const target of targets) {
             // create form copy - points to original
             var group_id;
@@ -237,12 +269,11 @@ async function sendForm(sender, id, targets) {
                 if (u) {
                     group_id = u.group;
                 } else {
-                    // TODO show something on screen
                     console.error('no user found')
                 }
             }
             )
-            const newForm = await copyForm(form, group_id);
+            const newForm = await copyChild(parent, group_id);
             await userModel.findOneAndUpdate({ email: target }, { $push: { receivedForms: newForm._id } });
         }
         return form

@@ -216,7 +216,7 @@ async function copyChild (form, group_id) {
     return newForm;
 }
 
-async function copyParent (form) {
+async function copyParent (sender, form) {
     // return existing parent form if one is found
     const foundForm = await formModel.findOne({ group: null, parent: form._id });
     if (foundForm) {
@@ -243,6 +243,7 @@ async function copyParent (form) {
         parent: form._id,
         sent: true,
     })
+    await userModel.findOneAndUpdate({ username: sender }, { $push: { sentForms: newForm._id } })
     return newForm;
 }
 
@@ -259,9 +260,8 @@ async function sendForm(sender, id, targets) {
             return null;
         }
         // create separate parent form, and send it
-        const parent = await copyParent(form);
+        const parent = await copyParent(sender, form);
         parent.fields = await fieldModel.find({ _id: { $in: parent.fields } })
-        await userModel.findOneAndUpdate({ username: sender }, { $push: { sentForms: parent._id }});
         for (const target of targets) {
             // create form copy - points to original
             var group_id;

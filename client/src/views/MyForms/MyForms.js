@@ -22,16 +22,6 @@ function MyForms(props) {
         checkLoggedIn(setUser);
     }, [])
 
-    useEffect(() => {
-        if (!user) return;
-        console.log('updated to user', user)
-        console.log(
-            'should see',
-            user.sentForms.filter(f => f.parent && !f.group),
-            user.sentForms.filter(f => f.sent)
-        )
-    }, [user])
-
     const handleDelete = (id) => {
         deleteForm(id)
             .then(_ => {

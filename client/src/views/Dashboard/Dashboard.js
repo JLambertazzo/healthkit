@@ -8,21 +8,45 @@ import { useHistory } from 'react-router-dom'
 import {FaPlus} from "react-icons/fa";
 import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button, Text, Image} from "@chakra-ui/react";
 import empty from './emptydash.svg';
+import ShareInternal from '../ShareInternal/ShareInternal';
+import { useState } from 'react';
 
 function Dashboard(props) {
     const history = useHistory();
+    // share form state
+    const [open, setOpen] = useState(false);
+    const [formName, setFormName] = useState("");
+    const [formId, setFormId] = useState("");
+
+    const handleClose = () => {
+        setOpen(false);
+        setFormName("");
+        setFormId("");
+    }
+
+    const handleOpen = (form) => {
+        setOpen(true);
+        setFormName(form.name);
+        setFormId(form._id);
+    }
+
     return (
         <div>
         <Navbar/>
         <div className="dashboard">
-
-
             <div className="dash-side">
                 <Sidebar
                     current="recent"
                 />
             </div>
             <div className="dash-main">
+                <ShareInternal
+                    open={open}
+                    formId={formId}
+                    formName={formName}
+                    handleClose={handleClose}
+                    user={props.user}
+                />
                 <div className="thumb-list">
 
                     {props.user.receivedForms.length > 0 &&(
@@ -34,6 +58,7 @@ function Dashboard(props) {
                             date={"Mar 10, 2022"}
                             complete={form.isSubmitted}
                             title={form.name}
+                            handleOpen={() => handleOpen(form)}
                         />)
                     })
                     )}

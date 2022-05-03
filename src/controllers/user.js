@@ -61,17 +61,21 @@ router.get('/current', mongoChecker, async (req, res, next) => {
     }
 })
 
-// FOR TESTING PURPOSES, DELETE THIS ONCE LOGIN COMPLETE -Julien
-router.get('/force/:username', mongoChecker, async (req, res, next) => {
-    req.session.username = req.params.username
-    res.send({ message: `logged you in as ${req.params.username}` })
-})
-
 // routes like these need to be at the bottom, :id and current conflict
 router.get('/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
         const user = await service.getUser(req.params.id)
         res.send({user})
+    } catch(e) {
+        console.error('error', e)
+        handleError(e, res)
+    }
+})
+
+router.get('/group/:id', idChecker, mongoChecker, async (req, res, next) => {
+    try {
+        const users = await service.getUsersByGroup(req.params.id)
+        res.send({users})
     } catch(e) {
         console.error('error', e)
         handleError(e, res)

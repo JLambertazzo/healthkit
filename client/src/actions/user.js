@@ -145,3 +145,32 @@ export const logout = () => {
             console.log(error);
         });
 }
+
+/**
+ * Find all users in the given group
+ * @param {string} group_id 
+ * @returns Array of users
+ */
+export const getUsersByGroup = (group_id) => {
+    const request = new Request(`/api/user/group/${group_id}`, {
+        method: "get",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    })
+    return fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json !== undefined) {
+                return json.users;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}

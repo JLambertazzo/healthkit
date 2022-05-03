@@ -1,8 +1,8 @@
 import './Thumbnail.css'
-import {Flex, FormControl, FormLabel, Heading, VStack, Input, Box, Button, Progress} from "@chakra-ui/react";
+import { VStack, Box, Button, Progress, HStack, Tooltip, IconButton } from "@chakra-ui/react";
 // import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
-import {FaRegChartBar} from "react-icons/fa"
+import {FaRegChartBar, FaShareAlt} from "react-icons/fa"
 
 function Thumbnail(props) {
     return (
@@ -35,8 +35,15 @@ function Thumbnail(props) {
                     Results
                 </Button>
             </Box>)}
-
-
+            <HStack>
+                <Tooltip label={"Share"}>
+                    <IconButton
+                        onClick={props.handleOpen}
+                        variant={'ghost'}
+                        icon={<FaShareAlt color={'#a9a9a9'}/>}
+                    />
+                </Tooltip>
+            </HStack>
         </VStack>
     );
 }

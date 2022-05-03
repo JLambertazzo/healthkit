@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Checkbox, FormGroup, FormControlLabel } from '@mui/material'
 import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react'
 
 export default function Multi(props) {

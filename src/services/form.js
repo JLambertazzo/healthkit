@@ -267,7 +267,7 @@ async function sendForm(sender, id, targets) {
             var group_id;
             await userModel.findOne({email: target}).then(u=> {
                 if (u) {
-                    group_id = u.group;
+                    group_id = u.group[0];
                 } else {
                     console.error('no user found')
                 }
@@ -275,6 +275,22 @@ async function sendForm(sender, id, targets) {
             )
             const newForm = await copyChild(parent, group_id);
             await userModel.findOneAndUpdate({ email: target }, { $push: { receivedForms: newForm._id } });
+        }
+        return form
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+async function sendFormInternal (id, targets) {
+    try {
+        const form = await formModel.findById(id)
+        if (form) {
+            await userModel.updateMany(
+                { email: { $in: targets } },
+                { $push: { receivedForms: form._id } }
+            )
         }
         return form
     } catch (e) {
@@ -304,5 +320,6 @@ module.exports = {
     isSubmitted,
     submitForm,
     sendForm,
+    sendFormInternal,
     sendFormGroup0
 }

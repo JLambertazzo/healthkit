@@ -77,10 +77,21 @@ async function getByUsername(username, populated = false) {
     }
 }
 
+async function getUsersByGroup(group_id) {
+    try {
+        users = await userModel.find({ group: group_id })
+        return users
+    } catch(e) {
+        console.log('error occurred', e)
+        return null
+    }
+}
+
 module.exports = {
     getUser,
     createUser,
     deleteUser,
     login,
-    getByUsername
+    getByUsername,
+    getUsersByGroup
 }

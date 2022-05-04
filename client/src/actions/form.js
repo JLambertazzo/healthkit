@@ -98,9 +98,9 @@ export const updateForm = (form) => {
 }
 
 // Share a form by email -- takes form id and array of emails (strings)
-export const shareByEmail = (id, username, emails) => {
+export const shareByEmail = (id, username, emails, internal = false) => {
 
-    const request = new Request(`/api/form/email/${id}`, {
+    const request = new Request(`/api/form/email/${id}${internal ? '?internal=1' : ''}`, {
         method: "post",
         body: JSON.stringify({username, emails}),
         headers: {

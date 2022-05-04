@@ -49,10 +49,16 @@ router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
 
 router.post('/email/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
+        const internal = !!req.query.internal // force to boolean
         const sender = req.body.username
         const emails = req.body.emails // temporary, may change to targets
-        const form = await service.sendForm(sender, req.params.id, emails)
-        res.send({ form })
+        if (internal) {
+            const form = await service.sendFormInternal(req.params.id, emails)
+            res.send({ form })
+        } else {
+            const form = await service.sendForm(sender, req.params.id, emails)
+            res.send({ form })
+        }
     } catch(e) {
         console.error('an error occurred', e)
         handleError(e, res)

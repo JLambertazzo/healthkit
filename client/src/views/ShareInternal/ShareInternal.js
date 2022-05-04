@@ -1,35 +1,72 @@
 // import './ShareForm.css'
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Text, Input, Button, UnorderedList, ListItem, FormControl } from "@chakra-ui/react"
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Text, Button, FormControl, useToast } from "@chakra-ui/react"
 import {useEffect, useState} from 'react';
-import {shareByEmail} from '../../actions/form'
-import {FaPlus, FaTimes, FaTrash} from "react-icons/fa";
+import { shareByEmail } from '../../actions/form'
 import { getUsersByGroup } from "../../actions/user";
 import { CUIAutoComplete } from "chakra-ui-autocomplete";
 
-export default function ShareInternal({open, formId, formName, user, handleClose}){
-
-    const [emails, setEmails] = useState([""])
+export default function ShareInternal({open, formId, formName, user, handleClose: propHandleClose}){
     const [users, setUsers] = useState([])
+    const [allUsers, setAllUsers] = useState([])
     const [selectedUsers, setSelectedUsers] = useState([])
+
+    const toast = useToast();
+
+    const handleClose = () => {
+        setSelectedUsers([])
+        propHandleClose()
+    }
 
     useEffect(() => {
         getUsersByGroup(user.group[0]._id || '')
             .then(users => {
-                setUsers(users
-                    .filter(u => u.name !== user.name)
-                    .map(u => ({value: u.email, label: u.email}))
-                )
+                const notCurrent = users.filter(u => u.username !== user.username)
+                setAllUsers(notCurrent)
+                setUsers(notCurrent.map(u => ({value: u.email, label: u.email})))
             })
             .catch(console.error)
     }, [])
 
     useEffect(() => {
-        console.log("WHAT ARE", users, selectedUsers)
-    }, [users, selectedUsers])
+        if (allUsers.length > 0 && formId) { // should indicate first fetch is done
+            setUsers(allUsers
+                .filter(u => !u.receivedForms.includes(formId))
+                .map(u => ({value: u.email, label: u.email}))
+            )
+        }
+    }, [formId])
 
     const sendForm = () => {
-        shareByEmail(formId, user.username, emails);
-        handleClose();
+        if (selectedUsers.length === 0) {
+            toast({
+                title: "No Recipients",
+                description: "Please specify at least one person to receive this form.",
+                status: 'error',
+                isClosable: true
+            })
+            return
+        }
+        
+        shareByEmail(formId, user.username, selectedUsers.map(u => u.value), true)
+            .then(res => {
+                console.log("what do we get as res??", res)
+                toast({
+                    title: "Form Sent",
+                    status: 'success',
+                    isClosable: true
+                })
+                setAllUsers(allUsers.filter(u => !selectedUsers.map(us => us.value).includes(u.email)))
+            })
+            .catch((e) => {
+                console.error(e)
+                toast({
+                    title: "Error",
+                    description: "Unexpected error sharing form",
+                    status: 'error',
+                    isClosable: true
+                })
+            })
+            .finally(handleClose)
     }
 
     return (

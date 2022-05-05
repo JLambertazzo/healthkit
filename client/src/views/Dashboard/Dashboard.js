@@ -30,6 +30,12 @@ function Dashboard(props) {
         setFormId(form._id);
     }
 
+    const getProgress = (form) => {
+        let value = form.fields.filter(f => f.value).length;
+        let count = form.fields.length;
+        return Math.floor(value / count);
+    }
+
     return (
         <div>
         <Navbar/>
@@ -48,19 +54,17 @@ function Dashboard(props) {
                     user={props.user}
                 />
                 <div className="thumb-list">
-
                     {props.user.receivedForms.length > 0 &&(
-
                         props.user.receivedForms.map((form) => {
                         return (<Thumbnail
                             form={form}
-                            value={0}
+                            value={getProgress(form)}
                             date={"Mar 10, 2022"}
                             complete={form.isSubmitted}
                             title={form.name}
                             handleOpen={() => handleOpen(form)}
                         />)
-                    })
+                        })
                     )}
                     {props.user.receivedForms.length === 0 && (
                         <HStack

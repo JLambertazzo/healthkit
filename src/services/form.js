@@ -170,11 +170,10 @@ async function isSubmitted(id) {
  */
 async function submitForm(id, fields) {
     try {
-        const form = await formModel.findById(id)
+        const form = await formModel.findById(id).populate("fields")
         if(form.isSubmitted) {
-            await reportModel.findOneAndDelete({ form: id })
             await generateReport(id)
-            return true
+            return form
         }
         const numComplete = form.fields.filter(f => f.value).length;
         const numFields = form.fields.length;

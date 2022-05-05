@@ -25,6 +25,8 @@ async function generateReport(form_id) {
         if (children.find(childForm => !childForm.isSubmitted)) {
             return null
         }
+        // if existing report found, delete it
+        await reportModel.findOneAndDelete({ form: form_id })
         const questions = parent.fields.map(field => field.label)
         
         const groupIds = children.map(childForm => childForm.group)

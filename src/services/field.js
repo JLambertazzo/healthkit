@@ -27,6 +27,9 @@ async function createField(form_id, field) {
 async function updateField(field_id, value, author, comment = "") {
     try {
         const target = await fieldModel.findById(field_id)
+        if (value === target.value) {
+            return target
+        }
         const history = {
             old: target.value,
             new: value,

@@ -69,7 +69,7 @@ async function updateForm(form) {
     }
 }
 
-async function setFields(form_id, fields) {
+async function setFields(username, form_id, fields) {
     try {
         const form = await formModel.findById(form_id)
         const newFields = []
@@ -78,7 +78,7 @@ async function setFields(form_id, fields) {
             let updatedField;
             if (found && found.value !== field.value) {
                 // TODO specify author and comment
-                updatedField = await updateField(field._id, field.value, "author")
+                updatedField = await updateField(field._id, field.value, username)
                 newFields.push(updatedField)
             } else {
                 updatedField = await createField(form_id, field)

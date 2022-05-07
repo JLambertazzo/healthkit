@@ -37,8 +37,8 @@ router.post('/update', mongoChecker, async (req, res, next) => {
 
 router.patch('/fields/:id', idChecker, mongoChecker, async (req, res, next) => {
     try {
-        const fields = req.body
-        const form = await service.setFields(req.params.id, fields)
+        const {username, fields} = req.body
+        const form = await service.setFields(username, req.params.id, fields)
         res.send({ form })
     } catch(e) {
         console.error('an error occurred', e)

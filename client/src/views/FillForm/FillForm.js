@@ -11,7 +11,7 @@ import { getForm, submitForm, updateFields } from '../../actions/form';
 import { useHistory } from 'react-router-dom';
 
 
-function FillForm(){
+function FillForm(props){
     const history = useHistory();
     const location = useLocation()
     const form = location.state.form;
@@ -36,7 +36,7 @@ function FillForm(){
     }
 
     const handleSubmit = () => {
-        updateFields(form._id, formFields)
+        updateFields(props.user.username, form._id, formFields)
         submitForm(form._id, formFields)
         history.push('/home')
     }

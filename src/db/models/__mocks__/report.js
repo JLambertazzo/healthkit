@@ -1,3 +1,4 @@
+const { Query } = require('mongoose')
 // mock handles all our uses of reportModel
 const reportModel = {
     findOne(query) {
@@ -8,6 +9,9 @@ const reportModel = {
             questionMap: {},
             populate() { return this }
         })
+    },
+    findOneAndDelete(query) {
+        return Promise.resolve(true) //idk what to do
     },
     create(doc) {
         return Promise.resolve({

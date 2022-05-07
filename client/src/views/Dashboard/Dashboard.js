@@ -9,7 +9,8 @@ import {FaPlus} from "react-icons/fa";
 import {Flex, FormControl, FormLabel, Heading, HStack, Input, Box, Button, Text, Image} from "@chakra-ui/react";
 import empty from './emptydash.svg';
 import ShareInternal from '../ShareInternal/ShareInternal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getForm } from '../../actions/form';
 
 function Dashboard(props) {
     const history = useHistory();
@@ -17,6 +18,7 @@ function Dashboard(props) {
     const [open, setOpen] = useState(false);
     const [formName, setFormName] = useState("");
     const [formId, setFormId] = useState("");
+    const [progMap, setProgMap] = useState({});
 
     const handleClose = () => {
         setOpen(false);
@@ -29,6 +31,18 @@ function Dashboard(props) {
         setFormName(form.name);
         setFormId(form._id);
     }
+
+    useEffect(async () => {
+        const forms = props.user.receivedForms;
+        for (let form of forms) {
+            const numComplete = form.fields.filter(f => f.value).length;
+            const numFields = form.fields.length;
+            setProgMap(prev => ({
+                ...prev,
+                [form._id]: Math.floor(numComplete * 100 / numFields)
+            }))
+        }
+    }, [props.user])
 
     return (
         <div>
@@ -48,19 +62,17 @@ function Dashboard(props) {
                     user={props.user}
                 />
                 <div className="thumb-list">
-
                     {props.user.receivedForms.length > 0 &&(
-
                         props.user.receivedForms.map((form) => {
                         return (<Thumbnail
                             form={form}
-                            value={0}
+                            value={progMap[form._id] || 0}
                             date={"Mar 10, 2022"}
                             complete={form.isSubmitted}
                             title={form.name}
                             handleOpen={() => handleOpen(form)}
                         />)
-                    })
+                        })
                     )}
                     {props.user.receivedForms.length === 0 && (
                         <HStack

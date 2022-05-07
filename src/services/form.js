@@ -3,6 +3,7 @@ const { userModel } = require('../db/models/user')
 const { fieldModel } = require('../db/models/field')
 const { generateReport } = require('./report')
 const { updateField, createField } = require('./field')
+const { reportModel } = require('../db/models/report')
 
 async function getForm(id, populated = false) {
     try {
@@ -77,7 +78,7 @@ async function setFields(form_id, fields) {
             let updatedField;
             if (found && found.value !== field.value) {
                 // TODO specify author and comment
-                updatedField = await updateField(field._id, JSON.stringify(field.value), "author")
+                updatedField = await updateField(field._id, field.value, "author")
                 newFields.push(updatedField)
             } else {
                 updatedField = await createField(form_id, field)
@@ -138,7 +139,9 @@ async function deleteForm(id) {
 async function isComplete(id) {
     try {
         const form = await formModel.findById(id)
-        return form.numFields === form.numComplete
+        const numFields = form.fields.length;
+        const numComplete = form.fields.filter(f => f.value).length;
+        return numFields === numComplete
     } catch(e) {
         console.error('error occurred', e)
         return null
@@ -167,24 +170,22 @@ async function isSubmitted(id) {
  */
 async function submitForm(id, fields) {
     try {
-        const form = await formModel.findById(id)
+        const form = await formModel.findById(id).populate("fields")
         if(form.isSubmitted) {
-            return false
+            await generateReport(id)
+            return form
         }
-        if(formModel.numComplete !== formModel.numFields) {
-            return false
+        const numComplete = form.fields.filter(f => f.value).length;
+        const numFields = form.fields.length;
+        if(numComplete !== numFields) {
+            return form
         }
+        
         // try creating report -- only goes through if all children submitted
         const formRes = await formModel.findOneAndUpdate({_id: id}, {$set:
             { isSubmitted: true }
         })
-        // update field values{
-        const valueMap = fields.reduce((map, field) => ({ ...map, [field._id]: field.value}), {})
-        for (const field_id of form.fields) {
-            if (valueMap[field_id.toString()]) {
-                await fieldModel.findByIdAndUpdate(field_id, { value: valueMap[field_id] })
-            }
-        }
+
         await generateReport(id)
         return formRes
     } catch(e) {
@@ -209,7 +210,6 @@ async function copyChild (form, group_id) {
         fields: newFields
             .sort((f1,f2) => f1.index - f2.index)
             .map(field => field._id),
-        numComplete: form.numComplete,
         group: group_id,
         parent: form._id,
     })
@@ -238,7 +238,6 @@ async function copyParent (sender, form) {
         fields: newFields
             .sort((f1,f2) => f1.index - f2.index)
             .map(field => field._id),
-        numComplete: form.numComplete,
         group: null,
         parent: form._id,
         sent: true,

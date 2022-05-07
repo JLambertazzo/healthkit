@@ -18,6 +18,7 @@ function FillForm(){
     const [formFields, setFormFields] = useState([]);
 
     useEffect(() => {
+        // needed to get any filled values
         getForm(form._id).then(res => {
             if (res.form) {
                 setFormFields(res.form.fields);
@@ -26,13 +27,12 @@ function FillForm(){
     },[form])
 
     const handleChange = (id, v) => {
-        const ff = formFields.map((field) => {
-            if (field._id == id){
+        setFormFields(prev => prev.map(field => {
+            if (field._id === id) {
                 return {...field, value: v};
             }
             return field
-        })
-        setFormFields(ff);
+        }));
     }
 
     const handleSubmit = () => {
@@ -56,7 +56,7 @@ function FillForm(){
                         {formFields.map(field =>
                             <Box className="question">
                                 <Input
-                                    handleChange={handleChange}
+                                    handleChange={(v) => handleChange(field._id, v)}
                                     value={field.value}
                                     id={field._id}
                                     type={field.type}

@@ -7,7 +7,6 @@ const schema = new Schema({
     description: {type: String, default: ""},
     fields: {type: [{type: ObjectId, ref: 'Field'}], default: []},
     numFields: {type: Number, default: 0},
-    numComplete: {type: Number, default: 0},
     isSubmitted: {type: Boolean, default: false},
     group: {type: ObjectId, required: false, ref: "Group"},
     parent: {type: ObjectId, required: false, ref: "Form"},

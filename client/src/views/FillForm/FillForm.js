@@ -62,6 +62,7 @@ function FillForm(){
                                     type={field.type}
                                     options={field.options}
                                     label={field.label}
+                                    history={field.history}
                                 />
                             </Box>
                         )}

@@ -24,6 +24,12 @@ export default function Input(props) {
         setOpenHistory(true)
     }
 
+    const handleCommentChange = (e) => {
+        console.log("replacing..")
+        const val = e.target.value
+        setComment(val.replace(/(^| )(@.+?)( |$)/g, '$1[$2]$3'))
+    }
+
     return (
         <>
             <HistoryModal
@@ -55,7 +61,7 @@ export default function Input(props) {
                         type="text"
                         value={comment}
                         placeholder='add comment here'
-                        onChange={(e) => setComment(e.target.value)}
+                        onChange={handleCommentChange}
                     />
                 </Box>
             </SlideFade>
